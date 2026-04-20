@@ -3,13 +3,13 @@ export function criarUsuario({
   telefone,
   endereco,
   distancia = 0,
-  logado = false
+  estaLogado = false
 }) {
   return {
     nome,
     telefone,
     endereco,
     distancia,
-    logado
+    estaLogado
   };
 }
