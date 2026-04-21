@@ -6,7 +6,7 @@ import { LINKS } from '../rotas/Links';
 import { formatarMoeda } from '../util/ConversorDeMoeda';
 import { ItemCarrinho } from '../components/ItemCarrinho';
 
-export function Carrinho() {
+export function CarrinhoPage() {
   const { itens, getSubtotal } = useCarrinho();
   const navigate = useNavigate();
 

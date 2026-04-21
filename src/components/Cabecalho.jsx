@@ -5,6 +5,7 @@ import { Link } from 'react-router';
 import { useUsuario } from '../context/UsuarioContexto';
 import { useCarrinho } from '../context/CarrinhoContexto';
 import { LINKS } from '../rotas/Links';
+import { MenuUsuario } from './MenuUsuario';
 
 
 export function Cabecalho() {
@@ -27,61 +28,8 @@ export function Cabecalho() {
 
                     <div className="flex items-center gap-2">
                         {/* User Profile */}
-                        {usuario && usuario.estaLogado && (
-                            <div className="relative">
-                                <button
-                                    onClick={() => setShowUserMenu(!showUserMenu)}
-                                    className="p-2 hover:bg-white/10 rounded-full transition-colors"
-                                    aria-label="User menu"
-                                >
-                                    <User className="w-6 h-6" />
-                                </button>
-
-                                {showUserMenu && (
-                                    <>
-                                        {/* Backdrop */}
-                                        <div
-                                            className="fixed inset-0 z-40"
-                                            onClick={() => setShowUserMenu(false)}
-                                        />
-
-                                        {/* Dropdown */}
-                                        <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-xl z-50 py-2 text-gray-900">
-                                            <div className="px-4 py-3 border-b border-gray-200">
-                                                <p className="font-semibold">{usuario.nome}</p>
-                                                <p className="text-sm text-gray-600">{usuario.telefone}</p>
-                                                <p className="text-xs text-gray-500 mt-1">{usuario.endereco}</p>
-                                            </div>
-
-                                            <Link
-                                                to="/orders"
-                                                className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors"
-                                                onClick={() => setShowUserMenu(false)}
-                                            >
-                                                <History className="w-4 h-4" />
-                                                <span>Meus Pedidos</span>
-                                            </Link>
-
-                                            <Link
-                                                to={LINKS.ADMIN}
-                                                className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors"
-                                                onClick={() => setShowUserMenu(false)}
-                                            >
-                                                <Settings className="w-4 h-4" />
-                                                <span>Painel Admin</span>
-                                            </Link>
-
-                                            <button
-                                                onClick={handleLogout}
-                                                className="w-full flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors text-red-600"
-                                            >
-                                                <LogOut className="w-4 h-4" />
-                                                <span>Sair</span>
-                                            </button>
-                                        </div>
-                                    </>
-                                )}
-                            </div>
+                        {usuario && (
+                            <MenuUsuario usuario={usuario} onLogout={handleLogout} />
                         )}
 
                         {/* Cart */}

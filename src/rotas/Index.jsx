@@ -1,9 +1,11 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { Layout } from '../layouts/Layout';
-import { Home } from '../pages/HomePage';
+import { CadastroPage } from '../pages/CadastroPage';
+import { CarrinhoPage } from '../pages/CarrinhoPage';
+import { CheckoutPage } from '../pages/CheckoutPage';
+import { HomePage } from '../pages/HomePage';
 import { LINKS } from './Links';
-import { Carrinho } from '../pages/CarrinhoPage';
-import { Cadastro } from '../pages/CadastroPage';
+import { ConfirmacaoPage } from '../pages/ConfirmacaoPage';
 
 export const router = createBrowserRouter([
   {
@@ -12,17 +14,17 @@ export const router = createBrowserRouter([
     children: [
       {
         path: LINKS.HOME,
-        element: <Home/>
+        element: <HomePage />
       }
     ]
   },
-    {
+  {
     path: LINKS.CARRINHO,
     element: <Layout />,
     children: [
       {
         path: LINKS.CARRINHO,
-        element: <Carrinho/>
+        element: <CarrinhoPage />
       }
     ]
   },
@@ -32,9 +34,30 @@ export const router = createBrowserRouter([
     children: [
       {
         path: LINKS.CADASTRO,
-        element: <Cadastro/>
+        element: <CadastroPage />
       }
     ]
   },
-  
+  {
+    path: LINKS.CHECKOUT,
+    element: <Layout />,
+    children: [
+      {
+        path: LINKS.CHECKOUT,
+        element: <CheckoutPage />
+      }
+    ]
+  },
+    {
+    path: LINKS.CONFIRMACAO,
+    element: <Layout />,
+    children: [
+      {
+        path: LINKS.CONFIRMACAO,
+        element: <ConfirmacaoPage />
+      }
+    ]
+  },
+
+
 ]);

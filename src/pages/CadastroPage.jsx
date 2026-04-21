@@ -8,7 +8,7 @@ import { formatarMoeda } from '../util/ConversorDeMoeda';
 import { aceitaApenasLetras, formatarTelefone } from '../util/Mascaras';
 
 
-export function Cadastro() {
+export function CadastroPage() {
     const navigate = useNavigate();
 
     const { usuario, salvarUsuario } = useUsuario();

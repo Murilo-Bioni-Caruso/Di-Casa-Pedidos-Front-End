@@ -5,7 +5,7 @@ import { useRestaurante } from '../context/RestauranteContexto';
 import { Categoria, getDiaAtual } from '../models/Constantes';
 import { formatarMoeda } from '../util/ConversorDeMoeda';
 
-export function Home() {
+export function HomePage() {
     const [categoriaAtiva, setCategoriaAtiva] = useState('all');
     const { produtos } = useRestaurante();
 
@@ -37,7 +37,7 @@ export function Home() {
                 {/* Prato do Dia */}
                 {categoriaAtiva === 'all' && pratoDoDia && (
                     <section className="mb-8">
-                        <div className="bg-gradient-to-r from-[#FFD93D] to-[#FFA500] rounded-xl p-6 shadow-lg">
+                        <div className="bg-linear-to-r from-[#FFD93D] to-[#FFA500] rounded-xl p-6 shadow-lg">
                             <h2 className="text-gray-900 mb-4">⭐ Prato do Dia</h2>
 
                             <div className="grid md:grid-cols-[1fr_2fr] gap-4">
