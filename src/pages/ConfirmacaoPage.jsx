@@ -49,7 +49,7 @@ export function ConfirmacaoPage() {
           </div>
 
           {/* ID */}
-          <div className="bg-gradient-to-r from-[#FF6B35] to-[#FF8C42] text-white rounded-lg p-6 mb-6">
+          <div className="bg-linear-to-r from-[#FF6B35] to-[#FF8C42] text-white rounded-lg p-6 mb-6">
             <p className="text-sm opacity-90 mb-1">
               Número do Pedido
             </p>

@@ -19,7 +19,7 @@ export function Cabecalho() {
         setShowUserMenu(false);
     };
     return (
-        <header className="sticky top-0 z-50 bg-gradient-to-r from-[#FF6B35] to-[#FF8C42] text-white shadow-lg">
+        <header className="sticky top-0 z-50 bg-linear-to-r from-[#FF6B35] to-[#FF8C42] text-white shadow-lg">
             <div className="container mx-auto px-4 py-4">
                 <div className="flex items-center justify-between mb-3">
                     <Link to="/" className="hover:opacity-90 transition-opacity">
