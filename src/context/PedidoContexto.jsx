@@ -24,8 +24,8 @@ export const PedidoProvider = ({ children }) => {
     );
   };
 
-  const getPedidosUsuario = (email) => {
-    return pedidos.filter(p => p.usuario.email === email);
+  const getPedidosUsuario = (telefone) => {
+    return pedidos.filter(p => p.usuario.telefone === telefone);
   };
 
   const getPedidoPorId = (pedidoId) => {

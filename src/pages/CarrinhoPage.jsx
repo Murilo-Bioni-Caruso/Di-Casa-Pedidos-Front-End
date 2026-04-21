@@ -7,30 +7,47 @@ import { formatarMoeda } from '../util/ConversorDeMoeda';
 import { ItemCarrinho } from '../components/ItemCarrinho';
 
 export function CarrinhoPage() {
-  const { itens, getSubtotal } = useCarrinho();
+  const { itens, getSubtotal, limparCarrinho } = useCarrinho();
   const navigate = useNavigate();
 
   const subtotal = getSubtotal();
 
   const finalizarPedido = () => {
-    navigate(LINKS.CADASTRO);
+    navigate(LINKS.CADASTRO, {
+      state: { from: LINKS.CARRINHO }
+    });
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
 
       <main className="container mx-auto px-4 py-6 max-w-4xl">
-        
-        {/* Voltar */}
-        <div className="mb-6 flex items-center gap-4">
-          <Link
-            to={LINKS.HOME}
-            className="p-2 hover:bg-gray-200 rounded-full transition-colors"
-          >
-            <ArrowLeft className="w-6 h-6" />
-          </Link>
 
-          <h1 className="text-gray-900">Meu Carrinho</h1>
+        {/* Voltar */}
+        <div className="mb-6 flex items-center justify-between">
+
+          {/* ESQUERDA */}
+          <div className="flex items-center gap-4">
+            <Link
+              to={LINKS.HOME}
+              className="p-2 hover:bg-gray-200 rounded-full transition-colors"
+            >
+              <ArrowLeft className="w-6 h-6" />
+            </Link>
+
+            <h1 className="text-gray-900">Meu Carrinho</h1>
+          </div>
+
+          {/* DIREITA */}
+          {itens.length > 0 && (
+            <button
+              onClick={limparCarrinho}
+              className="bg-[#FF6B35] hover:bg-[#FF5722] text-white  px-4 py-2 rounded-full transition-colors shadow-md"
+            >
+              🗑 Limpar
+            </button>
+          )}
+
         </div>
 
         {/* Carrinho vazio */}

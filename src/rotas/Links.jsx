@@ -7,5 +7,6 @@ export const LINKS = {
   CARRINHO: "/carrinho",
   CADASTRO: "/cadastro",
   CHECKOUT: "/checkout",
-  CONFIRMACAO: "/confirmacao"
+  CONFIRMACAO: "/confirmacao",
+  HISTORICO_PEDIDOS: "/historico-pedidos"
 };

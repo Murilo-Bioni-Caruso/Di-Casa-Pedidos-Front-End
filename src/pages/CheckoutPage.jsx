@@ -8,6 +8,7 @@ import { useUsuario } from '../context/UsuarioContexto';
 
 import { LINKS } from '../rotas/Links';
 import { formatarMoeda } from '../util/ConversorDeMoeda';
+import { OrderStatus } from '../models/Constantes';
 
 export function CheckoutPage() {
   const navigate = useNavigate();
@@ -31,16 +32,16 @@ export function CheckoutPage() {
   //Preciso jogar fora essa função para o contexto de pedido, para não ter que repetir a lógica de criar o objeto pedido lá no carrinho e aqui no checkout
   const finalizarPedido = () => {
     const pedido = {
-      id: `PED-${Date.now()}`,
-      usuario,
-      itens,
-      subtotal,
-      taxaEntrega,
-      total,
-      metodoPagamento,
-      data: Date.now(),
-      status: 'pendente'
-    };
+  id: `PED-${Date.now()}`,
+  usuario,
+  itens,
+  subtotal,
+  taxaEntrega, 
+  total,
+  metodoPagamento,
+  data: Date.now(), 
+  status: OrderStatus.PENDENTE
+};
 
     adicionarPedido(pedido);
     localStorage.setItem('ultimo-pedido', JSON.stringify(pedido));

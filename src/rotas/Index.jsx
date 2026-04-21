@@ -6,6 +6,7 @@ import { CheckoutPage } from '../pages/CheckoutPage';
 import { HomePage } from '../pages/HomePage';
 import { LINKS } from './Links';
 import { ConfirmacaoPage } from '../pages/ConfirmacaoPage';
+import { HistoricoPedidosPage } from '../pages/HistoricoPedidosPage';
 
 export const router = createBrowserRouter([
   {
@@ -55,6 +56,16 @@ export const router = createBrowserRouter([
       {
         path: LINKS.CONFIRMACAO,
         element: <ConfirmacaoPage />
+      }
+    ]
+  },
+    {
+    path: LINKS.HISTORICO_PEDIDOS,
+    element: <Layout />,
+    children: [
+      {
+        path: LINKS.HISTORICO_PEDIDOS,
+        element: <HistoricoPedidosPage />
       }
     ]
   },

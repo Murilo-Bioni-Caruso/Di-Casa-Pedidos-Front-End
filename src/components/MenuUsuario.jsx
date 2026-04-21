@@ -39,7 +39,7 @@ export function MenuUsuario({ usuario, onLogout }) {
 
             {/* Links */}
             <Link
-              to="/orders"
+              to={LINKS.HISTORICO_PEDIDOS}
               className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100"
               onClick={() => setAberto(false)}
             >

@@ -1,6 +1,6 @@
 import { ArrowLeft, MapPin, Phone, Truck, User } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useRestaurante } from '../context/RestauranteContexto';
 import { useUsuario } from '../context/UsuarioContexto';
 import { LINKS } from '../rotas/Links';
@@ -9,8 +9,13 @@ import { aceitaApenasLetras, formatarTelefone } from '../util/Mascaras';
 
 
 export function CadastroPage() {
+    const location = useLocation();
+    const origem = location.state?.from;
     const navigate = useNavigate();
-
+    const textoBotao =
+        origem === LINKS.CARRINHO
+            ? 'Continuar para Pagamento'
+            : 'Finalizar Cadastro';
     const { usuario, salvarUsuario } = useUsuario();
     const { calcularDistancia, calcularTaxaEntrega, configuracoes } = useRestaurante();
 
@@ -44,7 +49,11 @@ export function CadastroPage() {
             logado: true
         });
 
-        navigate(LINKS.CHECKOUT);
+        if (origem === LINKS.CARRINHO) {
+            navigate(LINKS.CHECKOUT);
+        } else {
+            navigate(LINKS.HOME);
+        };
     };
 
     return (
@@ -160,7 +169,7 @@ export function CadastroPage() {
                         type="submit"
                         className="w-full bg-[#FF6B35] hover:bg-[#FF5722] text-white py-4 rounded-full transition-colors shadow-lg"
                     >
-                        Continuar para Pagamento
+                        {textoBotao}
                     </button>
 
                 </form>
