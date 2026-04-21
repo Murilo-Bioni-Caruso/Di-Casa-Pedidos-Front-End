@@ -6,4 +6,5 @@ export const LINKS = {
   ADMIN_PEDIDOS: "/admin/pedidos",
   CARRINHO: "/carrinho",
   CADASTRO: "/cadastro",
+  CHECKOUT: "/checkout"
 };

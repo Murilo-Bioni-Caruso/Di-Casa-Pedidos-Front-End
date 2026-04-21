@@ -3,6 +3,7 @@ import { Layout } from '../layouts/Layout';
 import { Home } from '../pages/HomePage';
 import { LINKS } from './Links';
 import { Carrinho } from '../pages/CarrinhoPage';
+import { Cadastro } from '../pages/CadastroPage';
 
 export const router = createBrowserRouter([
   {
@@ -24,5 +25,16 @@ export const router = createBrowserRouter([
         element: <Carrinho/>
       }
     ]
-  }
+  },
+  {
+    path: LINKS.CADASTRO,
+    element: <Layout />,
+    children: [
+      {
+        path: LINKS.CADASTRO,
+        element: <Cadastro/>
+      }
+    ]
+  },
+  
 ]);
