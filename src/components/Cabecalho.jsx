@@ -4,6 +4,7 @@ import { ShoppingCart, MapPin, Clock, User, LogOut, History, Settings } from 'lu
 import { Link } from 'react-router';
 import { useUsuario } from '../context/UsuarioContexto';
 import { useCarrinho } from '../context/CarrinhoContexto';
+import { LINKS } from '../rotas/Links';
 
 
 export function Cabecalho() {
@@ -62,7 +63,7 @@ export function Cabecalho() {
                                             </Link>
 
                                             <Link
-                                                to="/admin"
+                                                to={LINKS.ADMIN}
                                                 className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors"
                                                 onClick={() => setShowUserMenu(false)}
                                             >
@@ -85,7 +86,7 @@ export function Cabecalho() {
 
                         {/* Cart */}
                         <Link
-                            to="/cart"
+                            to={LINKS.CARRINHO}
                             className="relative p-2 hover:bg-white/10 rounded-full transition-colors"
                         >
                             <ShoppingCart className="w-6 h-6" />
