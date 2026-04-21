@@ -1,21 +1,16 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { Layout } from '../layouts/Layout';
-
-function Home() {
-  return <div className="bg-red-500 text-white p-4">
-  Teste Tailwind
-</div>;
-
-}
+import { Home } from '../pages/HomePage';
+import { LINKS } from './Links';
 
 export const router = createBrowserRouter([
   {
-    path: '/',
+    path: LINKS.HOME,
     element: <Layout />,
     children: [
       {
-        path: '/',
-        element: <Home />
+        path: LINKS.HOME,
+        element: <Home/>
       }
     ]
   }

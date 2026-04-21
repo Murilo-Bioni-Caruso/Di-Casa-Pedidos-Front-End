@@ -1,7 +1,9 @@
 import { Plus } from 'lucide-react';
 import { useCarrinho } from '../context/CarrinhoContexto';
-import { FotoProduto } from './FotoProduto';
-import { DiaDaSemana } from '../models/Constantes';
+import { FotoProduto } from './ProdutoFoto';
+import { formatarMoeda } from '../util/ConversorDeMoeda';
+import { diasSemana } from '../models/Constantes';
+
 
 
 export function CartaoProduto({ produto }) {
@@ -24,7 +26,7 @@ export function CartaoProduto({ produto }) {
 
         {produto.diaDaSemana && (
           <div className="absolute top-2 left-2 bg-[#FFD93D] text-[#333] px-3 py-1 rounded-full">
-            <span>🌟 {DiaDaSemana[produto.diaDaSemana]}</span>
+            <span>🌟 {diasSemana.find(d => d.key === produto.diaDaSemana)?.label}</span>
           </div>
         )}
       </div>
