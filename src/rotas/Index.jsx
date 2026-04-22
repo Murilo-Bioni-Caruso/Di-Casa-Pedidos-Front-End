@@ -3,11 +3,13 @@ import { Layout } from '../layouts/Layout';
 import { CadastroPage } from '../pages/CadastroPage';
 import { CarrinhoPage } from '../pages/CarrinhoPage';
 import { CheckoutPage } from '../pages/CheckoutPage';
-import { HomePage } from '../pages/HomePage';
-import { LINKS } from './Links';
 import { ConfirmacaoPage } from '../pages/ConfirmacaoPage';
+import { DashboardAdminPage } from '../pages/DashboardAdminPage';
 import { HistoricoPedidosPage } from '../pages/HistoricoPedidosPage';
+import { HomePage } from '../pages/HomePage';
+import { NaoAutorizadoPage } from '../pages/NaoAutorizadoPage';
 import { NaoEncontradoPage } from '../pages/NaoEncontradoPage';
+import { LINKS } from './Links';
 
 export const router = createBrowserRouter([
   {
@@ -19,32 +21,55 @@ export const router = createBrowserRouter([
         element: <HomePage />
       },
       {
-      path: LINKS.CARRINHO,
-      element: <CarrinhoPage />
-    },
-    {
-      path: LINKS.CADASTRO,
-      element: <CadastroPage />
-    },
-    {
-      path: LINKS.CHECKOUT,
-      element: <CheckoutPage />
-    },
-    {
-      path: LINKS.CONFIRMACAO,
-      element: <ConfirmacaoPage />
-    },
-    {
-      path: LINKS.HISTORICO_PEDIDOS,
-      element: <HistoricoPedidosPage />
-    },
-    {
-      path: '*',
-      element: <NaoEncontradoPage/>
-    }
+        path: LINKS.CARRINHO,
+        element: <CarrinhoPage />
+      },
+      {
+        path: LINKS.CADASTRO,
+        element: <CadastroPage />
+      },
+      {
+        path: LINKS.CHECKOUT,
+        element: <CheckoutPage />
+      },
+      {
+        path: LINKS.CONFIRMACAO,
+        element: <ConfirmacaoPage />
+      },
+      {
+        path: LINKS.HISTORICO_PEDIDOS,
+        element: <HistoricoPedidosPage />
+      },
+      // Vou deixar comentado aqui, mas a rota admin só deve ser acessível para admins, abre para testes
+      {
+        path: LINKS.ADMIN,
+        element: <DashboardAdminPage />
+      },
+      {
+        path: LINKS.NAO_AUTORIZADO,
+        element: <NaoAutorizadoPage />
+      },
+      {
+        path: '*',
+        element: <NaoEncontradoPage />
+      }
     ]
-  },
-
+  }
+  // Rota protegida para admins
+  // {
+  //   path: LINKS.ADMIN,
+  //   element: (
+  //     <RotaAdmin>
+  //       <Layout />
+  //     </RotaAdmin>
+  //   ),
+  //   children: [
+  //     {
+  //       path: LINKS.ADMIN,
+  //       element: <DashboardAdminPage />
+  //     }
+  //   ]
+  // }
 
 
 ]);

@@ -28,7 +28,7 @@ export function LayoutAdmin({ children }) {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header Admin */}
-      <header className="bg-gradient-to-r from-[#FF6B35] to-[#FF8C42] text-white shadow-lg">
+      <header className="bg-linear-to-r from-[#FF6B35] to-[#FF8C42] text-white shadow-lg">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div>

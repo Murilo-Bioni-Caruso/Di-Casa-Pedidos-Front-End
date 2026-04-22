@@ -22,7 +22,8 @@ export function CadastroPage() {
     const [formulario, setFormulario] = useState({
         nome: usuario?.nome || '',
         telefone: usuario?.telefone || '',
-        endereco: usuario?.endereco || ''
+        endereco: usuario?.endereco || '',
+        isAdmin: false
     });
 
     const [distancia, setDistancia] = useState(0);

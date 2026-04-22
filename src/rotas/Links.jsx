@@ -8,5 +8,6 @@ export const LINKS = {
   CADASTRO: "/cadastro",
   CHECKOUT: "/checkout",
   CONFIRMACAO: "/confirmacao",
-  HISTORICO_PEDIDOS: "/historico-pedidos"
+  HISTORICO_PEDIDOS: "/historico-pedidos",
+  NAO_AUTORIZADO: "/nao-autorizado"
 };
