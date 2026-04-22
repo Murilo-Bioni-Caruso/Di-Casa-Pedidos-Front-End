@@ -7,8 +7,10 @@ import {
   Settings as ConfiguracoesIcon
 } from 'lucide-react';
 import { LINKS } from '../rotas/Links';
+import { useRestaurante } from '../context/RestauranteContexto';
 
 export function LayoutAdmin({ children }) {
+  const { configuracoes } = useRestaurante();
   const location = useLocation();
 
   const itensNavegacao = [
@@ -33,7 +35,7 @@ export function LayoutAdmin({ children }) {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-white mb-1">Painel Administrativo</h1>
-              <p className="text-sm opacity-90">DiCasa Marmitaria</p>
+              <p className="text-sm opacity-90">{configuracoes.nome}</p>
             </div>
 
             <Link

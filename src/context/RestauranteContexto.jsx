@@ -9,8 +9,8 @@ const configuracoesPadrao = {
   telefone: '(11) 98765-4321',
   email: 'contato@dicasa.com.br',
   horarioFuncionamento: {
-    monday: { open: '11:00', close: '22:00' },
-    sunday: { open: '11:00', close: '22:00' }
+    domingo: { open: '11:00', close: '22:00' },
+    segunda: { open: '11:00', close: '22:00' }
   },
   latitude: -23.5505,
   longitude: -46.6333,

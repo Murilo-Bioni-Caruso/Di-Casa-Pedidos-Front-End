@@ -10,6 +10,10 @@ import { HomePage } from '../pages/HomePage';
 import { NaoAutorizadoPage } from '../pages/NaoAutorizadoPage';
 import { NaoEncontradoPage } from '../pages/NaoEncontradoPage';
 import { LINKS } from './Links';
+import { AdminPedidosPage } from '../pages/AdminPedidosPage';
+import { AdminCardapiosPage } from '../pages/AdminCardapiosPage';
+import { AdminConfiguracoesPage } from '../pages/AdminConfiguracaoPage';
+import { RotaAdmin } from './RotasAdmin';
 
 export const router = createBrowserRouter([
   {
@@ -40,11 +44,6 @@ export const router = createBrowserRouter([
         path: LINKS.HISTORICO_PEDIDOS,
         element: <HistoricoPedidosPage />
       },
-      // Vou deixar comentado aqui, mas a rota admin só deve ser acessível para admins, abre para testes
-      {
-        path: LINKS.ADMIN,
-        element: <DashboardAdminPage />
-      },
       {
         path: LINKS.NAO_AUTORIZADO,
         element: <NaoAutorizadoPage />
@@ -54,22 +53,50 @@ export const router = createBrowserRouter([
         element: <NaoEncontradoPage />
       }
     ]
-  }
+  },
+      // Vou deixar comentado aqui, mas a rota admin só deve ser acessível para admins, abre para testes
+      // {
+      //   path: LINKS.ADMIN,
+      //   element: <DashboardAdminPage />
+      // },
+      // {
+      //   path: LINKS.ADMIN_PEDIDOS,
+      //   element: <AdminPedidosPage />
+      // },
+      // {
+      //   path: LINKS.ADMIN_PRODUTOS,
+      //   element: <AdminCardapiosPage />
+      // },
+      // {
+      //   path: LINKS.ADMIN_CONFIGURACOES,
+      //   element: <AdminConfiguracoesPage />
+      // },
+
   // Rota protegida para admins
-  // {
-  //   path: LINKS.ADMIN,
-  //   element: (
-  //     <RotaAdmin>
-  //       <Layout />
-  //     </RotaAdmin>
-  //   ),
-  //   children: [
-  //     {
-  //       path: LINKS.ADMIN,
-  //       element: <DashboardAdminPage />
-  //     }
-  //   ]
-  // }
+  {
+    path: LINKS.ADMIN,
+    element: (
+      <RotaAdmin />
+    ),
+    children: [
+      {
+        path: LINKS.ADMIN,
+        element: <DashboardAdminPage />
+      },
+      {
+        path: LINKS.ADMIN_PEDIDOS,
+        element: <AdminPedidosPage />
+      },
+      {
+        path: LINKS.ADMIN_PRODUTOS,
+        element: <AdminCardapiosPage />
+      },
+      {
+        path: LINKS.ADMIN_CONFIGURACOES,
+        element: <AdminConfiguracoesPage />
+      },
+    ]
+  }
 
 
 ]);

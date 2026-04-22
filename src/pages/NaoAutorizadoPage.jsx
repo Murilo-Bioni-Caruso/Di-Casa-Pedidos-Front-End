@@ -1,5 +1,6 @@
 import { Lock } from "lucide-react";
 import { NaoEncontrado } from "../components/NaoEncontrado";
+import { LINKS } from "../rotas/Links";
 
 export function NaoAutorizadoPage() {
     return (
