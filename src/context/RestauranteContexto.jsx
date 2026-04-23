@@ -29,6 +29,7 @@ export const RestauranteProvider = ({ children }) => {
     const salvo = localStorage.getItem('config-dicasa');
     return salvo ? JSON.parse(salvo) : configuracoesPadrao;
   });
+  
 
   useEffect(() => {
     localStorage.setItem('produtos-dicasa', JSON.stringify(produtos));

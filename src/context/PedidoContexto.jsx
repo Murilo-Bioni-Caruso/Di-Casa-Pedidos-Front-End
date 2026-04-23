@@ -1,21 +1,44 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import * as pedidoService from '../service/PedidoService';
+import { useRestaurante } from './RestauranteContexto';
 
 const PedidoContext = createContext();
 
 export const PedidoProvider = ({ children }) => {
-const [pedidos, setPedidos] = useState(() => {
-  return pedidoService.obterPedidos();
-});
+  const [pedidos, setPedidos] = useState(() => {
+    return pedidoService.obterPedidos();
+  });
 
   useEffect(() => {
     localStorage.setItem('pedidos-dicasa', JSON.stringify(pedidos));
   }, [pedidos]);
-
+  const { calcularTaxaEntrega, calcularDistancia } = useRestaurante();
   const adicionarPedido = (pedido) => {
     setPedidos(prev =>
       pedidoService.adicionarPedido(prev, pedido)
     );
+  };
+  const criarPedidoCompleto = ({ usuario, itens, metodoPagamento }) => {
+    const resumo = pedidoService.calcularResumoPedido({
+      itens,
+      usuario,
+      calcularTaxaEntrega,
+      calcularDistancia
+    });
+
+    const pedido = pedidoService.criarPedido({
+      ...resumo,
+      usuario,
+      itens,
+      metodoPagamento
+    });
+
+    setPedidos(prev =>
+      pedidoService.adicionarPedido(prev, pedido)
+    );
+    localStorage.setItem('ultimo-pedido', JSON.stringify(pedido));
+
+    return pedido;
   };
 
   const atualizarStatusPedido = (pedidoId, status) => {
@@ -47,6 +70,14 @@ const [pedidos, setPedidos] = useState(() => {
   const contarPedidosPorStatus = (status) => {
     return pedidoService.contarPedidosPorStatus(pedidos, status);
   };
+  const getResumoPedido = (itens, usuario) => {
+    return pedidoService.calcularResumoPedido({
+      itens,
+      usuario,
+      calcularTaxaEntrega,
+      calcularDistancia
+    });
+  };
 
   return (
     <PedidoContext.Provider
@@ -54,6 +85,8 @@ const [pedidos, setPedidos] = useState(() => {
         pedidos,
         adicionarPedido,
         atualizarStatusPedido,
+        criarPedidoCompleto,
+        getResumoPedido,
         getPedidosUsuario,
         getPedidoPorId,
         getPedidosHoje,
@@ -76,3 +109,4 @@ export const usePedido = () => {
 
   return context;
 };
+

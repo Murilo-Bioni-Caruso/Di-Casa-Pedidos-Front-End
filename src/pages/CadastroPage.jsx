@@ -6,19 +6,18 @@ import { useUsuario } from '../context/UsuarioContexto';
 import { LINKS } from '../rotas/Links';
 import { formatarMoeda } from '../util/ConversorDeMoeda';
 import { aceitaApenasLetras, formatarTelefone } from '../util/Mascaras';
+import { getRedirectCadastro, getTextoBotao } from '../util/CadastroHelper';
 
 
 export function CadastroPage() {
     const location = useLocation();
     const origem = location.state?.from;
     const navigate = useNavigate();
-    const textoBotao =
-        origem === LINKS.CARRINHO
-            ? 'Continuar para Pagamento'
-            : 'Finalizar Cadastro';
+    const textoBotao = getTextoBotao(origem);
+    const redirect = getRedirectCadastro(origem);
     const { usuario, salvarUsuario, calcularEntregaPreview } = useUsuario();
     const { configuracoes } = useRestaurante();
-
+    
     const [formulario, setFormulario] = useState({
         nome: usuario?.nome || '',
         telefone: usuario?.telefone || '',
@@ -26,23 +25,12 @@ export function CadastroPage() {
         isAdmin: false
     });
 
-    const [distancia, setDistancia] = useState(0);
-    const [taxaEntrega, setTaxaEntrega] = useState(0);
-
-    
-    useEffect(() => {
-        const preview = calcularEntregaPreview(formulario.endereco);
-
-        setDistancia(preview.distancia);
-        setTaxaEntrega(preview.taxaEntrega);
-    }, [formulario.endereco]);
+    const {distancia, taxaEntrega} = calcularEntregaPreview(formulario.endereco);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
         salvarUsuario(formulario);
-
-        navigate(origem === LINKS.CARRINHO ? LINKS.CHECKOUT : LINKS.HOME);
+        navigate(redirect);
     };
     return (
         <div className="min-h-screen bg-gray-50">

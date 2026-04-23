@@ -1,60 +1,50 @@
 import { ArrowLeft, Banknote, CreditCard, Receipt, Smartphone } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCarrinho } from '../context/CarrinhoContexto';
 import { usePedido } from '../context/PedidoContexto';
-import { useRestaurante } from '../context/RestauranteContexto';
 import { useUsuario } from '../context/UsuarioContexto';
 
 import { LINKS } from '../rotas/Links';
 import { formatarMoeda } from '../util/ConversorDeMoeda';
-import { OrderStatus } from '../models/Constantes';
 
 export function CheckoutPage() {
   const navigate = useNavigate();
-  const { itens, getSubtotal, limparCarrinho } = useCarrinho();
+  const { itens, limparCarrinho } = useCarrinho();
   const { usuario } = useUsuario();
-  const { calcularTaxaEntrega } = useRestaurante();
-  const { adicionarPedido } = usePedido();
+  const { getResumoPedido, criarPedidoCompleto } = usePedido();
+  const { subtotal, taxaEntrega, total, distancia } =
+    getResumoPedido(itens, usuario);
 
   const [metodoPagamento, setMetodoPagamento] = useState('pix');
 
-  // 🔥 proteção: se não tiver usuário
+  // proteção: se não tiver usuário
+useEffect(() => {
   if (!usuario) {
     navigate(LINKS.CADASTRO);
-    return null;
   }
+}, [usuario, navigate]);
 
-  const subtotal = getSubtotal();
-  const distancia = usuario.distancia || 0;
-  const taxaEntrega = calcularTaxaEntrega(distancia);
-  const total = subtotal + taxaEntrega;
-  //Preciso jogar fora essa função para o contexto de pedido, para não ter que repetir a lógica de criar o objeto pedido lá no carrinho e aqui no checkout
   const finalizarPedido = () => {
-    const pedido = {
-  id: `PED-${Date.now()}`,
-  usuario,
-  itens,
-  subtotal,
-  taxaEntrega, 
-  total,
-  metodoPagamento,
-  data: Date.now(), 
-  status: OrderStatus.PENDENTE
+  console.log('clicou');
+
+  const pedido = criarPedidoCompleto({
+    usuario,
+    itens,
+    metodoPagamento
+  });
+
+  console.log('pedido criado', pedido);
+
+  limparCarrinho();
+  navigate(LINKS.CONFIRMACAO);
 };
-
-    adicionarPedido(pedido);
-    localStorage.setItem('ultimo-pedido', JSON.stringify(pedido));
-
-    limparCarrinho();
-    navigate(LINKS.CONFIRMACAO);
-  };
 
   return (
     <div className="min-h-screen bg-gray-50">
 
       <main className="container mx-auto px-4 py-6 max-w-4xl">
-        
+
         {/* Voltar */}
         <div className="mb-6 flex items-center gap-4">
           <Link
@@ -68,7 +58,7 @@ export function CheckoutPage() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-6">
-          
+
           {/* Forma de pagamento */}
           <div className="bg-white rounded-xl shadow-lg p-6">
             <h2 className="text-gray-900 mb-4 flex items-center gap-2">

@@ -1,5 +1,20 @@
+import { OrderStatus } from "../models/Constantes";
+
 export function adicionarPedido(pedidos, pedido) {
   return [pedido, ...pedidos];
+}
+export function criarPedido(dados) {
+  return {
+    id: `PED-${Date.now()}`,
+    usuario: dados.usuario,
+    itens: dados.itens,
+    subtotal: dados.subtotal,
+    taxaEntrega: dados.taxaEntrega,
+    total: dados.total,
+    metodoPagamento: dados.metodoPagamento,
+    data: Date.now(),
+    status: OrderStatus.PENDENTE
+  };
 }
 
 export function atualizarStatusPedido(pedidos, pedidoId, status) {
@@ -61,4 +76,17 @@ export function obterPedidos() {
   const pedidos = salvo ? JSON.parse(salvo) : [];
 
   return pedidos.map(normalizarPedido);
+}
+
+export function calcularResumoPedido({ itens, usuario, calcularTaxaEntrega, calcularDistancia }) {
+  const subtotal = itens.reduce(
+    (total, item) => total + item.produto.preco * item.quantidade,
+    0
+  );
+
+  const distancia = calcularDistancia(usuario?.endereco || '');
+  const taxaEntrega = calcularTaxaEntrega(distancia);
+  const total = subtotal + taxaEntrega;
+
+  return { subtotal, taxaEntrega, total, distancia };
 }
