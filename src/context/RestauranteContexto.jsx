@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { produtos as produtosIniciais } from '../models/Dados';
+import * as restauranteService from '../service/RestauranteService';
 
 const RestauranteContext = createContext();
 
@@ -28,6 +29,7 @@ export const RestauranteProvider = ({ children }) => {
     const salvo = localStorage.getItem('config-dicasa');
     return salvo ? JSON.parse(salvo) : configuracoesPadrao;
   });
+  
 
   useEffect(() => {
     localStorage.setItem('produtos-dicasa', JSON.stringify(produtos));
@@ -37,42 +39,68 @@ export const RestauranteProvider = ({ children }) => {
     localStorage.setItem('config-dicasa', JSON.stringify(configuracoes));
   }, [configuracoes]);
 
+  // ✅ PRODUTOS (agora usando service)
+
   const adicionarProduto = (produto) => {
-    setProdutos(prev => [...prev, produto]);
+    setProdutos(prev =>
+      restauranteService.adicionarProduto(prev, produto)
+    );
+  };
+
+  const filtrarProdutos = (categoria) => {
+    return restauranteService.filtrarProdutos(produtos, categoria);
   };
 
   const atualizarProduto = (produto) => {
     setProdutos(prev =>
-      prev.map(p => (p.id === produto.id ? produto : p))
+      restauranteService.atualizarProduto(prev, produto)
     );
   };
 
   const removerProduto = (produtoId) => {
-    setProdutos(prev => prev.filter(p => p.id !== produtoId));
+    setProdutos(prev =>
+      restauranteService.removerProduto(prev, produtoId)
+    );
   };
+
+  // ✅ CONFIG
 
   const atualizarConfiguracoes = (novasConfigs) => {
-    setConfiguracoes(novasConfigs);
+    const atualizado = restauranteService.atualizarConfiguracoes(
+      configuracoes,
+      novasConfigs
+    );
+
+    setConfiguracoes(atualizado);
   };
 
-  const calcularDistancia = (endereco) => {
-    const hash = endereco
-      .toLowerCase()
-      .split('')
-      .reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  // ✅ REGRAS (delegadas ao service)
 
-    const distancia = ((hash % 145) + 5) / 10;
-    return Math.round(distancia * 10) / 10;
+  const calcularDistancia = (endereco) => {
+    return restauranteService.calcularDistancia(endereco);
   };
 
   const calcularTaxaEntrega = (distancia) => {
-    if (distancia <= configuracoes.raioEntregaGratis) {
-      return 0;
-    }
+    return restauranteService.calcularTaxaEntrega(distancia, configuracoes);
+  };
+  const atualizarHorario = (dia, campo, valor) => {
+    const atualizado = restauranteService.atualizarHorario(
+      configuracoes,
+      dia,
+      campo,
+      valor
+    );
 
-    const extra = distancia - configuracoes.raioEntregaGratis;
+    setConfiguracoes(atualizado);
+  };
 
-    return Math.round(extra * configuracoes.taxaPorKm * 100) / 100;
+  const toggleDiaFuncionamento = (dia) => {
+    const atualizado = restauranteService.toggleDiaFuncionamento(
+      configuracoes,
+      dia
+    );
+
+    setConfiguracoes(atualizado);
   };
 
   return (
@@ -85,7 +113,10 @@ export const RestauranteProvider = ({ children }) => {
         removerProduto,
         atualizarConfiguracoes,
         calcularDistancia,
-        calcularTaxaEntrega
+        calcularTaxaEntrega,
+        filtrarProdutos,
+        atualizarHorario,
+        toggleDiaFuncionamento
       }}
     >
       {children}

@@ -6,19 +6,18 @@ import { useUsuario } from '../context/UsuarioContexto';
 import { LINKS } from '../rotas/Links';
 import { formatarMoeda } from '../util/ConversorDeMoeda';
 import { aceitaApenasLetras, formatarTelefone } from '../util/Mascaras';
+import { getRedirectCadastro, getTextoBotao } from '../util/CadastroHelper';
 
 
 export function CadastroPage() {
     const location = useLocation();
     const origem = location.state?.from;
     const navigate = useNavigate();
-    const textoBotao =
-        origem === LINKS.CARRINHO
-            ? 'Continuar para Pagamento'
-            : 'Finalizar Cadastro';
-    const { usuario, salvarUsuario } = useUsuario();
-    const { calcularDistancia, calcularTaxaEntrega, configuracoes } = useRestaurante();
-
+    const textoBotao = getTextoBotao(origem);
+    const redirect = getRedirectCadastro(origem);
+    const { usuario, salvarUsuario, calcularEntregaPreview } = useUsuario();
+    const { configuracoes } = useRestaurante();
+    
     const [formulario, setFormulario] = useState({
         nome: usuario?.nome || '',
         telefone: usuario?.telefone || '',
@@ -26,37 +25,13 @@ export function CadastroPage() {
         isAdmin: false
     });
 
-    const [distancia, setDistancia] = useState(0);
-    const [taxaEntrega, setTaxaEntrega] = useState(0);
-
-    // Calcular distância automaticamente
-    useEffect(() => {
-        if (formulario.endereco.trim().length > 10) {
-            const dist = calcularDistancia(formulario.endereco);
-            setDistancia(dist);
-            setTaxaEntrega(calcularTaxaEntrega(dist));
-        } else {
-            setDistancia(0);
-            setTaxaEntrega(0);
-        }
-    }, [formulario.endereco, calcularDistancia, calcularTaxaEntrega]);
+    const {distancia, taxaEntrega} = calcularEntregaPreview(formulario.endereco);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        salvarUsuario({
-            ...formulario,
-            distancia,
-            logado: true
-        });
-
-        if (origem === LINKS.CARRINHO) {
-            navigate(LINKS.CHECKOUT);
-        } else {
-            navigate(LINKS.HOME);
-        };
+        salvarUsuario(formulario);
+        navigate(redirect);
     };
-
     return (
         <div className="min-h-screen bg-gray-50">
 

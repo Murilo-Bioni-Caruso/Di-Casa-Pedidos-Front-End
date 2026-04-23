@@ -1,52 +1,82 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import * as pedidoService from '../service/PedidoService';
+import { useRestaurante } from './RestauranteContexto';
 
 const PedidoContext = createContext();
 
 export const PedidoProvider = ({ children }) => {
   const [pedidos, setPedidos] = useState(() => {
-    const salvo = localStorage.getItem('pedidos-dicasa');
-    return salvo ? JSON.parse(salvo) : [];
+    return pedidoService.obterPedidos();
   });
 
   useEffect(() => {
     localStorage.setItem('pedidos-dicasa', JSON.stringify(pedidos));
   }, [pedidos]);
-
+  const { calcularTaxaEntrega, calcularDistancia } = useRestaurante();
   const adicionarPedido = (pedido) => {
-    setPedidos(prev => [pedido, ...prev]);
+    setPedidos(prev =>
+      pedidoService.adicionarPedido(prev, pedido)
+    );
+  };
+  const criarPedidoCompleto = ({ usuario, itens, metodoPagamento }) => {
+    const resumo = pedidoService.calcularResumoPedido({
+      itens,
+      usuario,
+      calcularTaxaEntrega,
+      calcularDistancia
+    });
+
+    const pedido = pedidoService.criarPedido({
+      ...resumo,
+      usuario,
+      itens,
+      metodoPagamento
+    });
+
+    setPedidos(prev =>
+      pedidoService.adicionarPedido(prev, pedido)
+    );
+    localStorage.setItem('ultimo-pedido', JSON.stringify(pedido));
+
+    return pedido;
   };
 
   const atualizarStatusPedido = (pedidoId, status) => {
     setPedidos(prev =>
-      prev.map(p =>
-        p.id === pedidoId ? { ...p, status } : p
-      )
+      pedidoService.atualizarStatusPedido(prev, pedidoId, status)
     );
   };
 
   const getPedidosUsuario = (telefone) => {
-    return pedidos.filter(p => p.usuario.telefone === telefone);
+    return pedidoService.getPedidosUsuario(pedidos, telefone);
   };
 
   const getPedidoPorId = (pedidoId) => {
-    return pedidos.find(p => p.id === pedidoId);
+    return pedidoService.getPedidoPorId(pedidos, pedidoId);
   };
 
   const getPedidosHoje = () => {
-    const hoje = new Date();
-    hoje.setHours(0, 0, 0, 0);
-
-    const amanha = new Date(hoje);
-    amanha.setDate(amanha.getDate() + 1);
-
-    return pedidos.filter(p => {
-      const dataPedido = new Date(p.dataHora);
-      return dataPedido >= hoje && dataPedido < amanha;
-    });
+    return pedidoService.getPedidosHoje(pedidos);
   };
 
   const getFaturamentoHoje = () => {
-    return getPedidosHoje().reduce((total, p) => total + p.total, 0);
+    return pedidoService.getFaturamentoHoje(pedidos);
+  };
+
+  const filtrarPedidos = (status) => {
+    return pedidoService.filtrarPedidos(pedidos, status);
+  };
+
+  const contarPedidosPorStatus = (status) => {
+    return pedidoService.contarPedidosPorStatus(pedidos, status);
+  };
+  const getResumoPedido = (itens, usuario) => {
+    return pedidoService.calcularResumoPedido({
+      itens,
+      usuario,
+      calcularTaxaEntrega,
+      calcularDistancia
+    });
   };
 
   return (
@@ -55,10 +85,14 @@ export const PedidoProvider = ({ children }) => {
         pedidos,
         adicionarPedido,
         atualizarStatusPedido,
+        criarPedidoCompleto,
+        getResumoPedido,
         getPedidosUsuario,
         getPedidoPorId,
         getPedidosHoje,
-        getFaturamentoHoje
+        getFaturamentoHoje,
+        filtrarPedidos,
+        contarPedidosPorStatus
       }}
     >
       {children}
@@ -75,3 +109,4 @@ export const usePedido = () => {
 
   return context;
 };
+

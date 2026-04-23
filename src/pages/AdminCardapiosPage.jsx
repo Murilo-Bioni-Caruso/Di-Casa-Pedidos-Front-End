@@ -3,18 +3,23 @@ import { useState } from 'react';
 import { LayoutAdmin } from '../components/LayoutAdmin';
 import { useRestaurante } from '../context/RestauranteContexto';
 import { formatarMoeda } from '../util/ConversorDeMoeda';
+import { categoriasEmojis } from '../util/CategoriasEmojis';
 
 export const AdminCardapiosPage = () => {
     const {
         produtos,
         adicionarProduto,
         atualizarProduto,
-        removerProduto
+        removerProduto,
+        filtrarProdutos
     } = useRestaurante();
 
     const [showModal, setShowModal] = useState(false);
-    const [editingProduct, setEditingProduct] = useState(null);
-    const [filterCategory, setFilterCategory] = useState('all');
+    const [produtoEditado, setProdutoEditado] = useState(null);
+    const [categoriaFiltrada, setFiltrarCategoria] = useState('all');
+    const categoria = categoriasEmojis.find(
+        (c) => c.id === produtos.categoria
+    );
 
     const [formData, setFormData] = useState({
         nome: '',
@@ -32,12 +37,12 @@ export const AdminCardapiosPage = () => {
             categoria: 'marmitas',
             imagem: ''
         });
-        setEditingProduct(null);
+        setProdutoEditado(null);
     };
 
     const handleOpenModal = (produto) => {
         if (produto) {
-            setEditingProduct(produto);
+            setProdutoEditado(produto);
             setFormData({
                 nome: produto.nome,
                 descricao: produto.descricao,
@@ -60,21 +65,13 @@ export const AdminCardapiosPage = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const produtoData = {
-            id: editingProduct?.id || `produto-${Date.now()}`,
-            nome: formData.nome,
-            descricao: formData.descricao,
-            preco: parseFloat(formData.preco),
-            categoria: formData.categoria,
-            imagem:
-                formData.imagem ||
-                'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400'
-        };
-
-        if (editingProduct) {
-            atualizarProduto(produtoData);
+        if (produtoEditado) {
+            atualizarProduto({
+                ...formData,
+                id: produtoEditado.id
+            });
         } else {
-            adicionarProduto(produtoData);
+            adicionarProduto(formData);
         }
 
         handleCloseModal();
@@ -86,24 +83,11 @@ export const AdminCardapiosPage = () => {
         }
     };
 
-    const produtosFiltrados =
-        filterCategory === 'all'
-            ? produtos
-            : produtos.filter((p) => p.categoria === filterCategory);
-
-    const categoriaLabels = {
-        all: 'Todos',
-        marmitas: 'Marmitas',
-        assados: 'Assados',
-        bebidas: 'Bebidas',
-        sobremesas: 'Sobremesas'
-    };
+    const produtosFiltrados = filtrarProdutos(categoriaFiltrada);
 
     return (
         <LayoutAdmin>
             <div className="space-y-6">
-
-                {/* Header */}
                 <div className="flex items-center justify-between">
                     <h2 className="text-gray-900">Gerenciar Cardápio</h2>
 
@@ -118,16 +102,16 @@ export const AdminCardapiosPage = () => {
 
                 {/* Filtro */}
                 <div className="flex gap-2 overflow-x-auto pb-2">
-                    {['all', 'marmitas', 'assados', 'bebidas', 'sobremesas'].map((cat) => (
+                    {categoriasEmojis.map((cat) => (
                         <button
-                            key={cat}
-                            onClick={() => setFilterCategory(cat)}
-                            className={`px-4 py-2 rounded-lg whitespace-nowrap ${filterCategory === cat
-                                    ? 'bg-[#FF6B35] text-white'
-                                    : 'bg-white text-gray-700 hover:bg-gray-100'
+                            key={cat.id}
+                            onClick={() => setFiltrarCategoria(cat.id)}
+                            className={`px-4 py-2 rounded-lg whitespace-nowrap ${categoriaFiltrada === cat.id
+                                ? 'bg-[#FF6B35] text-white'
+                                : 'bg-white text-gray-700 hover:bg-gray-100'
                                 }`}
                         >
-                            {categoriaLabels[cat]}
+                            {cat.emoji} {cat.label}
                         </button>
                     ))}
                 </div>
@@ -169,7 +153,7 @@ export const AdminCardapiosPage = () => {
                                 </div>
 
                                 <span className="inline-block mt-2 px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded">
-                                    {categoriaLabels[produto.categoria]}
+                                    {categoria?.emoji} {categoria?.label}
                                 </span>
                             </div>
                         </div>
@@ -194,7 +178,7 @@ export const AdminCardapiosPage = () => {
                         {/* header */}
                         <div className="flex justify-between p-4 border-b">
                             <h2>
-                                {editingProduct ? 'Editar Produto' : 'Novo Produto'}
+                                {produtoEditado ? 'Editar Produto' : 'Novo Produto'}
                             </h2>
 
                             <button onClick={handleCloseModal}>
