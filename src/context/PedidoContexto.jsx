@@ -4,10 +4,9 @@ import * as pedidoService from '../service/PedidoService';
 const PedidoContext = createContext();
 
 export const PedidoProvider = ({ children }) => {
-  const [pedidos, setPedidos] = useState(() => {
-    const salvo = localStorage.getItem('pedidos-dicasa');
-    return salvo ? JSON.parse(salvo) : [];
-  });
+const [pedidos, setPedidos] = useState(() => {
+  return pedidoService.obterPedidos();
+});
 
   useEffect(() => {
     localStorage.setItem('pedidos-dicasa', JSON.stringify(pedidos));
@@ -41,6 +40,14 @@ export const PedidoProvider = ({ children }) => {
     return pedidoService.getFaturamentoHoje(pedidos);
   };
 
+  const filtrarPedidos = (status) => {
+    return pedidoService.filtrarPedidos(pedidos, status);
+  };
+
+  const contarPedidosPorStatus = (status) => {
+    return pedidoService.contarPedidosPorStatus(pedidos, status);
+  };
+
   return (
     <PedidoContext.Provider
       value={{
@@ -50,7 +57,9 @@ export const PedidoProvider = ({ children }) => {
         getPedidosUsuario,
         getPedidoPorId,
         getPedidosHoje,
-        getFaturamentoHoje
+        getFaturamentoHoje,
+        filtrarPedidos,
+        contarPedidosPorStatus
       }}
     >
       {children}

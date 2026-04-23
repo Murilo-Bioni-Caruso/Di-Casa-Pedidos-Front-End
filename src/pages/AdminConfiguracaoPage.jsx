@@ -5,45 +5,13 @@ import { Save } from 'lucide-react';
 import { diasSemana } from '../models/Constantes';
 
 export const AdminConfiguracoesPage = () => {
-  const { configuracoes, atualizarConfiguracoes } = useRestaurante();
-
-  const [formData, setFormData] = useState(configuracoes);
+  const { configuracoes, atualizarConfiguracoes, atualizarHorario, toggleDiaFuncionamento } = useRestaurante();
   const [salvo, setSalvo] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    atualizarConfiguracoes(formData);
     setSalvo(true);
-
     setTimeout(() => setSalvo(false), 3000);
-  };
-
-  const handleHorarioChange = (dia, campo, valor) => {
-    setFormData({
-      ...formData,
-      horarioFuncionamento: {
-        ...formData.horarioFuncionamento,
-        [dia]: {
-          ...formData.horarioFuncionamento[dia],
-          [campo]: valor
-        }
-      }
-    });
-  };
-
-  const toggleFechado = (dia) => {
-    const atual = formData.horarioFuncionamento[dia];
-
-    setFormData({
-      ...formData,
-      horarioFuncionamento: {
-        ...formData.horarioFuncionamento,
-        [dia]: atual
-          ? null
-          : { open: '09:00', close: '18:00' }
-      }
-    });
   };
 
   return (
@@ -66,36 +34,35 @@ export const AdminConfiguracoesPage = () => {
           {/* INFO RESTAURANTE */}
           <div className="bg-white rounded-xl shadow-lg p-6 space-y-4">
             <h3 className="border-b pb-3">Informações</h3>
-
             <input
               placeholder="Nome"
-              value={formData.nome}
+              value={configuracoes.nome}
               onChange={(e) =>
-                setFormData({ ...formData, nome: e.target.value })
+                atualizarConfiguracoes({ nome: e.target.value })
               }
             />
 
             <input
               placeholder="Endereço"
-              value={formData.endereco}
+              value={configuracoes.endereco}
               onChange={(e) =>
-                setFormData({ ...formData, endereco: e.target.value })
+                atualizarConfiguracoes({ endereco: e.target.value })
               }
             />
 
             <input
               placeholder="Telefone"
-              value={formData.telefone}
+              value={configuracoes.telefone}
               onChange={(e) =>
-                setFormData({ ...formData, telefone: e.target.value })
+                atualizarConfiguracoes({ telefone: e.target.value })
               }
             />
 
             <input
               placeholder="Email"
-              value={formData.email}
+              value={configuracoes.email}
               onChange={(e) =>
-                setFormData({ ...formData, email: e.target.value })
+                atualizarConfiguracoes({ email: e.target.value })
               }
             />
           </div>
@@ -105,7 +72,7 @@ export const AdminConfiguracoesPage = () => {
             <h3 className="border-b pb-3">Horário de Funcionamento</h3>
 
             {diasSemana.map((dia) => {
-              const horario = formData.horarioFuncionamento[dia.key];
+              const horario = configuracoes.horarioFuncionamento[dia.key];
               const fechado = !horario;
 
               return (
@@ -115,7 +82,7 @@ export const AdminConfiguracoesPage = () => {
 
                   <button
                     type="button"
-                    onClick={() => toggleFechado(dia.key)}
+                    onClick={() => toggleDiaFuncionamento(dia.key)}
                     className="text-sm text-blue-600"
                   >
                     {fechado ? 'Abrir' : 'Fechar'}
@@ -127,7 +94,7 @@ export const AdminConfiguracoesPage = () => {
                         type="time"
                         value={horario.open}
                         onChange={(e) =>
-                          handleHorarioChange(dia.key, 'open', e.target.value)
+                          atualizarHorario(dia.key, 'open', e.target.value)
                         }
                       />
 
@@ -137,7 +104,7 @@ export const AdminConfiguracoesPage = () => {
                         type="time"
                         value={horario.close}
                         onChange={(e) =>
-                          handleHorarioChange(dia.key, 'close', e.target.value)
+                          atualizarHorario(dia.key, 'close', e.target.value)
                         }
                       />
                     </>
@@ -155,11 +122,9 @@ export const AdminConfiguracoesPage = () => {
 
             <input
               type="number"
-              placeholder="Raio grátis (km)"
-              value={formData.raioEntregaGratis}
+              value={configuracoes.raioEntregaGratis}
               onChange={(e) =>
-                setFormData({
-                  ...formData,
+                atualizarConfiguracoes({
                   raioEntregaGratis: parseFloat(e.target.value) || 0
                 })
               }
@@ -167,11 +132,9 @@ export const AdminConfiguracoesPage = () => {
 
             <input
               type="number"
-              placeholder="Taxa por km"
-              value={formData.taxaPorKm}
+              value={configuracoes.taxaPorKm}
               onChange={(e) =>
-                setFormData({
-                  ...formData,
+                atualizarConfiguracoes({
                   taxaPorKm: parseFloat(e.target.value) || 0
                 })
               }

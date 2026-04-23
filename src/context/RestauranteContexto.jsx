@@ -46,6 +46,10 @@ export const RestauranteProvider = ({ children }) => {
     );
   };
 
+  const filtrarProdutos = (categoria) => {
+    return restauranteService.filtrarProdutos(produtos, categoria);
+  };
+
   const atualizarProduto = (produto) => {
     setProdutos(prev =>
       restauranteService.atualizarProduto(prev, produto)
@@ -61,7 +65,12 @@ export const RestauranteProvider = ({ children }) => {
   // ✅ CONFIG
 
   const atualizarConfiguracoes = (novasConfigs) => {
-    setConfiguracoes(novasConfigs);
+    const atualizado = restauranteService.atualizarConfiguracoes(
+      configuracoes,
+      novasConfigs
+    );
+
+    setConfiguracoes(atualizado);
   };
 
   // ✅ REGRAS (delegadas ao service)
@@ -72,6 +81,25 @@ export const RestauranteProvider = ({ children }) => {
 
   const calcularTaxaEntrega = (distancia) => {
     return restauranteService.calcularTaxaEntrega(distancia, configuracoes);
+  };
+  const atualizarHorario = (dia, campo, valor) => {
+    const atualizado = restauranteService.atualizarHorario(
+      configuracoes,
+      dia,
+      campo,
+      valor
+    );
+
+    setConfiguracoes(atualizado);
+  };
+
+  const toggleDiaFuncionamento = (dia) => {
+    const atualizado = restauranteService.toggleDiaFuncionamento(
+      configuracoes,
+      dia
+    );
+
+    setConfiguracoes(atualizado);
   };
 
   return (
@@ -84,7 +112,10 @@ export const RestauranteProvider = ({ children }) => {
         removerProduto,
         atualizarConfiguracoes,
         calcularDistancia,
-        calcularTaxaEntrega
+        calcularTaxaEntrega,
+        filtrarProdutos,
+        atualizarHorario,
+        toggleDiaFuncionamento
       }}
     >
       {children}
