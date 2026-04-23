@@ -16,8 +16,8 @@ export function CadastroPage() {
         origem === LINKS.CARRINHO
             ? 'Continuar para Pagamento'
             : 'Finalizar Cadastro';
-    const { usuario, salvarUsuario } = useUsuario();
-    const { calcularDistancia, calcularTaxaEntrega, configuracoes } = useRestaurante();
+    const { usuario, salvarUsuario, calcularEntregaPreview } = useUsuario();
+    const { configuracoes } = useRestaurante();
 
     const [formulario, setFormulario] = useState({
         nome: usuario?.nome || '',
@@ -29,34 +29,21 @@ export function CadastroPage() {
     const [distancia, setDistancia] = useState(0);
     const [taxaEntrega, setTaxaEntrega] = useState(0);
 
-    // Calcular distância automaticamente
+    
     useEffect(() => {
-        if (formulario.endereco.trim().length > 10) {
-            const dist = calcularDistancia(formulario.endereco);
-            setDistancia(dist);
-            setTaxaEntrega(calcularTaxaEntrega(dist));
-        } else {
-            setDistancia(0);
-            setTaxaEntrega(0);
-        }
-    }, [formulario.endereco, calcularDistancia, calcularTaxaEntrega]);
+        const preview = calcularEntregaPreview(formulario.endereco);
+
+        setDistancia(preview.distancia);
+        setTaxaEntrega(preview.taxaEntrega);
+    }, [formulario.endereco]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        salvarUsuario({
-            ...formulario,
-            distancia,
-            logado: true
-        });
+        salvarUsuario(formulario);
 
-        if (origem === LINKS.CARRINHO) {
-            navigate(LINKS.CHECKOUT);
-        } else {
-            navigate(LINKS.HOME);
-        };
+        navigate(origem === LINKS.CARRINHO ? LINKS.CHECKOUT : LINKS.HOME);
     };
-
     return (
         <div className="min-h-screen bg-gray-50">
 

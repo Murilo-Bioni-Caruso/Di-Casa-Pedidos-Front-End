@@ -1,24 +1,14 @@
 import { Link, useLocation } from 'react-router-dom';
 import {
   Home,
-  LayoutDashboard,
-  UtensilsCrossed,
-  Package,
-  Settings as ConfiguracoesIcon
 } from 'lucide-react';
 import { LINKS } from '../rotas/Links';
 import { useRestaurante } from '../context/RestauranteContexto';
+import { layoutNavegacaoAdmin } from '../util/LayoutNavegacaoAdmin';
 
 export function LayoutAdmin({ children }) {
   const { configuracoes } = useRestaurante();
   const location = useLocation();
-
-  const itensNavegacao = [
-    { caminho: LINKS.ADMIN, label: 'Dashboard', icone: LayoutDashboard },
-    { caminho: LINKS.ADMIN_PRODUTOS, label: 'Cardápio', icone: UtensilsCrossed },
-    { caminho: LINKS.ADMIN_PEDIDOS, label: 'Pedidos', icone: Package },
-    { caminho: LINKS.ADMIN_CONFIGURACOES, label: 'Configurações', icone: ConfiguracoesIcon }
-  ];
 
   const estaAtivo = (caminho) => {
     if (caminho === LINKS.ADMIN) {
@@ -52,7 +42,7 @@ export function LayoutAdmin({ children }) {
       <div className="container mx-auto px-4 py-6">
         {/* Navegação */}
         <nav className="mb-6 flex gap-2 overflow-x-auto pb-2">
-          {itensNavegacao.map((item) => {
+          {layoutNavegacaoAdmin.map((item) => {
             const Icone = item.icone;
             const ativo = estaAtivo(item.caminho);
 

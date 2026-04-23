@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import * as carrinhoService from '../service/CarrinhoService';
 
 const CarrinhoContext = createContext();
 
@@ -13,37 +14,16 @@ export const CarrinhoProvider = ({ children }) => {
   }, [itens]);
 
   const adicionarItem = (produto) => {
-    setItens(prev => {
-      const existente = prev.find(item => item.produto.id === produto.id);
-
-      if (existente) {
-        return prev.map(item =>
-          item.produto.id === produto.id
-            ? { ...item, quantidade: item.quantidade + 1 }
-            : item
-        );
-      }
-
-      return [...prev, { produto, quantidade: 1 }];
-    });
+    setItens(prev => carrinhoService.adicionarItem(prev, produto));
   };
 
   const removerItem = (produtoId) => {
-    setItens(prev => prev.filter(item => item.produto.id !== produtoId));
+    setItens(prev => carrinhoService.removerItem(prev, produtoId));
   };
 
   const atualizarQuantidade = (produtoId, quantidade) => {
-    if (quantidade <= 0) {
-      removerItem(produtoId);
-      return;
-    }
-
     setItens(prev =>
-      prev.map(item =>
-        item.produto.id === produtoId
-          ? { ...item, quantidade }
-          : item
-      )
+      carrinhoService.atualizarQuantidade(prev, produtoId, quantidade)
     );
   };
 
@@ -53,14 +33,11 @@ export const CarrinhoProvider = ({ children }) => {
   };
 
   const getTotalItens = () => {
-    return itens.reduce((total, item) => total + item.quantidade, 0);
+    return carrinhoService.getTotalItens(itens);
   };
 
   const getSubtotal = () => {
-    return itens.reduce(
-      (total, item) => total + item.produto.preco * item.quantidade,
-      0
-    );
+    return carrinhoService.getSubtotal(itens);
   };
 
   return (

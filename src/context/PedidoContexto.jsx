@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import * as pedidoService from '../service/PedidoService';
 
 const PedidoContext = createContext();
 
@@ -13,40 +14,31 @@ export const PedidoProvider = ({ children }) => {
   }, [pedidos]);
 
   const adicionarPedido = (pedido) => {
-    setPedidos(prev => [pedido, ...prev]);
+    setPedidos(prev =>
+      pedidoService.adicionarPedido(prev, pedido)
+    );
   };
 
   const atualizarStatusPedido = (pedidoId, status) => {
     setPedidos(prev =>
-      prev.map(p =>
-        p.id === pedidoId ? { ...p, status } : p
-      )
+      pedidoService.atualizarStatusPedido(prev, pedidoId, status)
     );
   };
 
   const getPedidosUsuario = (telefone) => {
-    return pedidos.filter(p => p.usuario.telefone === telefone);
+    return pedidoService.getPedidosUsuario(pedidos, telefone);
   };
 
   const getPedidoPorId = (pedidoId) => {
-    return pedidos.find(p => p.id === pedidoId);
+    return pedidoService.getPedidoPorId(pedidos, pedidoId);
   };
 
   const getPedidosHoje = () => {
-    const hoje = new Date();
-    hoje.setHours(0, 0, 0, 0);
-
-    const amanha = new Date(hoje);
-    amanha.setDate(amanha.getDate() + 1);
-
-    return pedidos.filter(p => {
-      const dataPedido = new Date(p.dataHora);
-      return dataPedido >= hoje && dataPedido < amanha;
-    });
+    return pedidoService.getPedidosHoje(pedidos);
   };
 
   const getFaturamentoHoje = () => {
-    return getPedidosHoje().reduce((total, p) => total + p.total, 0);
+    return pedidoService.getFaturamentoHoje(pedidos);
   };
 
   return (

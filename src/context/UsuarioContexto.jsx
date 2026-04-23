@@ -1,28 +1,39 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState } from 'react';
+import { UsuarioService } from '../service/UsuarioService';
+import { useRestaurante } from './RestauranteContexto';
 
 const UsuarioContext = createContext();
 
 export const UsuarioProvider = ({ children }) => {
-  const [usuario, setUsuario] = useState(() => {
-    const salvo = localStorage.getItem('usuario-dicasa');
-    return salvo ? JSON.parse(salvo) : null;
-  });
+  const [usuario, setUsuario] = useState(
+    UsuarioService.obterUsuario()
+  );
 
-  useEffect(() => {
-    if (usuario) {
-      localStorage.setItem('usuario-dicasa', JSON.stringify(usuario));
-    } else {
-      localStorage.removeItem('usuario-dicasa');
-    }
-  }, [usuario]);
+  const { calcularDistancia, calcularTaxaEntrega } = useRestaurante();
 
   const salvarUsuario = (dadosUsuario) => {
-    setUsuario(dadosUsuario);
+    const usuarioCriado = UsuarioService.criarUsuario(
+      dadosUsuario,
+      calcularDistancia,
+      calcularTaxaEntrega
+    );
+
+    const usuarioSalvo = UsuarioService.salvarUsuario(usuarioCriado);
+
+    setUsuario(usuarioSalvo);
   };
 
   const limparUsuario = () => {
+    UsuarioService.limparUsuario();
     setUsuario(null);
-    localStorage.removeItem('usuario-dicasa');
+  };
+
+  const calcularEntregaPreview = (endereco) => {
+    return UsuarioService.criarUsuario(
+      { endereco },
+      calcularDistancia,
+      calcularTaxaEntrega
+    );
   };
 
   return (
@@ -30,7 +41,8 @@ export const UsuarioProvider = ({ children }) => {
       value={{
         usuario,
         salvarUsuario,
-        limparUsuario
+        limparUsuario,
+        calcularEntregaPreview
       }}
     >
       {children}
