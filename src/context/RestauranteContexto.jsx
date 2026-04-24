@@ -50,6 +50,9 @@ export const RestauranteProvider = ({ children }) => {
   const filtrarProdutos = (categoria) => {
     return restauranteService.filtrarProdutos(produtos, categoria);
   };
+  const getPratoDoDia = () => {
+  return restauranteService.getPratoDoDia(produtos);
+};
 
   const atualizarProduto = (produto) => {
     setProdutos(prev =>
@@ -116,7 +119,8 @@ export const RestauranteProvider = ({ children }) => {
         calcularTaxaEntrega,
         filtrarProdutos,
         atualizarHorario,
-        toggleDiaFuncionamento
+        toggleDiaFuncionamento,
+        getPratoDoDia
       }}
     >
       {children}

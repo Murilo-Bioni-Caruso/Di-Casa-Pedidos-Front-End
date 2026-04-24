@@ -4,6 +4,12 @@ import { LayoutAdmin } from '../components/LayoutAdmin';
 import { useRestaurante } from '../context/RestauranteContexto';
 import { formatarMoeda } from '../util/ConversorDeMoeda';
 import { categoriasEmojis } from '../util/CategoriasEmojis';
+import { Categoria } from '../models/Constantes';
+import { Input } from '../components/Input';
+import { TextArea } from '../components/TextArea';
+import { Select } from '../components/Select';
+import { aceitaApenasLetras, formatarMoedaInput } from '../util/Mascaras';
+import { InputMoeda } from '../components/InputMoeda';
 
 export const AdminCardapiosPage = () => {
     const {
@@ -17,14 +23,10 @@ export const AdminCardapiosPage = () => {
     const [showModal, setShowModal] = useState(false);
     const [produtoEditado, setProdutoEditado] = useState(null);
     const [categoriaFiltrada, setFiltrarCategoria] = useState('all');
-    const categoria = categoriasEmojis.find(
-        (c) => c.id === produtos.categoria
-    );
-
     const [formData, setFormData] = useState({
         nome: '',
         descricao: '',
-        preco: '',
+        preco: 0,
         categoria: 'marmitas',
         imagem: ''
     });
@@ -33,7 +35,7 @@ export const AdminCardapiosPage = () => {
         setFormData({
             nome: '',
             descricao: '',
-            preco: '',
+            preco: 0,
             categoria: 'marmitas',
             imagem: ''
         });
@@ -118,7 +120,11 @@ export const AdminCardapiosPage = () => {
 
                 {/* Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {produtosFiltrados.map((produto) => (
+                    {produtosFiltrados.map((produto) => {
+                        const categoria = categoriasEmojis.find(
+        (c) => c.id === produto.categoria
+    );
+                        return (
                         <div key={produto.id} className="bg-white rounded-xl shadow-lg overflow-hidden">
                             <img
                                 src={produto.imagem}
@@ -157,7 +163,7 @@ export const AdminCardapiosPage = () => {
                                 </span>
                             </div>
                         </div>
-                    ))}
+                    )})}
                 </div>
 
                 {/* vazio */}
@@ -188,55 +194,48 @@ export const AdminCardapiosPage = () => {
 
                         {/* form */}
                         <form onSubmit={handleSubmit} className="p-6 space-y-4">
-
-                            <input
+                            <Input
                                 placeholder="Nome"
                                 value={formData.nome}
                                 onChange={(e) =>
                                     setFormData({ ...formData, nome: e.target.value })
                                 }
-                                className="w-full border p-2 rounded"
+                                mask={aceitaApenasLetras}
                             />
-
-                            <textarea
+                            <TextArea
                                 placeholder="Descrição"
                                 value={formData.descricao}
                                 onChange={(e) =>
                                     setFormData({ ...formData, descricao: e.target.value })
                                 }
-                                className="w-full border p-2 rounded"
                             />
-
-                            <input
-                                type="number"
-                                placeholder="Preço"
+                            <InputMoeda
                                 value={formData.preco}
-                                onChange={(e) =>
-                                    setFormData({ ...formData, preco: e.target.value })
+                                onChange={(numero) =>
+                                    setFormData({
+                                        ...formData,
+                                        preco: numero
+                                    })
                                 }
-                                className="w-full border p-2 rounded"
                             />
-
-                            <select
+                            <Select
                                 value={formData.categoria}
                                 onChange={(e) =>
                                     setFormData({ ...formData, categoria: e.target.value })
                                 }
-                                className="w-full border p-2 rounded"
-                            >
-                                <option value="marmitas">Marmitas</option>
-                                <option value="assados">Assados</option>
-                                <option value="bebidas">Bebidas</option>
-                                <option value="sobremesas">Sobremesas</option>
-                            </select>
-
-                            <input
+                                options={[
+                                    { value: Categoria.MARMITAS, label: 'Marmitas' },
+                                    { value: Categoria.ASSADOS, label: 'Assados' },
+                                    { value: Categoria.BEBIDAS, label: 'Bebidas' },
+                                    { value: Categoria.SOBREMESAS, label: 'Sobremesas' }
+                                ]}
+                            />
+                            <Input
                                 placeholder="Imagem URL"
                                 value={formData.imagem}
                                 onChange={(e) =>
                                     setFormData({ ...formData, imagem: e.target.value })
                                 }
-                                className="w-full border p-2 rounded"
                             />
 
                             <div className="flex gap-3">

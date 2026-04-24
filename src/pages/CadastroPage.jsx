@@ -7,6 +7,7 @@ import { LINKS } from '../rotas/Links';
 import { formatarMoeda } from '../util/ConversorDeMoeda';
 import { aceitaApenasLetras, formatarTelefone } from '../util/Mascaras';
 import { getRedirectCadastro, getTextoBotao } from '../util/CadastroHelper';
+import { Input } from '../components/Input';
 
 
 export function CadastroPage() {
@@ -17,7 +18,7 @@ export function CadastroPage() {
     const redirect = getRedirectCadastro(origem);
     const { usuario, salvarUsuario, calcularEntregaPreview } = useUsuario();
     const { configuracoes } = useRestaurante();
-    
+
     const [formulario, setFormulario] = useState({
         nome: usuario?.nome || '',
         telefone: usuario?.telefone || '',
@@ -25,7 +26,7 @@ export function CadastroPage() {
         isAdmin: false
     });
 
-    const {distancia, taxaEntrega} = calcularEntregaPreview(formulario.endereco);
+    const { distancia, taxaEntrega } = calcularEntregaPreview(formulario.endereco);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -78,18 +79,21 @@ export function CadastroPage() {
                             Telefone
                         </label>
 
-                        <input
-                            type="text"
-                            value={formulario.telefone}
-                            onChange={(e) => {
-                                const telefoneFormatado = formatarTelefone(e.target.value);
-                                setFormulario({ ...formulario, telefone: telefoneFormatado })
-                            }
-                            }
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FF6B35] outline-none"
-                            placeholder="Digite seu telefone"
-                            required
-                        />
+                        <div>
+                            <label className="flex items-center gap-2 text-gray-700 mb-2">
+                                <Phone className="w-5 h-5" />
+                                Telefone
+                            </label>
+                            <Input
+                                placeholder="Digite seu nome"
+                                value={formulario.nome}
+                                onChange={(valor) =>
+                                    setFormulario({ ...formulario, nome: valor })
+                                }
+                                mask={aceitaApenasLetras}
+                                required
+                            />
+                        </div>
                     </div>
 
                     {/* Endereço */}
@@ -98,17 +102,13 @@ export function CadastroPage() {
                             <MapPin className="w-5 h-5" />
                             Endereço de Entrega
                         </label>
-
-                        <input
-                            type="text"
-                            value={formulario.endereco}
-                            onChange={(e) =>
-                                setFormulario({ ...formulario, endereco: e.target.value })
-                            }
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FF6B35] outline-none"
+                        <Input
                             placeholder="Rua, número, bairro"
+                            value={formulario.endereco}
+                            onChange={(valor) =>
+                                setFormulario({ ...formulario, endereco: valor })
+                            }
                             required
-                            minLength={10}
                         />
 
                         {/* Info entrega */}

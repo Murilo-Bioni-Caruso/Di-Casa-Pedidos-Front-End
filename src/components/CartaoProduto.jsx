@@ -4,10 +4,9 @@ import { FotoProduto } from './ProdutoFoto';
 import { formatarMoeda } from '../util/ConversorDeMoeda';
 import { diasSemana } from '../models/Constantes';
 
-
-
 export function CartaoProduto({ produto }) {
   const { adicionarItem } = useCarrinho();
+  console.log(produto.nome, produto.preco, typeof produto.preco);
 
   const adicionarAoCarrinho = () => {
     adicionarItem(produto);

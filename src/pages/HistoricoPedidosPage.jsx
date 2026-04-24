@@ -2,12 +2,13 @@ import { ArrowLeft, Package } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { usePedido } from '../context/PedidoContexto';
 import { useUsuario } from '../context/UsuarioContexto';
-import { OrderStatus } from '../models/Constantes';
+import { OrderStatus, pagamentoConfig } from '../models/Constantes';
 import { LINKS } from '../rotas/Links';
 import { formatarMoeda } from '../util/ConversorDeMoeda';
 import { formatarDataHora } from '../util/DataEHora';
 import { statusConfig } from '../util/StatusConfig';
 import { UsuarioNaoLogado } from '../components/UsuarioNaoLogado';
+import { StatusBadge } from '../components/StatusBadge';
 
 export function HistoricoPedidosPage() {
   const { usuario } = useUsuario();
@@ -62,7 +63,6 @@ export function HistoricoPedidosPage() {
           <div className="space-y-4">
             {pedidos.map(pedido => {
               const status = statusConfig[pedido.status] || statusConfig[OrderStatus.PENDENTE];
-              const IconeStatus = status.icon;
               const dataPedido = new Date(pedido.timestamp || pedido.data);
 
               return (
@@ -79,13 +79,7 @@ export function HistoricoPedidosPage() {
                         {formatarDataHora(dataPedido)}
                       </p>
                     </div>
-
-                    <div className={`flex items-center gap-2 px-3 py-1 rounded-full ${status.color}`}>
-                      <IconeStatus className="w-4 h-4" />
-                      <span className="text-sm font-medium">
-                        {status.label}
-                      </span>
-                    </div>
+                    <StatusBadge status={pedido.status || OrderStatus.PENDENTE} />
                   </div>
 
                   {/* Itens */}
@@ -111,11 +105,7 @@ export function HistoricoPedidosPage() {
                       </p>
 
                       <p>
-                        {pedido.paymentMethod === 'pix'
-                          ? 'PIX'
-                          : pedido.paymentMethod === 'credit'
-                          ? 'Cartão de Crédito'
-                          : 'Dinheiro'}
+                        {pagamentoConfig[pedido.metodoPagamento] || 'Desconhecido'}
                       </p>
                     </div>
 
