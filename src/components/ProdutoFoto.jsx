@@ -1,31 +1,24 @@
-import { useState } from 'react';
+import { useState } from "react";
+import { IMAGEM_ERRO } from "../assets/ImagemErro";
 
-const IMAGEM_ERRO =
-  'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODgiIGhlaWdodD0iODgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgc3Ryb2tlPSIjMDAwIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBvcGFjaXR5PSIuMyIgZmlsbD0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIzLjciPjxyZWN0IHg9IjE2IiB5PSIxNiIgd2lkdGg9IjU2IiBoZWlnaHQ9IjU2IiByeD0iNiIvPjxwYXRoIGQ9Im0xNiA1OCAxNi0xOCAzMiAzMiIvPjxjaXJjbGUgY3g9IjUzIiBjeT0iMzUiIHI9IjciLz48L3N2Zz4=';
-
-export function FotoProduto(props) {
+export function FotoProduto({ src, alt, className, style, ...resto }) {
   const [erro, setErro] = useState(false);
 
-  const aoDarErro = () => {
-    setErro(true);
-  };
+  const srcValido = src && src.trim() !== '';
 
-  const { src, alt, style, className, ...resto } = props;
-
-  if (erro) {
+  // 👉 se não tiver src válida, já entra no fallback
+  if (!srcValido || erro) {
     return (
       <div
-        className={`inline-block bg-gray-100 text-center align-middle ${className || ''}`}
+        className={`bg-gray-100 flex items-center justify-center ${className}`}
         style={style}
       >
-        <div className="flex items-center justify-center w-full h-full">
-          <img
-            src={IMAGEM_ERRO}
-            alt="Erro ao carregar imagem"
-            {...resto}
-            data-url-original={src}
-          />
-        </div>
+        <img
+          src={IMAGEM_ERRO}
+          alt="Imagem indisponível"
+          className="w-16 h-16 opacity-50"
+          {...resto}
+        />
       </div>
     );
   }
@@ -34,10 +27,10 @@ export function FotoProduto(props) {
     <img
       src={src}
       alt={alt}
-      className={className}
+      className={`w-full h-full object-cover ${className || ''}`}
       style={style}
+      onError={() => setErro(true)}
       {...resto}
-      onError={aoDarErro}
     />
   );
 }

@@ -1,13 +1,13 @@
 import { ArrowLeft, MapPin, Phone, Truck, User } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Input } from '../components/Input';
 import { useRestaurante } from '../context/RestauranteContexto';
 import { useUsuario } from '../context/UsuarioContexto';
 import { LINKS } from '../rotas/Links';
+import { getRedirectCadastro, getTextoBotao } from '../util/CadastroHelper';
 import { formatarMoeda } from '../util/ConversorDeMoeda';
 import { aceitaApenasLetras, formatarTelefone } from '../util/Mascaras';
-import { getRedirectCadastro, getTextoBotao } from '../util/CadastroHelper';
-import { Input } from '../components/Input';
 
 
 export function CadastroPage() {
@@ -78,22 +78,15 @@ export function CadastroPage() {
                             <Phone className="w-5 h-5" />
                             Telefone
                         </label>
-
-                        <div>
-                            <label className="flex items-center gap-2 text-gray-700 mb-2">
-                                <Phone className="w-5 h-5" />
-                                Telefone
-                            </label>
-                            <Input
-                                placeholder="Digite seu nome"
-                                value={formulario.nome}
-                                onChange={(valor) =>
-                                    setFormulario({ ...formulario, nome: valor })
-                                }
-                                mask={aceitaApenasLetras}
-                                required
-                            />
-                        </div>
+                        <Input
+                            placeholder="Digite seu telefone"
+                            value={formulario.telefone}
+                            onChange={(valor) =>
+                                setFormulario({ ...formulario, telefone: valor })
+                            }
+                            mask={formatarTelefone}
+                            required
+                        />
                     </div>
 
                     {/* Endereço */}
