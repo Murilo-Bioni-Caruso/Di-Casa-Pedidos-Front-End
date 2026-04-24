@@ -17,3 +17,17 @@ export function formatarTelefone(valor) {
 export function aceitaApenasLetras(valor){
     return valor.replace(/[^a-zA-ZÀ-ÿ\s]/g, '');
 }
+export function formatarMoedaInput(valor) {
+  // remove tudo que não é número
+  const numeros = valor.replace(/\D/g, '');
+
+  // evita vazio
+  if (!numeros) return '';
+
+  const numero = Number(numeros) / 100;
+
+  return numero.toLocaleString('pt-BR', {
+    style: 'currency',
+    currency: 'BRL'
+  });
+}

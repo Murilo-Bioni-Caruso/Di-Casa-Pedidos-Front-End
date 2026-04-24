@@ -1,4 +1,5 @@
 import { CheckCircle, Clock, Package, Truck, XCircle } from "lucide-react";
+import { Categoria } from "../models/Constantes";
 
 export const statusConfig = {
   pendente: {
@@ -26,4 +27,12 @@ export const statusConfig = {
     icon: XCircle,
     color: 'text-red-600 bg-red-50'
   }
+};
+
+export const categoriasConfig = {
+  all: 'Todos os Produtos',
+  [Categoria.MARMITAS]: 'Marmitas',
+  [Categoria.ASSADOS]: 'Assados',
+  [Categoria.BEBIDAS]: 'Bebidas',
+  [Categoria.SOBREMESAS]: 'Sobremesas'
 };

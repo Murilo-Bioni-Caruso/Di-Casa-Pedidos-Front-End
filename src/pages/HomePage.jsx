@@ -1,32 +1,19 @@
 import { useState } from 'react';
 import { CartaoProduto } from '../components/CartaoProduto';
 import { NavegacaoCategorias } from '../components/NavegacaoCategoria';
+import { PratoDoDia } from '../components/PratoDoDia';
 import { useRestaurante } from '../context/RestauranteContexto';
-import { Categoria, getDiaAtual } from '../models/Constantes';
-import { formatarMoeda } from '../util/ConversorDeMoeda';
+import { categoriasConfig } from '../util/StatusConfig';
 
 export function HomePage() {
     const [categoriaAtiva, setCategoriaAtiva] = useState('all');
-    const { produtos } = useRestaurante();
+    const { filtrarProdutos,getPratoDoDia } = useRestaurante();
 
     // Filtrar produtos
-    const produtosFiltrados =
-        categoriaAtiva === 'all'
-            ? produtos
-            : produtos.filter(p => p.categoria === categoriaAtiva);
-
-    // Prato do dia
-    const diaAtual = getDiaAtual();
-    const pratoDoDia = produtos.find(p => p.diaDaSemana === diaAtual.key);
-
+    const produtosFiltrados = filtrarProdutos(categoriaAtiva);
+    const pratoDoDia = getPratoDoDia();
     // Nome da categoria
-    const nomeCategoria = () => {
-        if (categoriaAtiva === 'all') return 'Todos os Produtos';
-        if (categoriaAtiva === Categoria.MARMITAS) return 'Marmitas';
-        if (categoriaAtiva === Categoria.ASSADOS) return 'Assados';
-        if (categoriaAtiva === Categoria.BEBIDAS) return 'Bebidas';
-        return 'Sobremesas';
-    };
+    const nomeCategoria = categoriasConfig[categoriaAtiva] || 'Produtos';
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -36,39 +23,13 @@ export function HomePage() {
 
                 {/* Prato do Dia */}
                 {categoriaAtiva === 'all' && pratoDoDia && (
-                    <section className="mb-8">
-                        <div className="bg-linear-to-r from-[#FFD93D] to-[#FFA500] rounded-xl p-6 shadow-lg">
-                            <h2 className="text-gray-900 mb-4">⭐ Prato do Dia</h2>
-
-                            <div className="grid md:grid-cols-[1fr_2fr] gap-4">
-                                <img
-                                    src={pratoDoDia.imagem}
-                                    alt={pratoDoDia.nome}
-                                    className="w-full h-48 object-cover rounded-lg"
-                                />
-
-                                <div className="flex flex-col justify-center">
-                                    <h3 className="text-gray-900 mb-2">
-                                        {pratoDoDia.nome}
-                                    </h3>
-
-                                    <p className="text-gray-700 mb-3">
-                                        {pratoDoDia.descricao}
-                                    </p>
-
-                                    <p className="text-[#FF6B35]">
-                                        R$ {formatarMoeda(pratoDoDia.preco)}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
+                    <PratoDoDia produto={pratoDoDia} />
                 )}
 
                 {/* Título */}
                 <div className="mb-4">
                     <h2 className="text-gray-900">
-                        {nomeCategoria()}
+                        {nomeCategoria}
                     </h2>
 
                     <p className="text-gray-600">

@@ -78,6 +78,21 @@ export const PedidoProvider = ({ children }) => {
       calcularDistancia
     });
   };
+  const getTicketMedio = () => {
+    return pedidoService.calcularTicketMedio(pedidos);
+  };
+
+  const getTotalFaturamento = () => {
+    return pedidoService.getTotalFaturamento(pedidos);
+  };
+
+  const getPedidosAtivos = () => {
+    return pedidoService.getPedidosAtivos(pedidos);
+  };
+
+  const getPedidosRecentes = () => {
+    return pedidoService.getPedidosRecentes(pedidos);
+  };
 
   return (
     <PedidoContext.Provider
@@ -92,7 +107,11 @@ export const PedidoProvider = ({ children }) => {
         getPedidosHoje,
         getFaturamentoHoje,
         filtrarPedidos,
-        contarPedidosPorStatus
+        contarPedidosPorStatus,
+        getTicketMedio,
+        getTotalFaturamento,
+        getPedidosAtivos,
+        getPedidosRecentes,
       }}
     >
       {children}

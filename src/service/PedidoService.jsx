@@ -1,4 +1,4 @@
-import { OrderStatus } from "../models/Constantes";
+import { getDiaAtual, OrderStatus } from "../models/Constantes";
 
 export function adicionarPedido(pedidos, pedido) {
   return [pedido, ...pedidos];
@@ -89,4 +89,24 @@ export function calcularResumoPedido({ itens, usuario, calcularTaxaEntrega, calc
   const total = subtotal + taxaEntrega;
 
   return { subtotal, taxaEntrega, total, distancia };
+}
+export function calcularTicketMedio(pedidos) {
+  if (!pedidos.length) return 0;
+
+  const total = pedidos.reduce((acc, p) => acc + p.total, 0);
+  return total / pedidos.length;
+}
+
+export function getTotalFaturamento(pedidos) {
+  return pedidos.reduce((total, p) => total + p.total, 0);
+}
+
+export function getPedidosAtivos(pedidos) {
+  return pedidos.filter(
+    p => p.status === 'pendente' || p.status === 'preparando'
+  );
+}
+
+export function getPedidosRecentes(pedidos, limite = 10) {
+  return pedidos.slice(0, limite);
 }

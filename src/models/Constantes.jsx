@@ -41,3 +41,8 @@ export const OrderStatus = {
     ENTREGUE: 'entregue',
     CANCELADO: 'cancelado'
 };
+export const pagamentoConfig = {
+  pix: 'PIX',
+  cartao: 'Cartão de Crédito',
+  dinheiro: 'Dinheiro'
+};

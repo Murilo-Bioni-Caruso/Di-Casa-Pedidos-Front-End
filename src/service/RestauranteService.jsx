@@ -1,3 +1,4 @@
+import { getDiaAtual } from "../models/Constantes";
 import { criarProduto } from "../models/Produto";
 
 export function adicionarProduto(produtos, dadosProduto) {
@@ -38,6 +39,12 @@ export function filtrarProdutos(produtos, categoria) {
     if (!categoria || categoria === 'all') return produtos;
 
     return produtos.filter((p) => p.categoria === categoria);
+}
+
+export function getPratoDoDia(produtos) {
+  const diaAtual = getDiaAtual();
+
+  return produtos.find(p => p.diaDaSemana === diaAtual.key);
 }
 
 export function calcularTaxaEntrega(distancia, configuracoes) {
