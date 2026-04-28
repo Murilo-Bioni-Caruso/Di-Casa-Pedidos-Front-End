@@ -20,17 +20,19 @@ export function ItemCarrinho({ item }) {
 
   return (
     <div className="flex gap-4 bg-white p-4 rounded-lg shadow-sm">
-      
+
       {/* Imagem */}
-      <FotoProduto
-        src={item.produto.imagem}
-        alt={item.produto.nome}
-        className="w-24 h-24 object-cover rounded-lg"
-      />
+      <div className="w-20 h-20 shrink-0">
+        <FotoProduto
+          src={item.produto.imagem}
+          alt={item.produto.nome}
+          className="w-full h-full object-cover rounded-lg"
+        />
+      </div>
 
       {/* Conteúdo */}
       <div className="flex-1 flex flex-col justify-between">
-        
+
         {/* Nome + preço */}
         <div>
           <h4 className="text-gray-900 mb-1">
