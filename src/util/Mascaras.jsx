@@ -15,7 +15,10 @@ export function formatarTelefone(valor) {
 }
 
 export function aceitaApenasLetras(valor){
-    return valor.replace(/[^a-zA-ZÀ-ÿ\s]/g, '');
+      return valor
+    .replace(/[^a-zA-ZÀ-ÿ\s'-]/g, '')
+    .replace(/\s+/g, ' ')
+    .trimStart();
 }
 export function formatarMoedaInput(valor) {
   // remove tudo que não é número

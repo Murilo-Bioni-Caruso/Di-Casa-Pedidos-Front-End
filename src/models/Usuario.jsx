@@ -11,13 +11,19 @@ export function criarUsuario({
   telefone,
   endereco,
   distancia = 0,
-  isAdmin = false
+  isAdmin = false,
+  usuario,
+  senha
 }) {
   return {
     nome,
     telefone,
     endereco,
     distancia,
-    isAdmin
+    isAdmin,
+        credenciais: {
+      usuario,
+      senha
+    }
   };
 }
