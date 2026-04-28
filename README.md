@@ -1,16 +1,74 @@
-# React + Vite
+# 🍔 Sistema de Pedidos - DiCasa
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicação web para gerenciamento de pedidos do restaurante Dicasa, com funcionalidades de:
 
-Currently, two official plugins are available:
+* Cardápio de produtos
+* Carrinho de compras
+* Cadastro de usuário
+* Login
+* Checkout com cálculo de entrega
+* Painel administrativo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🚀 Como rodar o projeto
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+npm install
+npm run dev
+```
 
-## Expanding the ESLint configuration
+Depois acesse no navegador:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```
+http://localhost:5173
+```
+
+---
+
+## 👤 Acesso de Usuário
+
+Você pode:
+
+* Criar uma conta normalmente pela tela de cadastro
+* Ou fazer login com um usuário já existente
+
+---
+
+## 🔐 Acesso ao Painel Administrativo
+
+Para acessar o painel de administração, utilize:
+
+```
+Usuário: admin
+Senha: admin
+```
+
+Após o login, você será redirecionado automaticamente para o painel de admin.
+
+---
+
+## ⚙️ Funcionalidades do Admin
+
+* Gerenciar produtos
+* Visualizar pedidos
+* Configurar informações do restaurante
+
+---
+
+## 🛠 Tecnologias
+
+* React
+* React Router
+* Context API
+* Tailwind CSS
+
+---
+
+## 📌 Observações
+
+* Os dados são salvos no **localStorage**
+* Não há backend nesta fase do projeto
+
+---
+

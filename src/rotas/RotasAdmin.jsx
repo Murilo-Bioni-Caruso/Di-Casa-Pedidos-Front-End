@@ -1,8 +1,8 @@
-import { Navigate } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import { useUsuario } from '../context/UsuarioContexto';
 import { LINKS } from '../rotas/Links';
 
-export function RotaAdmin({ children }) {
+export function RotaAdmin() {
   const { usuario } = useUsuario();
 
   // ❌ não logado
@@ -16,5 +16,5 @@ export function RotaAdmin({ children }) {
   }
 
   // ✅ liberado
-  return children;
+  return <Outlet />;
 }

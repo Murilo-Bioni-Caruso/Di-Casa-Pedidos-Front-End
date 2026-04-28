@@ -15,6 +15,8 @@ import { AdminCardapiosPage } from '../pages/AdminCardapiosPage';
 import { AdminConfiguracoesPage } from '../pages/AdminConfiguracaoPage';
 import { RotaAdmin } from './RotasAdmin';
 import { RotaProtegida } from './RotasLogado';
+import { LoginPage } from '../pages/LoginPage';
+import { CadastroCompletoPage } from '../pages/CadastroCompletoPage';
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +35,10 @@ export const router = createBrowserRouter([
       {
         path: LINKS.CADASTRO,
         element: <CadastroPage />
+      },
+      {
+        path: LINKS.CADASTRO_COMPLETO,
+        element: <CadastroCompletoPage />
       },
       {
         element: <RotaProtegida />,
@@ -56,54 +62,58 @@ export const router = createBrowserRouter([
         element: <NaoAutorizadoPage />
       },
       {
+        path: LINKS.LOGIN,
+        element: <LoginPage />
+      },
+      {
         path: '*',
         element: <NaoEncontradoPage />
       }
     ]
   },
   // Vou deixar comentado aqui, mas a rota admin só deve ser acessível para admins, abre para testes
-  {
-    path: LINKS.ADMIN,
-    element: <DashboardAdminPage />
-  },
-  {
-    path: LINKS.ADMIN_PEDIDOS,
-    element: <AdminPedidosPage />
-  },
-  {
-    path: LINKS.ADMIN_PRODUTOS,
-    element: <AdminCardapiosPage />
-  },
-  {
-    path: LINKS.ADMIN_CONFIGURACOES,
-    element: <AdminConfiguracoesPage />
-  },
-
-  // Rota protegida para admins, com layout de admin
   // {
   //   path: LINKS.ADMIN,
-  //   element: (
-  //     <RotaAdmin />
-  //   ),
-  //   children: [
-  //     {
-  //       path: LINKS.ADMIN,
-  //       element: <DashboardAdminPage />
-  //     },
-  //     {
-  //       path: LINKS.ADMIN_PEDIDOS,
-  //       element: <AdminPedidosPage />
-  //     },
-  //     {
-  //       path: LINKS.ADMIN_PRODUTOS,
-  //       element: <AdminCardapiosPage />
-  //     },
-  //     {
-  //       path: LINKS.ADMIN_CONFIGURACOES,
-  //       element: <AdminConfiguracoesPage />
-  //     },
-  //   ]
-  // }
+  //   element: <DashboardAdminPage />
+  // },
+  // {
+  //   path: LINKS.ADMIN_PEDIDOS,
+  //   element: <AdminPedidosPage />
+  // },
+  // {
+  //   path: LINKS.ADMIN_PRODUTOS,
+  //   element: <AdminCardapiosPage />
+  // },
+  // {
+  //   path: LINKS.ADMIN_CONFIGURACOES,
+  //   element: <AdminConfiguracoesPage />
+  // },
+
+  // Rota protegida para admins, com layout de admin
+  {
+    path: LINKS.ADMIN,
+    element: (
+      <RotaAdmin />
+    ),
+    children: [
+      {
+        path: LINKS.ADMIN,
+        element: <DashboardAdminPage />
+      },
+      {
+        path: LINKS.ADMIN_PEDIDOS,
+        element: <AdminPedidosPage />
+      },
+      {
+        path: LINKS.ADMIN_PRODUTOS,
+        element: <AdminCardapiosPage />
+      },
+      {
+        path: LINKS.ADMIN_CONFIGURACOES,
+        element: <AdminConfiguracoesPage />
+      },
+    ]
+  }
 
 
 ]);

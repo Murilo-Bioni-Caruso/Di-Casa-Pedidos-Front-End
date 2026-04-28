@@ -12,7 +12,7 @@ export const UsuarioProvider = ({ children }) => {
   const { calcularDistancia, calcularTaxaEntrega } = useRestaurante();
 
   const salvarUsuario = (dadosUsuario) => {
-    const usuarioCriado = UsuarioService.criarUsuarioSimples(
+    const usuarioCriado = UsuarioService.criarUsuario(
       dadosUsuario,
       calcularDistancia,
       calcularTaxaEntrega
@@ -35,6 +35,16 @@ export const UsuarioProvider = ({ children }) => {
       calcularTaxaEntrega
     );
   };
+  const autenticar = (usuario, senha) => {
+    const user = UsuarioService.autenticarUsuario(usuario, senha);
+    if (user) {
+      setUsuario(user);
+      UsuarioService.salvarUsuario(user);
+      return user;
+    }
+
+    return null;
+  };
 
   return (
     <UsuarioContext.Provider
@@ -42,7 +52,8 @@ export const UsuarioProvider = ({ children }) => {
         usuario,
         salvarUsuario,
         limparUsuario,
-        calcularEntregaPreview
+        calcularEntregaPreview,
+        autenticar
       }}
     >
       {children}

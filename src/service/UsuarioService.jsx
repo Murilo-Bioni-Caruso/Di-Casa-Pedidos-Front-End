@@ -2,6 +2,15 @@ import { gerarSenha, gerarUsername } from "../util/UsuarioHelper";
 
 const STORAGE_KEY = 'usuario-dicasa';
 
+const ADMIN = {
+  nome: 'Administrador',
+  isAdmin: true,
+  credenciais: {
+    usuario: 'admin',
+    senha: 'admin'
+  }
+};
+
 export const UsuarioService = {
   obterUsuario() {
     const salvo = localStorage.getItem(STORAGE_KEY);
@@ -17,15 +26,15 @@ export const UsuarioService = {
     localStorage.removeItem(STORAGE_KEY);
   },
 
-  criarUsuarioSimples(dados, calcularDistancia, calcularTaxaEntrega) {
-      const { distancia, taxaEntrega } = this.calcularEntrega(
-    dados.endereco,
-    calcularDistancia,
-    calcularTaxaEntrega
-  );
+  criarUsuario(dados, calcularDistancia, calcularTaxaEntrega) {
+    const { distancia, taxaEntrega } = this.calcularEntrega(
+      dados.endereco,
+      calcularDistancia,
+      calcularTaxaEntrega
+    );
 
-    const username = gerarUsername(dados.nome);
-    const senha = gerarSenha();
+    const username = dados.credenciais?.usuario || gerarUsername(dados.nome);
+    const senha = dados.credenciais?.senha || gerarSenha();
 
     return {
       ...dados,
@@ -51,11 +60,22 @@ export const UsuarioService = {
 
     return { distancia, taxaEntrega };
   },
-  autenticarUsuario(usuarios, usuario, senha) {
-    return usuarios.find(
-      u =>
-        u.credenciais.usuario === usuario &&
-        u.credenciais.senha === senha
-    );
+  autenticarUsuario(usuario, senha) {
+    if (
+      usuario === ADMIN.credenciais.usuario &&
+      senha === ADMIN.credenciais.senha
+    ) {
+      return ADMIN;
+    }
+    const salvo = this.obterUsuario();
+
+    if (
+      salvo?.credenciais?.usuario === usuario &&
+      salvo?.credenciais?.senha === senha
+    ) {
+      return salvo;
+    }
+
+    return null;
   }
 };
