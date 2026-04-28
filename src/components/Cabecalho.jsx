@@ -32,10 +32,7 @@ export function Cabecalho() {
 
                     <div className="flex items-center gap-2">
                         {/* User Profile */}
-                        {usuario && (
-                            <MenuUsuario usuario={usuario} onLogout={handleLogout} />
-                        )}
-
+                        <MenuUsuario usuario={usuario} onLogout={handleLogout} />
                         {/* Cart */}
                         <Link
                             to={LINKS.CARRINHO}

@@ -7,8 +7,8 @@ export function NaoAutorizadoPage() {
         <NaoEncontrado
             titulo="Acesso negado"
             mensagem="Você não tem permissão para acessar esta página."
-            textoBotao="Voltar para início"
-            linkBotao={LINKS.HOME}
+            textoBotao="Ir para o login"
+            linkBotao={LINKS.LOGIN}
             icone={Lock}
         />
     )
