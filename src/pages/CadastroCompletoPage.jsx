@@ -1,13 +1,12 @@
-import { ArrowLeft, MapPin, Phone, Truck, User, Lock } from 'lucide-react';
+import { Lock, MapPin, Phone, User } from 'lucide-react';
 import { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Input } from '../components/Input';
 import { useRestaurante } from '../context/RestauranteContexto';
 import { useUsuario } from '../context/UsuarioContexto';
-import { LINKS } from '../rotas/Links';
 import { getRedirectCadastro, getTextoBotao } from '../util/CadastroHelper';
-import { formatarMoeda } from '../util/ConversorDeMoeda';
 import { aceitaApenasLetras, formatarTelefone } from '../util/Mascaras';
+import { validarSenha } from '../util/UsuarioHelper';
 
 export function CadastroCompletoPage() {
     const location = useLocation();
@@ -15,9 +14,7 @@ export function CadastroCompletoPage() {
     const navigate = useNavigate();
     const textoBotao = getTextoBotao(origem);
     const redirect = getRedirectCadastro(origem);
-
-    const { usuario, salvarUsuario} = useUsuario();
-    const { configuracoes } = useRestaurante();
+    const { usuario, salvarUsuario } = useUsuario();
 
     const [erro, setErro] = useState('');
 
@@ -35,14 +32,11 @@ export function CadastroCompletoPage() {
         e.preventDefault();
 
         // 🔴 validações
-        if (formulario.senha.length < 6) {
-            return setErro('A senha deve ter pelo menos 6 caracteres');
+        const erroValidacao = validarSenha(formulario.senha, formulario.confirmarSenha);
+        if (erroValidacao) {
+            setErro(erroValidacao);
+            return;
         }
-
-        if (formulario.senha !== formulario.confirmarSenha) {
-            return setErro('As senhas não coincidem');
-        }
-
         setErro('');
 
         salvarUsuario({

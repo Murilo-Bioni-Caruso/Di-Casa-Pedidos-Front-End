@@ -50,6 +50,7 @@ export const UsuarioProvider = ({ children }) => {
     <UsuarioContext.Provider
       value={{
         usuario,
+        setUsuario,
         salvarUsuario,
         limparUsuario,
         calcularEntregaPreview,

@@ -20,3 +20,15 @@ export function gerarSenha(tamanho = 8) {
 
     return senha;
 }
+export function validarSenha(senha, confirmarSenha) {
+    if (!senha) {
+        return 'Senha não informada';
+    }
+    if (senha.length < 6) {
+        return 'A senha deve ter pelo menos 6 caracteres';
+    }
+    if (senha !== confirmarSenha) {
+        return 'As senhas não coincidem';
+    }
+    return null;
+}

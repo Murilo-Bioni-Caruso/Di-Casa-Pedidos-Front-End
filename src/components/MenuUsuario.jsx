@@ -66,6 +66,14 @@ export function MenuUsuario({ usuario, onLogout }) {
                   <History className="w-4 h-4" />
                   Meus Pedidos
                 </Link>
+                <Link
+                  to={LINKS.USUARIO_CONFIG}
+                  className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100"
+                  onClick={() => setAberto(false)}
+                >
+                  <User className="w-4 h-4" />
+                  Meus dados
+                </Link>
 
                 {usuario.isAdmin && (
                   <Link
