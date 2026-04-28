@@ -1,3 +1,5 @@
+import { gerarSenha, gerarUsername } from "../util/UsuarioHelper";
+
 const STORAGE_KEY = 'usuario-dicasa';
 
 export const UsuarioService = {
@@ -15,22 +17,45 @@ export const UsuarioService = {
     localStorage.removeItem(STORAGE_KEY);
   },
 
-  criarUsuario(dados, calcularDistancia, calcularTaxaEntrega) {
-    const enderecoValido = dados.endereco?.trim().length > 10;
+  criarUsuarioSimples(dados, calcularDistancia, calcularTaxaEntrega) {
+      const { distancia, taxaEntrega } = this.calcularEntrega(
+    dados.endereco,
+    calcularDistancia,
+    calcularTaxaEntrega
+  );
 
-    let distancia = 0;
-    let taxaEntrega = 0;
-
-    if (enderecoValido) {
-      distancia = calcularDistancia(dados.endereco);
-      taxaEntrega = calcularTaxaEntrega(distancia);
-    }
+    const username = gerarUsername(dados.nome);
+    const senha = gerarSenha();
 
     return {
       ...dados,
+      nome: dados.nome || '',
       distancia,
       taxaEntrega,
-      logado: true
+      isAdmin: false,
+      credenciais: {
+        usuario: username,
+        senha
+      }
     };
+  },
+  calcularEntrega(endereco, calcularDistancia, calcularTaxaEntrega) {
+    const enderecoValido = endereco?.trim().length > 10;
+
+    if (!enderecoValido) {
+      return { distancia: 0, taxaEntrega: 0 };
+    }
+
+    const distancia = calcularDistancia(endereco);
+    const taxaEntrega = calcularTaxaEntrega(distancia);
+
+    return { distancia, taxaEntrega };
+  },
+  autenticarUsuario(usuarios, usuario, senha) {
+    return usuarios.find(
+      u =>
+        u.credenciais.usuario === usuario &&
+        u.credenciais.senha === senha
+    );
   }
 };

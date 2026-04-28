@@ -14,6 +14,7 @@ import { AdminPedidosPage } from '../pages/AdminPedidosPage';
 import { AdminCardapiosPage } from '../pages/AdminCardapiosPage';
 import { AdminConfiguracoesPage } from '../pages/AdminConfiguracaoPage';
 import { RotaAdmin } from './RotasAdmin';
+import { RotaProtegida } from './RotasLogado';
 
 export const router = createBrowserRouter([
   {
@@ -34,12 +35,17 @@ export const router = createBrowserRouter([
         element: <CadastroPage />
       },
       {
-        path: LINKS.CHECKOUT,
-        element: <CheckoutPage />
-      },
-      {
-        path: LINKS.CONFIRMACAO,
-        element: <ConfirmacaoPage />
+        element: <RotaProtegida />,
+        children: [
+          {
+            path: LINKS.CHECKOUT,
+            element: <CheckoutPage />
+          },
+          {
+            path: LINKS.CONFIRMACAO,
+            element: <ConfirmacaoPage />
+          }
+        ]
       },
       {
         path: LINKS.HISTORICO_PEDIDOS,
@@ -55,23 +61,23 @@ export const router = createBrowserRouter([
       }
     ]
   },
-      // Vou deixar comentado aqui, mas a rota admin só deve ser acessível para admins, abre para testes
-      {
-        path: LINKS.ADMIN,
-        element: <DashboardAdminPage />
-      },
-      {
-        path: LINKS.ADMIN_PEDIDOS,
-        element: <AdminPedidosPage />
-      },
-      {
-        path: LINKS.ADMIN_PRODUTOS,
-        element: <AdminCardapiosPage />
-      },
-      {
-        path: LINKS.ADMIN_CONFIGURACOES,
-        element: <AdminConfiguracoesPage />
-      },
+  // Vou deixar comentado aqui, mas a rota admin só deve ser acessível para admins, abre para testes
+  {
+    path: LINKS.ADMIN,
+    element: <DashboardAdminPage />
+  },
+  {
+    path: LINKS.ADMIN_PEDIDOS,
+    element: <AdminPedidosPage />
+  },
+  {
+    path: LINKS.ADMIN_PRODUTOS,
+    element: <AdminCardapiosPage />
+  },
+  {
+    path: LINKS.ADMIN_CONFIGURACOES,
+    element: <AdminConfiguracoesPage />
+  },
 
   // Rota protegida para admins, com layout de admin
   // {

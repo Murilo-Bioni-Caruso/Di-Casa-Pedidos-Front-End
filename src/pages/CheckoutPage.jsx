@@ -21,7 +21,13 @@ export function CheckoutPage() {
   // proteção: se não tiver usuário
 useEffect(() => {
   if (!usuario) {
-    navigate(LINKS.CADASTRO);
+      <NaoEncontrado
+      titulo='Usuário não encontrado'
+      mensagem='Você precisa se identificar para continuar.'
+      textoBotao='Voltar ao Cardápio'
+      linkBotao={LINKS.HOME}
+      icone={AlertCircle}
+    />
   }
 }, [usuario, navigate]);
 

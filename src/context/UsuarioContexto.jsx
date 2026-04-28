@@ -12,7 +12,7 @@ export const UsuarioProvider = ({ children }) => {
   const { calcularDistancia, calcularTaxaEntrega } = useRestaurante();
 
   const salvarUsuario = (dadosUsuario) => {
-    const usuarioCriado = UsuarioService.criarUsuario(
+    const usuarioCriado = UsuarioService.criarUsuarioSimples(
       dadosUsuario,
       calcularDistancia,
       calcularTaxaEntrega
@@ -29,8 +29,8 @@ export const UsuarioProvider = ({ children }) => {
   };
 
   const calcularEntregaPreview = (endereco) => {
-    return UsuarioService.criarUsuario(
-      { endereco },
+    return UsuarioService.calcularEntrega(
+      endereco,
       calcularDistancia,
       calcularTaxaEntrega
     );

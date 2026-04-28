@@ -63,8 +63,8 @@ export function CadastroPage() {
                             type="text"
                             value={formulario.nome}
                             onChange={(e) => {
-                                const apenasLetras = aceitaApenasLetras(e.target.value);
-                                setFormulario({ ...formulario, nome: apenasLetras })
+                                const valorLimpo = aceitaApenasLetras(e.target.value);
+                                setFormulario({ ...formulario, nome: valorLimpo });
                             }}
                             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FF6B35] outline-none"
                             placeholder="Digite seu nome"
