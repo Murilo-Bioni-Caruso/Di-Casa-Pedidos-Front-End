@@ -11,5 +11,6 @@ export const LINKS = {
   CONFIRMACAO: "/confirmacao",
   HISTORICO_PEDIDOS: "/historico-pedidos",
   NAO_AUTORIZADO: "/nao-autorizado",
-  LOGIN: "/login"
+  LOGIN: "/login",
+  USUARIO_CONFIG: "/usuario",
 };

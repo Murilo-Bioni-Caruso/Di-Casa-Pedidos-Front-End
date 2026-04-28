@@ -17,6 +17,7 @@ import { RotaAdmin } from './RotasAdmin';
 import { RotaProtegida } from './RotasLogado';
 import { LoginPage } from '../pages/LoginPage';
 import { CadastroCompletoPage } from '../pages/CadastroCompletoPage';
+import { UsuarioConfigPage } from '../pages/UsuarioConfigPage';
 
 export const router = createBrowserRouter([
   {
@@ -40,6 +41,7 @@ export const router = createBrowserRouter([
         path: LINKS.CADASTRO_COMPLETO,
         element: <CadastroCompletoPage />
       },
+      //Rotas protegidas para usuários logados, com layout tradicional
       {
         element: <RotaProtegida />,
         children: [
@@ -50,12 +52,16 @@ export const router = createBrowserRouter([
           {
             path: LINKS.CONFIRMACAO,
             element: <ConfirmacaoPage />
-          }
+          },
+          {
+            path: LINKS.USUARIO_CONFIG,
+            element: <UsuarioConfigPage />
+          },
+          {
+            path: LINKS.HISTORICO_PEDIDOS,
+            element: <HistoricoPedidosPage />
+          },
         ]
-      },
-      {
-        path: LINKS.HISTORICO_PEDIDOS,
-        element: <HistoricoPedidosPage />
       },
       {
         path: LINKS.NAO_AUTORIZADO,
