@@ -37,7 +37,7 @@ export function analisarForcaSenha(senha) {
     if (/[0-9]/.test(senha)) pontos++;
     if (/[^A-Za-z0-9]/.test(senha)) pontos++;
 
-    if (pontos <= 2) return { nivel: 'fraca',  texto: 'Fraca',  cor: 'bg-red-500',    largura: 'w-1/3' };
-    if (pontos <= 3) return { nivel: 'media',  texto: 'Média',  cor: 'bg-yellow-400', largura: 'w-2/3' };
-    return              { nivel: 'forte', texto: 'Forte',  cor: 'bg-green-500',  largura: 'w-full' };
+    if (pontos <= 2) return { nivel: 'fraca',  texto: 'Fraca',  cor: '#ef4444', largura: '33%'  };
+    if (pontos <= 3) return { nivel: 'media',  texto: 'Média',  cor: '#f59e0b', largura: '66%'  };
+    return              { nivel: 'forte', texto: 'Forte',  cor: '#22c55e', largura: '100%' };
 }

@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import fs from 'fs';
 import path from 'path';
@@ -5,7 +6,7 @@ import { fileURLToPath } from 'url';
 import multer from 'multer';
 
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -57,7 +58,7 @@ app.post('/upload', upload.single('imagem'), (req, res) => {
   if (!req.file) {
     return res.status(400).json({ erro: 'Nenhum arquivo enviado' });
   }
-  const url = `http://localhost:3001/imagens/${req.file.filename}`;
+  const url = `${process.env.VITE_API_URL}/imagens/${req.file.filename}`;
   res.json({ url });
 });
 
@@ -96,8 +97,12 @@ app.get('/usuarios', (req, res) => {
 app.post('/usuarios', (req, res) => {
   const lista = lerArquivo('usuarios');
   const nomeUsuario = req.body.credenciais?.usuario;
+  const email = req.body.email;
   if (nomeUsuario && lista.some(u => u.credenciais?.usuario === nomeUsuario)) {
     return res.status(409).json({ erro: 'Este nome de usuário já está em uso. Escolha outro.' });
+  }
+  if (email && lista.some(u => u.email === email)) {
+    return res.status(409).json({ erro: 'Este e-mail já está cadastrado.' });
   }
   const novo = { ...req.body, id: `usuario-${Date.now()}` };
   lista.push(novo);
