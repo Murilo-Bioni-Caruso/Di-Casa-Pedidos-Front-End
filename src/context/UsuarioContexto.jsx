@@ -14,12 +14,33 @@ export const UsuarioProvider = ({ children }) => {
   const { calcularDistancia, calcularTaxaEntrega } = useRestaurante();
 
   const salvarUsuario = async (dadosUsuario) => {
+    const { distancia, taxaEntrega } = UsuarioService.calcularEntrega(
+      dadosUsuario.endereco,
+      calcularDistancia,
+      calcularTaxaEntrega
+    );
+
+    // Se já tem usuário logado, só atualiza — não cria um novo
+    if (usuario?.id) {
+      const atualizado = {
+        ...usuario,
+        ...dadosUsuario,
+        distancia,
+        taxaEntrega,
+        isAdmin: usuario.isAdmin,
+      };
+      await usuariosApi.atualizar(atualizado);
+      sessionStorage.setItem('usuario-dicasa', JSON.stringify(atualizado));
+      setUsuario(atualizado);
+      return;
+    }
+
+    // Usuário novo — cria normalmente
     const usuarioCriado = UsuarioService.criarUsuario(
       dadosUsuario,
       calcularDistancia,
       calcularTaxaEntrega
     );
-
     const salvo = await usuariosApi.criar(usuarioCriado);
     sessionStorage.setItem('usuario-dicasa', JSON.stringify(salvo));
     setUsuario(salvo);
@@ -67,10 +88,8 @@ export const UsuarioProvider = ({ children }) => {
 
 export const useUsuario = () => {
   const context = useContext(UsuarioContext);
-
   if (!context) {
     throw new Error('useUsuario deve ser usado dentro de UsuarioProvider');
   }
-
   return context;
 };

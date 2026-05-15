@@ -95,6 +95,10 @@ app.get('/usuarios', (req, res) => {
 
 app.post('/usuarios', (req, res) => {
   const lista = lerArquivo('usuarios');
+  const nomeUsuario = req.body.credenciais?.usuario;
+  if (nomeUsuario && lista.some(u => u.credenciais?.usuario === nomeUsuario)) {
+    return res.status(409).json({ erro: 'Este nome de usuário já está em uso. Escolha outro.' });
+  }
   const novo = { ...req.body, id: `usuario-${Date.now()}` };
   lista.push(novo);
   salvarArquivo('usuarios', lista);
