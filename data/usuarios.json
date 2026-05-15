@@ -1,0 +1,197 @@
+[
+  {
+    "id": "usuario-admin",
+    "nome": "Administrador",
+    "telefone": "000000000",
+    "endereco": "",
+    "distancia": 0,
+    "taxaEntrega": 0,
+    "isAdmin": true,
+    "credenciais": {
+      "usuario": "admin",
+      "senha": "admin"
+    }
+  },
+  {
+    "nome": "Administrador",
+    "telefone": "000000000",
+    "endereco": "rua dos bobos, numero 0",
+    "isAdmin": false,
+    "distancia": 4.4,
+    "taxaEntrega": 0,
+    "credenciais": {
+      "usuario": "administrador",
+      "senha": "BzEJJftQ"
+    },
+    "id": "usuario-1778795527025"
+  },
+  {
+    "nome": "Administrador",
+    "telefone": "000000000",
+    "endereco": "rua dos bobos, numero 0",
+    "isAdmin": false,
+    "distancia": 4.4,
+    "taxaEntrega": 0,
+    "credenciais": {
+      "usuario": "administrador",
+      "senha": "!mpxE$$o"
+    },
+    "id": "usuario-1778795900058"
+  },
+  {
+    "nome": "Administrador",
+    "telefone": "000000000",
+    "endereco": "rua dos bobos, numero 0",
+    "isAdmin": false,
+    "distancia": 4.4,
+    "taxaEntrega": 0,
+    "credenciais": {
+      "usuario": "administrador",
+      "senha": "H$4I9gJx"
+    },
+    "id": "usuario-1778796194276"
+  },
+  {
+    "nome": "Administrador",
+    "telefone": "000000000",
+    "endereco": "rua dos bobos, numero 0",
+    "isAdmin": false,
+    "distancia": 4.4,
+    "taxaEntrega": 0,
+    "credenciais": {
+      "usuario": "administrador",
+      "senha": "3QEoDU41"
+    },
+    "id": "usuario-1778796761269"
+  },
+  {
+    "nome": "Administrador",
+    "telefone": "000000000",
+    "endereco": "rua dos bobos, numero 0",
+    "isAdmin": false,
+    "distancia": 4.4,
+    "taxaEntrega": 0,
+    "credenciais": {
+      "usuario": "administrador",
+      "senha": "yC85RqNX"
+    },
+    "id": "usuario-1778797021944"
+  },
+  {
+    "nome": "Administrador",
+    "telefone": "000000000",
+    "endereco": "rua dos bobos, numero 0",
+    "isAdmin": false,
+    "distancia": 4.4,
+    "taxaEntrega": 0,
+    "credenciais": {
+      "usuario": "administrador",
+      "senha": "sD7LbgEN"
+    },
+    "id": "usuario-1778797418515"
+  },
+  {
+    "nome": "Administrador",
+    "telefone": "000000000",
+    "endereco": "rua dos bobos, numero 0",
+    "isAdmin": false,
+    "distancia": 4.4,
+    "taxaEntrega": 0,
+    "credenciais": {
+      "usuario": "administrador",
+      "senha": "NvSFQ!JR"
+    },
+    "id": "usuario-1778797963999"
+  },
+  {
+    "nome": "Administrador",
+    "telefone": "000000000",
+    "endereco": "rua dos bobos, ",
+    "isAdmin": false,
+    "distancia": 2.7,
+    "taxaEntrega": 0,
+    "credenciais": {
+      "usuario": "administrador",
+      "senha": "59Bd2uTp"
+    },
+    "id": "usuario-1778798240270"
+  },
+  {
+    "nome": "Administrador",
+    "telefone": "000000000",
+    "endereco": "rua dos bob",
+    "isAdmin": false,
+    "distancia": 1.5,
+    "taxaEntrega": 0,
+    "credenciais": {
+      "usuario": "administrador",
+      "senha": "5Vhgvfd6"
+    },
+    "id": "usuario-1778798593576"
+  },
+  {
+    "nome": "Administrador",
+    "telefone": "000000000",
+    "endereco": "rua dos bob",
+    "isAdmin": false,
+    "distancia": 1.5,
+    "taxaEntrega": 0,
+    "credenciais": {
+      "usuario": "administrador",
+      "senha": "#PS3lB$Z"
+    },
+    "id": "usuario-1778798770910"
+  },
+  {
+    "nome": "Administrador",
+    "telefone": "000000000",
+    "endereco": "rua dos bob789",
+    "isAdmin": false,
+    "distancia": 3.8,
+    "taxaEntrega": 0,
+    "credenciais": {
+      "usuario": "administrador",
+      "senha": "i4PJ1JrQ"
+    },
+    "id": "usuario-1778798988747"
+  },
+  {
+    "nome": "Administrador",
+    "telefone": "000000000",
+    "endereco": "rua dos bob",
+    "isAdmin": false,
+    "distancia": 1.5,
+    "taxaEntrega": 0,
+    "credenciais": {
+      "usuario": "administrador",
+      "senha": "N71KqZ#P"
+    },
+    "id": "usuario-1778799786621"
+  },
+  {
+    "nome": "Administrador",
+    "telefone": "000000000",
+    "endereco": "rua dos bob",
+    "isAdmin": false,
+    "distancia": 1.5,
+    "taxaEntrega": 0,
+    "credenciais": {
+      "usuario": "administrador",
+      "senha": "Dzh1Tz0@"
+    },
+    "id": "usuario-1778799944009"
+  },
+  {
+    "nome": "Administrador",
+    "telefone": "000000000",
+    "endereco": "rua dos bob",
+    "isAdmin": false,
+    "distancia": 1.5,
+    "taxaEntrega": 0,
+    "credenciais": {
+      "usuario": "administrador",
+      "senha": "qpCyUqUD"
+    },
+    "id": "usuario-1778799982760"
+  }
+]

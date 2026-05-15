@@ -12,7 +12,7 @@ import { StatusBadge } from '../components/StatusBadge';
 
 export function HistoricoPedidosPage() {
   const { usuario } = useUsuario();
-  const { getPedidosUsuario  } = usePedido();
+  const { getPedidosUsuario } = usePedido();
 
   // 🔒 Se não estiver logado
   if (!usuario) {
@@ -21,7 +21,7 @@ export function HistoricoPedidosPage() {
     );
   }
 
-  const pedidos = getPedidosUsuario(usuario.telefone); 
+  const pedidos = getPedidosUsuario(usuario.telefone);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -80,6 +80,11 @@ export function HistoricoPedidosPage() {
                       </p>
                     </div>
                     <StatusBadge status={pedido.status || OrderStatus.PENDENTE} />
+                    {pedido.horarioEntrega && (
+                      <div className="mt-2 text-sm text-orange-600 font-medium">
+                        ⏱️ Entrega prevista: entre {pedido.horarioEntrega.minimo} e {pedido.horarioEntrega.maximo}
+                      </div>
+                    )}
                   </div>
 
                   {/* Itens */}

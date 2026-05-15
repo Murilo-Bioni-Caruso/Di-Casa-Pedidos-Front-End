@@ -1,30 +1,32 @@
 import { createContext, useContext, useState } from 'react';
 import { UsuarioService } from '../service/UsuarioService';
+import { usuariosApi } from '../api/api';
 import { useRestaurante } from './RestauranteContexto';
 
 const UsuarioContext = createContext();
 
 export const UsuarioProvider = ({ children }) => {
-  const [usuario, setUsuario] = useState(
-    UsuarioService.obterUsuario()
-  );
+  const [usuario, setUsuario] = useState(() => {
+    const salvo = sessionStorage.getItem('usuario-dicasa');
+    return salvo ? JSON.parse(salvo) : null;
+  });
 
   const { calcularDistancia, calcularTaxaEntrega } = useRestaurante();
 
-  const salvarUsuario = (dadosUsuario) => {
+  const salvarUsuario = async (dadosUsuario) => {
     const usuarioCriado = UsuarioService.criarUsuario(
       dadosUsuario,
       calcularDistancia,
       calcularTaxaEntrega
     );
 
-    const usuarioSalvo = UsuarioService.salvarUsuario(usuarioCriado);
-
-    setUsuario(usuarioSalvo);
+    const salvo = await usuariosApi.criar(usuarioCriado);
+    sessionStorage.setItem('usuario-dicasa', JSON.stringify(salvo));
+    setUsuario(salvo);
   };
 
   const limparUsuario = () => {
-    UsuarioService.limparUsuario();
+    sessionStorage.removeItem('usuario-dicasa');
     setUsuario(null);
   };
 
@@ -35,15 +37,16 @@ export const UsuarioProvider = ({ children }) => {
       calcularTaxaEntrega
     );
   };
-  const autenticar = (usuario, senha) => {
-    const user = UsuarioService.autenticarUsuario(usuario, senha);
-    if (user) {
-      setUsuario(user);
-      UsuarioService.salvarUsuario(user);
-      return user;
-    }
 
-    return null;
+  const autenticar = async (usuario, senha) => {
+    try {
+      const user = await usuariosApi.login({ usuario, senha });
+      sessionStorage.setItem('usuario-dicasa', JSON.stringify(user));
+      setUsuario(user);
+      return user;
+    } catch {
+      return null;
+    }
   };
 
   return (

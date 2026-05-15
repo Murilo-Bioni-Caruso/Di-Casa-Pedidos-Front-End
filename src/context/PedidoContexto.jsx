@@ -1,24 +1,28 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import * as pedidoService from '../service/PedidoService';
+import { pedidosApi } from '../api/api';
 import { useRestaurante } from './RestauranteContexto';
 
 const PedidoContext = createContext();
 
 export const PedidoProvider = ({ children }) => {
-  const [pedidos, setPedidos] = useState(() => {
-    return pedidoService.obterPedidos();
-  });
-
-  useEffect(() => {
-    localStorage.setItem('pedidos-dicasa', JSON.stringify(pedidos));
-  }, [pedidos]);
+  const [pedidos, setPedidos] = useState([]);
   const { calcularTaxaEntrega, calcularDistancia } = useRestaurante();
-  const adicionarPedido = (pedido) => {
-    setPedidos(prev =>
-      pedidoService.adicionarPedido(prev, pedido)
-    );
-  };
-  const criarPedidoCompleto = ({ usuario, itens, metodoPagamento }) => {
+
+  // Busca todos os pedidos do servidor ao iniciar
+  useEffect(() => {
+    async function carregar() {
+      try {
+        const lista = await pedidosApi.listar();
+        setPedidos(lista.map(pedidoService.normalizarPedido));
+      } catch (erro) {
+        console.error('Erro ao carregar pedidos:', erro);
+      }
+    }
+    carregar();
+  }, []);
+
+  const criarPedidoCompleto = async ({ usuario, itens, metodoPagamento }) => {
     const resumo = pedidoService.calcularResumoPedido({
       itens,
       usuario,
@@ -26,79 +30,76 @@ export const PedidoProvider = ({ children }) => {
       calcularDistancia
     });
 
-    const pedido = pedidoService.criarPedido({
+    const dadosPedido = pedidoService.criarPedido({
       ...resumo,
       usuario,
       itens,
       metodoPagamento
     });
 
-    setPedidos(prev =>
-      pedidoService.adicionarPedido(prev, pedido)
-    );
-    localStorage.setItem('ultimo-pedido', JSON.stringify(pedido));
+    const salvo = await pedidosApi.criar(dadosPedido);
+    const normalizado = pedidoService.normalizarPedido(salvo);
 
-    return pedido;
+    setPedidos(prev => [normalizado, ...prev]);
+    sessionStorage.setItem('ultimo-pedido', JSON.stringify(normalizado));
+
+    return normalizado;
   };
 
-  const atualizarStatusPedido = (pedidoId, status) => {
-    setPedidos(prev =>
-      pedidoService.atualizarStatusPedido(prev, pedidoId, status)
-    );
-  };
+  const atualizarStatusPedido = async (pedidoId, status) => {
+  const novosPedidos = pedidoService.atualizarStatusPedido(pedidos, pedidoId, status);
+  const pedidoAtualizado = novosPedidos.find(p => p.id === pedidoId);
 
-  const getPedidosUsuario = (telefone) => {
-    return pedidoService.getPedidosUsuario(pedidos, telefone);
-  };
+  try {
+    await pedidosApi.atualizarStatus(pedidoId, status, pedidoAtualizado.horarioEntrega);
+    setPedidos(novosPedidos);
+  } catch (erro) {
+    alert(`Erro ao atualizar status: ${erro.message}`);
+  }
+};
 
-  const getPedidoPorId = (pedidoId) => {
-    return pedidoService.getPedidoPorId(pedidos, pedidoId);
-  };
+  const getPedidosUsuario = (telefone) =>
+    pedidoService.getPedidosUsuario(pedidos, telefone);
 
-  const getPedidosHoje = () => {
-    return pedidoService.getPedidosHoje(pedidos);
-  };
+  const getPedidoPorId = (pedidoId) =>
+    pedidoService.getPedidoPorId(pedidos, pedidoId);
 
-  const getFaturamentoHoje = () => {
-    return pedidoService.getFaturamentoHoje(pedidos);
-  };
+  const getPedidosHoje = () =>
+    pedidoService.getPedidosHoje(pedidos);
 
-  const filtrarPedidos = (status) => {
-    return pedidoService.filtrarPedidos(pedidos, status);
-  };
+  const getFaturamentoHoje = () =>
+    pedidoService.getFaturamentoHoje(pedidos);
 
-  const contarPedidosPorStatus = (status) => {
-    return pedidoService.contarPedidosPorStatus(pedidos, status);
-  };
-  const getResumoPedido = (itens, usuario) => {
-    return pedidoService.calcularResumoPedido({
+  const filtrarPedidos = (status) =>
+    pedidoService.filtrarPedidos(pedidos, status);
+
+  const contarPedidosPorStatus = (status) =>
+    pedidoService.contarPedidosPorStatus(pedidos, status);
+
+  const getResumoPedido = (itens, usuario) =>
+    pedidoService.calcularResumoPedido({
       itens,
       usuario,
       calcularTaxaEntrega,
       calcularDistancia
     });
-  };
-  const getTicketMedio = () => {
-    return pedidoService.calcularTicketMedio(pedidos);
-  };
 
-  const getTotalFaturamento = () => {
-    return pedidoService.getTotalFaturamento(pedidos);
-  };
+  const getTicketMedio = () =>
+    pedidoService.calcularTicketMedio(pedidos);
 
-  const getPedidosAtivos = () => {
-    return pedidoService.getPedidosAtivos(pedidos);
-  };
+  const getTotalFaturamento = () =>
+    pedidoService.getTotalFaturamento(pedidos);
 
-  const getPedidosRecentes = () => {
-    return pedidoService.getPedidosRecentes(pedidos);
-  };
+  const getPedidosAtivos = () =>
+    pedidoService.getPedidosAtivos(pedidos);
+
+  const getPedidosRecentes = () =>
+    pedidoService.getPedidosRecentes(pedidos);
 
   return (
     <PedidoContext.Provider
       value={{
         pedidos,
-        adicionarPedido,
         atualizarStatusPedido,
         criarPedidoCompleto,
         getResumoPedido,
@@ -128,4 +129,3 @@ export const usePedido = () => {
 
   return context;
 };
-

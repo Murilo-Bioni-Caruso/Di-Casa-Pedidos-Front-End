@@ -1,83 +1,96 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { produtos as produtosIniciais } from '../models/Dados';
 import * as restauranteService from '../service/RestauranteService';
+import { produtosApi, configuracoesApi } from '../api/api';
 
 const RestauranteContext = createContext();
 
-const configuracoesPadrao = {
-  nome: 'DiCasa Marmitaria',
-  endereco: 'Rua das Flores, 123 - Centro',
-  telefone: '(11) 98765-4321',
-  email: 'contato@dicasa.com.br',
-  horarioFuncionamento: {
-    domingo: { open: '11:00', close: '22:00' },
-    segunda: { open: '11:00', close: '22:00' }
-  },
-  latitude: -23.5505,
-  longitude: -46.6333,
-  raioEntregaGratis: 5,
-  taxaPorKm: 2.5
-};
-
 export const RestauranteProvider = ({ children }) => {
-  const [produtos, setProdutos] = useState(() => {
-    const salvo = localStorage.getItem('produtos-dicasa');
-    return salvo ? JSON.parse(salvo) : produtosIniciais;
-  });
+  const [produtos, setProdutos] = useState([]);
+  const [configuracoes, setConfiguracoes] = useState(null);
+  const [carregando, setCarregando] = useState(true);
 
-  const [configuracoes, setConfiguracoes] = useState(() => {
-    const salvo = localStorage.getItem('config-dicasa');
-    return salvo ? JSON.parse(salvo) : configuracoesPadrao;
-  });
-  
-
+  // Busca produtos e configurações do servidor ao iniciar
   useEffect(() => {
-    localStorage.setItem('produtos-dicasa', JSON.stringify(produtos));
-  }, [produtos]);
+    async function carregar() {
+      try {
+        const [prods, config] = await Promise.all([
+          produtosApi.listar(),
+          configuracoesApi.obter()
+        ]);
+        setProdutos(prods);
+        setConfiguracoes(config);
+      } catch (erro) {
+        console.error('Erro ao carregar dados do servidor:', erro);
+      } finally {
+        setCarregando(false);
+      }
+    }
+    carregar();
+  }, []);
 
-  useEffect(() => {
-    localStorage.setItem('config-dicasa', JSON.stringify(configuracoes));
-  }, [configuracoes]);
+  // ─── PRODUTOS ─────────────────────────────────────────
 
-  // ✅ PRODUTOS (agora usando service)
-
-  const adicionarProduto = (produto) => {
-    setProdutos(prev =>
-      restauranteService.adicionarProduto(prev, produto)
-    );
+  const adicionarProduto = async (dadosProduto) => {
+    const novo = await produtosApi.criar({
+      ...dadosProduto,
+      preco: parseFloat(dadosProduto.preco),
+      imagem: dadosProduto.imagem ||
+        'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400'
+    });
+    setProdutos(prev => [...prev, novo]);
   };
 
-  const filtrarProdutos = (categoria) => {
-    return restauranteService.filtrarProdutos(produtos, categoria);
+  const atualizarProduto = async (produto) => {
+    const atualizado = await produtosApi.atualizar(produto);
+    setProdutos(prev => prev.map(p => p.id === atualizado.id ? atualizado : p));
   };
+
+  const removerProduto = async (produtoId) => {
+    await produtosApi.remover(produtoId);
+    setProdutos(prev => prev.filter(p => p.id !== produtoId));
+  };
+
+  const filtrarProdutos = (categoria, apenasDisponiveis = false) => {
+    const aplicarFiltroDia = apenasDisponiveis && configuracoes?.filtrarPorDia;
+    return restauranteService.filtrarProdutos(produtos, categoria, aplicarFiltroDia);
+  };
+
   const getPratoDoDia = () => {
-  return restauranteService.getPratoDoDia(produtos);
-};
-
-  const atualizarProduto = (produto) => {
-    setProdutos(prev =>
-      restauranteService.atualizarProduto(prev, produto)
-    );
+    return restauranteService.getPratoDoDia(produtos);
   };
 
-  const removerProduto = (produtoId) => {
-    setProdutos(prev =>
-      restauranteService.removerProduto(prev, produtoId)
-    );
-  };
+  // ─── CONFIGURAÇÕES ────────────────────────────────────
 
-  // ✅ CONFIG
-
-  const atualizarConfiguracoes = (novasConfigs) => {
+  const atualizarConfiguracoes = async (novasConfigs) => {
     const atualizado = restauranteService.atualizarConfiguracoes(
       configuracoes,
       novasConfigs
     );
-
-    setConfiguracoes(atualizado);
+    const salvo = await configuracoesApi.atualizar(atualizado);
+    setConfiguracoes(salvo);
   };
 
-  // ✅ REGRAS (delegadas ao service)
+  const atualizarHorario = async (dia, campo, valor) => {
+    const atualizado = restauranteService.atualizarHorario(
+      configuracoes,
+      dia,
+      campo,
+      valor
+    );
+    const salvo = await configuracoesApi.atualizar(atualizado);
+    setConfiguracoes(salvo);
+  };
+
+  const toggleDiaFuncionamento = async (dia) => {
+    const atualizado = restauranteService.toggleDiaFuncionamento(
+      configuracoes,
+      dia
+    );
+    const salvo = await configuracoesApi.atualizar(atualizado);
+    setConfiguracoes(salvo);
+  };
+
+  // ─── REGRAS ───────────────────────────────────────────
 
   const calcularDistancia = (endereco) => {
     return restauranteService.calcularDistancia(endereco);
@@ -86,25 +99,8 @@ export const RestauranteProvider = ({ children }) => {
   const calcularTaxaEntrega = (distancia) => {
     return restauranteService.calcularTaxaEntrega(distancia, configuracoes);
   };
-  const atualizarHorario = (dia, campo, valor) => {
-    const atualizado = restauranteService.atualizarHorario(
-      configuracoes,
-      dia,
-      campo,
-      valor
-    );
 
-    setConfiguracoes(atualizado);
-  };
-
-  const toggleDiaFuncionamento = (dia) => {
-    const atualizado = restauranteService.toggleDiaFuncionamento(
-      configuracoes,
-      dia
-    );
-
-    setConfiguracoes(atualizado);
-  };
+  if (carregando) return null;
 
   return (
     <RestauranteContext.Provider
