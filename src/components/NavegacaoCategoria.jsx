@@ -3,7 +3,7 @@ import { categoriasEmojis } from "../util/CategoriasEmojis";
 
 export function NavegacaoCategorias({ categoriaAtiva, aoSelecionarCategoria }) {
   return (
-    <div className="sticky top-35 md:top-27.5 z-40 bg-white border-b border-gray-200 shadow-sm">
+    <div className="sticky top-[var(--header-height,140px)] z-40 bg-white border-b border-gray-200 shadow-sm">
       <div className="container mx-auto px-4 py-3">
         <div className="flex gap-3 overflow-x-auto scrollbar-hide">
           {categoriasEmojis.map((cat) => (

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { ShoppingCart, MapPin, Clock, User, LogOut, History, Settings } from 'lucide-react';
 import { Link } from 'react-router';
 import { useUsuario } from '../context/UsuarioContexto';
@@ -15,6 +15,17 @@ export function Cabecalho() {
     const { usuario, limparUsuario } = useUsuario();
     const totalItems = getTotalItens();
     const [showUserMenu, setShowUserMenu] = useState(false);
+    const headerRef = useRef(null);
+
+    useEffect(() => {
+        const el = headerRef.current;
+        if (!el) return;
+        const observer = new ResizeObserver(([entry]) => {
+            document.documentElement.style.setProperty('--header-height', entry.contentRect.height + 'px');
+        });
+        observer.observe(el);
+        return () => observer.disconnect();
+    }, []);
     const horarioFuncionamento = configuracoes?.horarioFuncionamento;
     const horarioTexto = horarioFuncionamento ? obterStatusFuncionamento(horarioFuncionamento) : '';
 
@@ -23,7 +34,7 @@ export function Cabecalho() {
         setShowUserMenu(false);
     };
     return (
-        <header className="sticky top-0 z-50 bg-linear-to-r from-[#FF6B35] to-[#FF8C42] text-white shadow-lg">
+        <header ref={headerRef} className="sticky top-0 z-50 bg-linear-to-r from-[#FF6B35] to-[#FF8C42] text-white shadow-lg">
             <div className="container mx-auto px-4 py-4">
                 <div className="flex items-center justify-between mb-3">
                     <Link to="/" className="hover:opacity-90 transition-opacity">
