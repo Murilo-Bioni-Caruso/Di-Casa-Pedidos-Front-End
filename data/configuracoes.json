@@ -4,10 +4,7 @@
   "telefone": "(11) 98765-4321",
   "email": "contato@dicasa.com.br",
   "horarioFuncionamento": {
-    "segunda": {
-      "open": "11:00",
-      "close": "22:00"
-    },
+    "segunda": null,
     "terca": {
       "open": "11:00",
       "close": "22:00"

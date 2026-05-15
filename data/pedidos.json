@@ -1,5 +1,129 @@
 [
   {
+    "id": "PED-1778820100057",
+    "usuario": {
+      "id": "usuario-admin",
+      "nome": "Administrador",
+      "telefone": "(11) 94002-8922",
+      "endereco": "rua dos aaaaa",
+      "distancia": 4.8,
+      "taxaEntrega": 0,
+      "isAdmin": true,
+      "credenciais": {
+        "usuario": "admin",
+        "senha": "admin"
+      }
+    },
+    "itens": [
+      {
+        "produto": {
+          "id": "5",
+          "nome": "Coca-Cola",
+          "descricao": "Lata 350ml gelada",
+          "preco": 5,
+          "categoria": "bebidas",
+          "imagem": "https://images.unsplash.com/photo-1580910051074-3eb694886505",
+          "diaDaSemana": []
+        },
+        "quantidade": 2
+      }
+    ],
+    "subtotal": 10,
+    "taxaEntrega": 0,
+    "total": 10,
+    "metodoPagamento": "pix",
+    "data": 1778820100055,
+    "status": "pendente"
+  },
+  {
+    "id": "PED-1778820086004",
+    "usuario": {
+      "id": "usuario-admin",
+      "nome": "Administrador",
+      "telefone": "(11) 94002-8922",
+      "endereco": "rua dos aaaaa",
+      "distancia": 4.8,
+      "taxaEntrega": 0,
+      "isAdmin": true,
+      "credenciais": {
+        "usuario": "admin",
+        "senha": "admin"
+      }
+    },
+    "itens": [
+      {
+        "produto": {
+          "nome": "Marmita de Frango",
+          "descricao": "Frango grelhado com arroz, feijão e salada",
+          "preco": "25",
+          "categoria": "marmitas",
+          "imagem": "http://localhost:3001/imagens/img-1778795335493.png",
+          "diaDaSemana": [
+            "domingo",
+            "segunda",
+            "terca",
+            "quarta",
+            "quinta",
+            "sexta",
+            "sabado"
+          ],
+          "id": "1"
+        },
+        "quantidade": 2
+      }
+    ],
+    "subtotal": 50,
+    "taxaEntrega": 0,
+    "total": 50,
+    "metodoPagamento": "pix",
+    "data": 1778820086002,
+    "status": "pendente"
+  },
+  {
+    "id": "PED-1778819810505",
+    "usuario": {
+      "nome": "Administrador",
+      "telefone": "(69) 99971-4972",
+      "endereco": "Rua dos nno",
+      "isAdmin": false,
+      "distancia": 3.9,
+      "taxaEntrega": 0,
+      "credenciais": {
+        "usuario": "administrador",
+        "senha": "zPa4WRI!"
+      },
+      "id": "usuario-1778819794328"
+    },
+    "itens": [
+      {
+        "produto": {
+          "nome": "Marmita de Frango",
+          "descricao": "Frango grelhado com arroz, feijão e salada",
+          "preco": "25",
+          "categoria": "marmitas",
+          "imagem": "http://localhost:3001/imagens/img-1778795335493.png",
+          "diaDaSemana": [
+            "domingo",
+            "segunda",
+            "terca",
+            "quarta",
+            "quinta",
+            "sexta",
+            "sabado"
+          ],
+          "id": "1"
+        },
+        "quantidade": 2
+      }
+    ],
+    "subtotal": 50,
+    "taxaEntrega": 0,
+    "total": 50,
+    "metodoPagamento": "pix",
+    "data": 1778819810494,
+    "status": "pendente"
+  },
+  {
     "id": "PED-1778799983910",
     "usuario": {
       "nome": "Administrador",
@@ -33,7 +157,7 @@
     "total": 20,
     "metodoPagamento": "pix",
     "data": 1778799983907,
-    "status": "preparando",
+    "status": "entregue",
     "horarioEntrega": {
       "minimo": "20:46",
       "maximo": "21:06"
@@ -93,7 +217,7 @@
     "total": 55,
     "metodoPagamento": "pix",
     "data": 1778799946500,
-    "status": "preparando",
+    "status": "entregue",
     "horarioEntrega": {
       "minimo": "20:46",
       "maximo": "21:06"
@@ -141,7 +265,7 @@
     "total": 125,
     "metodoPagamento": "pix",
     "data": 1778799787653,
-    "status": "preparando"
+    "status": "entregue"
   },
   {
     "id": "PED-1778799067629",
@@ -177,7 +301,7 @@
     "total": 5,
     "metodoPagamento": "pix",
     "data": 1778799067603,
-    "status": "preparando"
+    "status": "entregue"
   },
   {
     "id": "PED-1778798991640",
@@ -221,7 +345,7 @@
     "total": 75,
     "metodoPagamento": "dinheiro",
     "data": 1778798991637,
-    "status": "preparando"
+    "status": "entregue"
   },
   {
     "id": "PED-1778798774223",
@@ -265,7 +389,7 @@
     "total": 150,
     "metodoPagamento": "pix",
     "data": 1778798774220,
-    "status": "preparando"
+    "status": "entregue"
   },
   {
     "id": "PED-1778798594815",
@@ -309,7 +433,7 @@
     "total": 100,
     "metodoPagamento": "pix",
     "data": 1778798594812,
-    "status": "preparando"
+    "status": "entregue"
   },
   {
     "id": "PED-1778798241847",
@@ -353,7 +477,7 @@
     "total": 50,
     "metodoPagamento": "pix",
     "data": 1778798241844,
-    "status": "preparando"
+    "status": "entregue"
   },
   {
     "id": "PED-1778797965310",
@@ -397,7 +521,7 @@
     "total": 50,
     "metodoPagamento": "pix",
     "data": 1778797965308,
-    "status": "preparando"
+    "status": "entregue"
   },
   {
     "id": "PED-1778797421566",
@@ -441,7 +565,7 @@
     "total": 75,
     "metodoPagamento": "pix",
     "data": 1778797421563,
-    "status": "preparando"
+    "status": "entregue"
   },
   {
     "id": "PED-1778797027317",
@@ -497,7 +621,7 @@
     "total": 40,
     "metodoPagamento": "pix",
     "data": 1778797027316,
-    "status": "preparando"
+    "status": "entregue"
   },
   {
     "id": "PED-1778796765270",
@@ -572,7 +696,7 @@
     "total": 35,
     "metodoPagamento": "pix",
     "data": 1778796765267,
-    "status": "preparando"
+    "status": "entregue"
   },
   {
     "id": "PED-1778795535587",

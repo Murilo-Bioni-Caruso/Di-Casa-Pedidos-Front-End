@@ -63,4 +63,4 @@ export const configuracoesApi = {
 
   atualizar: (configuracoes) =>
     request('/configuracoes', { method: 'PUT', body: JSON.stringify(configuracoes) }),
-};
+}; 

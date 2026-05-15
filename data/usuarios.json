@@ -2,9 +2,9 @@
   {
     "id": "usuario-admin",
     "nome": "Administrador",
-    "telefone": "000000000",
-    "endereco": "",
-    "distancia": 0,
+    "telefone": "(11) 94002-8922",
+    "endereco": "rua dos aaaaa",
+    "distancia": 4.8,
     "taxaEntrega": 0,
     "isAdmin": true,
     "credenciais": {
@@ -193,5 +193,44 @@
       "senha": "qpCyUqUD"
     },
     "id": "usuario-1778799982760"
+  },
+  {
+    "nome": "Willian Thiago Junges Alexandrino",
+    "telefone": "(69) 99971-4972",
+    "endereco": "Dos bobos, 0, sem nome",
+    "isAdmin": false,
+    "credenciais": {
+      "usuario": "Baunilha",
+      "senha": "123456"
+    },
+    "distancia": 14.4,
+    "taxaEntrega": 23.5,
+    "id": "usuario-1778819671352"
+  },
+  {
+    "nome": "Administrador",
+    "telefone": "(69) 99971-4972",
+    "endereco": "Rua dos nno",
+    "isAdmin": false,
+    "distancia": 3.9,
+    "taxaEntrega": 0,
+    "credenciais": {
+      "usuario": "administrador",
+      "senha": "zPa4WRI!"
+    },
+    "id": "usuario-1778819794328"
+  },
+  {
+    "nome": "Willian",
+    "telefone": "(66) 12311-2313",
+    "endereco": "rua, 0, um",
+    "isAdmin": false,
+    "credenciais": {
+      "usuario": "admin",
+      "senha": "123456"
+    },
+    "distancia": 0,
+    "taxaEntrega": 0,
+    "id": "usuario-1778821181956"
   }
 ]
