@@ -17,10 +17,33 @@ export function criarPedido(dados) {
   };
 }
 
+const TEMPO_MINIMO_ENTREGA = 40;
+const TEMPO_MAXIMO_ENTREGA = 60;
+
+function calcularHorarioEntrega(minutos) {
+  const horario = new Date();
+  horario.setMinutes(horario.getMinutes() + minutos);
+  return horario.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+}
+
 export function atualizarStatusPedido(pedidos, pedidoId, status) {
-  return pedidos.map(p =>
-    p.id === pedidoId ? { ...p, status } : p
-  );
+  return pedidos.map(p => {
+    if (p.id !== pedidoId) return p;
+
+    // Quando muda para "preparando", registra o horário previsto de entrega
+    if (status === OrderStatus.PREPARANDO && !p.horarioEntrega) {
+      return {
+        ...p,
+        status,
+        horarioEntrega: {
+          minimo: calcularHorarioEntrega(TEMPO_MINIMO_ENTREGA),
+          maximo: calcularHorarioEntrega(TEMPO_MAXIMO_ENTREGA)
+        }
+      };
+    }
+
+    return { ...p, status };
+  });
 }
 
 export function getPedidosUsuario(pedidos, telefone) {
@@ -39,7 +62,7 @@ export function getPedidosHoje(pedidos) {
   amanha.setDate(amanha.getDate() + 1);
 
   return pedidos.filter(p => {
-    const dataPedido = new Date(p.dataHora);
+    const dataPedido = new Date(p.data);
     return dataPedido >= hoje && dataPedido < amanha;
   });
 }

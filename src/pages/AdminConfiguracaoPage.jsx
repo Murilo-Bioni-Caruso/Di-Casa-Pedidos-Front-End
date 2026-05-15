@@ -65,6 +65,21 @@ export const AdminConfiguracoesPage = () => {
                 atualizarConfiguracoes({ email: e.target.value })
               }
             />
+
+            <div className="flex items-center gap-2 pt-2">
+              <input
+                type="checkbox"
+                id="filtrarPorDia"
+                checked={configuracoes.filtrarPorDia}
+                onChange={(e) =>
+                  atualizarConfiguracoes({ filtrarPorDia: e.target.checked })
+                }
+                className="w-4 h-4 text-[#FF6B35] rounded focus:ring-[#FF6B35]"
+              />
+              <label htmlFor="filtrarPorDia" className="text-sm text-gray-700 font-medium cursor-pointer">
+                Filtrar cardápio automaticamente por dia da semana
+              </label>
+            </div>
           </div>
 
           {/* HORÁRIOS */}

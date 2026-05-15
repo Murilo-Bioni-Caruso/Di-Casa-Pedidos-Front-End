@@ -10,7 +10,7 @@ export function HomePage() {
     const { filtrarProdutos,getPratoDoDia } = useRestaurante();
 
     // Filtrar produtos
-    const produtosFiltrados = filtrarProdutos(categoriaAtiva);
+    const produtosFiltrados = filtrarProdutos(categoriaAtiva, true);
     const pratoDoDia = getPratoDoDia();
     // Nome da categoria
     const nomeCategoria = categoriasConfig[categoriaAtiva] || 'Produtos';

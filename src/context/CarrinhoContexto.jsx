@@ -1,44 +1,38 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState } from 'react';
 import * as carrinhoService from '../service/CarrinhoService';
 
 const CarrinhoContext = createContext();
 
 export const CarrinhoProvider = ({ children }) => {
   const [itens, setItens] = useState(() => {
-    const salvo = localStorage.getItem('carrinho-dicasa');
+    const salvo = sessionStorage.getItem('carrinho-dicasa');
     return salvo ? JSON.parse(salvo) : [];
   });
 
-  useEffect(() => {
-    localStorage.setItem('carrinho-dicasa', JSON.stringify(itens));
-  }, [itens]);
+  const salvar = (novosItens) => {
+    sessionStorage.setItem('carrinho-dicasa', JSON.stringify(novosItens));
+    setItens(novosItens);
+  };
 
   const adicionarItem = (produto) => {
-    setItens(prev => carrinhoService.adicionarItem(prev, produto));
+    salvar(carrinhoService.adicionarItem(itens, produto));
   };
 
   const removerItem = (produtoId) => {
-    setItens(prev => carrinhoService.removerItem(prev, produtoId));
+    salvar(carrinhoService.removerItem(itens, produtoId));
   };
 
   const atualizarQuantidade = (produtoId, quantidade) => {
-    setItens(prev =>
-      carrinhoService.atualizarQuantidade(prev, produtoId, quantidade)
-    );
+    salvar(carrinhoService.atualizarQuantidade(itens, produtoId, quantidade));
   };
 
   const limparCarrinho = () => {
+    sessionStorage.removeItem('carrinho-dicasa');
     setItens([]);
-    localStorage.removeItem('carrinho-dicasa');
   };
 
-  const getTotalItens = () => {
-    return carrinhoService.getTotalItens(itens);
-  };
-
-  const getSubtotal = () => {
-    return carrinhoService.getSubtotal(itens);
-  };
+  const getTotalItens = () => carrinhoService.getTotalItens(itens);
+  const getSubtotal = () => carrinhoService.getSubtotal(itens);
 
   return (
     <CarrinhoContext.Provider
@@ -59,10 +53,8 @@ export const CarrinhoProvider = ({ children }) => {
 
 export const useCarrinho = () => {
   const context = useContext(CarrinhoContext);
-
   if (!context) {
     throw new Error('useCarrinho deve ser usado dentro de CarrinhoProvider');
   }
-
   return context;
 };

@@ -35,16 +35,47 @@ export function calcularDistancia(endereco) {
     return Math.round(distancia * 10) / 10;
 }
 
-export function filtrarProdutos(produtos, categoria) {
-    if (!categoria || categoria === 'all') return produtos;
+export function filtrarProdutos(produtos, categoria, apenasDisponiveis = false) {
+    let lista = produtos;
 
-    return produtos.filter((p) => p.categoria === categoria);
+    if (apenasDisponiveis) {
+        const diaAtual = getDiaAtual().key;
+        const isFimDeSemana = diaAtual === 'sabado' || diaAtual === 'domingo';
+
+        lista = produtos.filter((p) => {
+            // Regra para assados: apenas no fim de semana
+            if (p.categoria === 'assados') {
+                return isFimDeSemana;
+            }
+
+            // Regra para produtos com dias específicos (ex: marmitas)
+            // Agora suporta array ou string única para retrocompatibilidade
+            if (p.diaDaSemana) {
+                if (Array.isArray(p.diaDaSemana)) {
+                    return p.diaDaSemana.length === 0 || p.diaDaSemana.includes(diaAtual);
+                }
+                return p.diaDaSemana === diaAtual;
+            }
+
+            // Outras categorias sempre visíveis
+            return true;
+        });
+    }
+
+    if (!categoria || categoria === 'all') return lista;
+
+    return lista.filter((p) => p.categoria === categoria);
 }
 
 export function getPratoDoDia(produtos) {
-  const diaAtual = getDiaAtual();
+  const diaAtual = getDiaAtual().key;
 
-  return produtos.find(p => p.diaDaSemana === diaAtual.key);
+  return produtos.find(p => {
+    if (Array.isArray(p.diaDaSemana)) {
+        return p.diaDaSemana.includes(diaAtual);
+    }
+    return p.diaDaSemana === diaAtual;
+  });
 }
 
 export function calcularTaxaEntrega(distancia, configuracoes) {

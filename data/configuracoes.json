@@ -1,0 +1,41 @@
+{
+  "nome": "DiCasa Marmitaria",
+  "endereco": "Rua das Flores, 123 - Centro",
+  "telefone": "(11) 98765-4321",
+  "email": "contato@dicasa.com.br",
+  "horarioFuncionamento": {
+    "segunda": {
+      "open": "11:00",
+      "close": "22:00"
+    },
+    "terca": {
+      "open": "11:00",
+      "close": "22:00"
+    },
+    "quarta": {
+      "open": "11:00",
+      "close": "22:00"
+    },
+    "quinta": {
+      "open": "09:00",
+      "close": "18:00"
+    },
+    "sexta": {
+      "open": "11:00",
+      "close": "22:00"
+    },
+    "sabado": {
+      "open": "11:00",
+      "close": "22:00"
+    },
+    "domingo": {
+      "open": "11:00",
+      "close": "22:00"
+    }
+  },
+  "latitude": -23.5505,
+  "longitude": -46.6333,
+  "raioEntregaGratis": 5,
+  "taxaPorKm": 2.5,
+  "filtrarPorDia": true
+}

@@ -15,8 +15,8 @@ export function Cabecalho() {
     const { usuario, limparUsuario } = useUsuario();
     const totalItems = getTotalItens();
     const [showUserMenu, setShowUserMenu] = useState(false);
-    const horarioFuncionamento = configuracoes.horarioFuncionamento;
-    const horarioTexto = obterStatusFuncionamento(horarioFuncionamento)
+    const horarioFuncionamento = configuracoes?.horarioFuncionamento;
+    const horarioTexto = horarioFuncionamento ? obterStatusFuncionamento(horarioFuncionamento) : '';
 
     const handleLogout = () => {
         limparUsuario();

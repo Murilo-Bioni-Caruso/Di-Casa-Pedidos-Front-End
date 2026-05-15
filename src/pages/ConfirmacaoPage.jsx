@@ -5,21 +5,21 @@ import { Link } from 'react-router-dom';
 import { LINKS } from '../rotas/Links';
 import { formatarMoeda } from '../util/ConversorDeMoeda';
 
+
 export function ConfirmacaoPage() {
   const [pedido, setPedido] = useState(null);
 
   useEffect(() => {
-    const ultimoPedido = localStorage.getItem('ultimo-pedido');
+    const ultimoPedido = sessionStorage.getItem('ultimo-pedido');
     if (ultimoPedido) {
       setPedido(JSON.parse(ultimoPedido));
+      // Calcula o horário no momento exato em que o pedido é confirmado
     }
   }, []);
 
-  // 🔥 loading
   if (!pedido) {
     return (
       <div className="min-h-screen bg-gray-50">
-
         <main className="container mx-auto px-4 py-12 max-w-2xl text-center">
           <p className="text-gray-600">
             Carregando informações do pedido...
@@ -31,7 +31,6 @@ export function ConfirmacaoPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-
       <main className="container mx-auto px-4 py-12 max-w-2xl">
         <div className="bg-white rounded-xl shadow-lg p-8 text-center">
 
@@ -133,9 +132,8 @@ export function ConfirmacaoPage() {
           {/* Tempo */}
           <div className="bg-[#FFD93D] rounded-lg p-4 mb-6">
             <Package className="w-8 h-8 text-gray-800 mx-auto mb-2" />
-
             <p className="text-gray-800">
-              ⏱️ Tempo estimado de entrega: <strong>40-60 minutos</strong>
+              ⏱️ Seu pedido está <strong>aguardando confirmação</strong>. O horário de entrega será informado quando começar o preparo.
             </p>
           </div>
 
