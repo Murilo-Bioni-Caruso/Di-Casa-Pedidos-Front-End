@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import * as restauranteService from '../service/RestauranteService';
-import { produtosApi, configuracoesApi } from '../api/api';
+import { produtosApi, configuracoesApi, mapsApi } from '../api/api';
 
 const RestauranteContext = createContext();
 
@@ -92,8 +92,13 @@ export const RestauranteProvider = ({ children }) => {
 
   // ─── REGRAS ───────────────────────────────────────────
 
-  const calcularDistancia = (endereco) => {
-    return restauranteService.calcularDistancia(endereco);
+  const calcularDistancia = async (endereco) => {
+    try {
+      const resultado = await mapsApi.calcularDistancia(endereco);
+      return resultado.distanciaKm;
+    } catch {
+      return restauranteService.calcularDistancia(endereco);
+    }
   };
 
   const calcularTaxaEntrega = (distancia) => {

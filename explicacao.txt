@@ -1,0 +1,151 @@
+====================================================
+  VARIÁVEIS DE AMBIENTE — O QUE É E O QUE FAREMOS
+====================================================
+
+----------------------------------------------------
+O PROBLEMA ATUAL
+----------------------------------------------------
+
+Hoje, a URL do backend está escrita diretamente no código:
+
+  src/api/api.js → const BASE_URL = 'http://localhost:3001'
+  server.js      → const PORT = 3001
+
+Isso causa dois problemas:
+
+  1. Se mudar o endereço do servidor (ex: colocar na nuvem),
+     precisaria abrir o código e editar manualmente.
+
+  2. Chaves de API secretas (Google Maps, Mercado Pago) NÃO podem
+     ficar no código — qualquer um que acesse o repositório vê.
+
+
+----------------------------------------------------
+O QUE É UMA VARIÁVEL DE AMBIENTE
+----------------------------------------------------
+
+É uma variável configurada FORA do código, no sistema operacional
+ou em um arquivo especial (.env). O código lê o valor dela em
+tempo de execução, sem saber de onde vem.
+
+Exemplo simples:
+
+  Sem variável de ambiente:
+    const url = 'http://localhost:3001'   ← valor fixo no código
+
+  Com variável de ambiente:
+    const url = process.env.BACKEND_URL   ← valor vem de fora
+
+
+----------------------------------------------------
+O ARQUIVO .env
+----------------------------------------------------
+
+É um arquivo de texto simples na raiz do projeto, com esse formato:
+
+  CHAVE=valor
+
+Exemplo do que criaremos:
+
+  VITE_API_URL=http://localhost:3001
+  PORT=3001
+
+Regras importantes:
+  - Nunca sobe o .env pro GitHub (dados secretos ficam aqui)
+  - O .gitignore já costuma ignorar esse arquivo
+  - Cada desenvolvedor do projeto tem o seu próprio .env local
+
+
+----------------------------------------------------
+DIFERENÇA: FRONTEND vs BACKEND
+----------------------------------------------------
+
+O projeto tem duas partes, e cada uma lida com .env diferente:
+
+  BACKEND (server.js — Node/Express):
+    - Lê variáveis com: process.env.NOME_DA_VARIAVEL
+    - Precisa de uma biblioteca chamada "dotenv" para ler o .env
+    - Exemplo: process.env.PORT
+
+  FRONTEND (React/Vite):
+    - Lê variáveis com: import.meta.env.NOME_DA_VARIAVEL
+    - O Vite já lê o .env automaticamente, sem biblioteca extra
+    - OBRIGATÓRIO: o nome da variável precisa começar com VITE_
+    - Exemplo: import.meta.env.VITE_API_URL
+
+    Por que o prefixo VITE_?
+    Segurança. O Vite só expõe pro código do navegador as variáveis
+    que começam com VITE_. As outras ficam ocultas.
+
+
+----------------------------------------------------
+O QUE FAREMOS NO PROJETO
+----------------------------------------------------
+
+Passo 1 — Criar o arquivo .env na raiz do projeto:
+
+  VITE_API_URL=http://localhost:3001
+  PORT=3001
+
+Passo 2 — Criar o arquivo .env.example (esse SOBE pro GitHub):
+  Serve para outros desenvolvedores saberem quais variáveis
+  precisam configurar, sem expor os valores reais.
+
+  VITE_API_URL=
+  PORT=
+
+Passo 3 — Confirmar que .env está no .gitignore:
+  Verificar se a linha ".env" já existe no arquivo .gitignore.
+  Se não existir, adicionar.
+
+Passo 4 — Atualizar src/api/api.js:
+
+  ANTES:
+    const BASE_URL = 'http://localhost:3001'
+
+  DEPOIS:
+    const BASE_URL = import.meta.env.VITE_API_URL
+
+Passo 5 — Atualizar server.js:
+
+  ANTES:
+    const PORT = 3001
+
+  DEPOIS:
+    import 'dotenv/config'       ← importar a biblioteca dotenv
+    const PORT = process.env.PORT || 3001
+
+Passo 6 — Instalar a biblioteca dotenv no projeto:
+
+  npm install dotenv
+
+  (O Vite não precisa, mas o Express sim para ler o .env)
+
+
+----------------------------------------------------
+RESULTADO FINAL
+----------------------------------------------------
+
+Depois disso:
+  - Trocar o endereço do servidor = mudar só o .env, sem tocar código
+  - Chaves de API (Google Maps, Mercado Pago) entram no .env, seguras
+  - O repositório no GitHub não terá nenhum dado sensível
+
+
+----------------------------------------------------
+RESUMO DOS ARQUIVOS QUE SERÃO ALTERADOS
+----------------------------------------------------
+
+  CRIADOS:
+    .env              ← variáveis reais (não sobe pro GitHub)
+    .env.example      ← modelo vazio (sobe pro GitHub)
+
+  ALTERADOS:
+    src/api/api.js    ← BASE_URL usa import.meta.env.VITE_API_URL
+    server.js         ← PORT usa process.env.PORT + importa dotenv
+    .gitignore        ← garante que .env está listado
+
+  INSTALADO:
+    dotenv            ← biblioteca para o Express ler o .env
+
+====================================================

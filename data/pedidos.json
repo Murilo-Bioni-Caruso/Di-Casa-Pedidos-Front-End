@@ -1,5 +1,298 @@
 [
   {
+    "id": "PED-1778890283975",
+    "usuario": {
+      "nome": "jorge",
+      "telefone": "(19) 99999-9999",
+      "endereco": "Bairro Bela Vista, Avenida 5, vilhena",
+      "isAdmin": false,
+      "distancia": 2217,
+      "taxaEntrega": 5530,
+      "credenciais": {
+        "usuario": "jorge",
+        "senha": "VmQcvQnE"
+      },
+      "id": "usuario-1778890274096"
+    },
+    "itens": [
+      {
+        "produto": {
+          "nome": "Marmita de Frango",
+          "descricao": "Frango grelhado com arroz, feijão e salada",
+          "preco": "25",
+          "categoria": "marmitas",
+          "imagem": "http://localhost:3001/imagens/img-1778795335493.png",
+          "diaDaSemana": [
+            "domingo",
+            "segunda",
+            "terca",
+            "quarta",
+            "quinta",
+            "sexta",
+            "sabado"
+          ],
+          "id": "1"
+        },
+        "quantidade": 3
+      }
+    ],
+    "subtotal": 75,
+    "taxaEntrega": 5530,
+    "total": 5605,
+    "metodoPagamento": "pix",
+    "data": 1778890283966,
+    "status": "entregue",
+    "horarioEntrega": {
+      "minimo": "23:32",
+      "maximo": "23:52"
+    }
+  },
+  {
+    "id": "PED-1778889079419",
+    "usuario": {
+      "nome": "WILLIAN THIAGO JUNGES ALEXANDRINO",
+      "telefone": "(69) 99971-4972",
+      "endereco": "Rua itupeva, vila furlan, 45",
+      "email": "willianjungesa@gmail.com",
+      "isAdmin": false,
+      "credenciais": {
+        "usuario": "Teste1",
+        "senha": "123456!A"
+      },
+      "distancia": 1.4,
+      "taxaEntrega": 0,
+      "id": "usuario-1778886738866"
+    },
+    "itens": [
+      {
+        "produto": {
+          "nome": "Marmita de Frango",
+          "descricao": "Frango grelhado com arroz, feijão e salada",
+          "preco": "25",
+          "categoria": "marmitas",
+          "imagem": "http://localhost:3001/imagens/img-1778795335493.png",
+          "diaDaSemana": [
+            "domingo",
+            "segunda",
+            "terca",
+            "quarta",
+            "quinta",
+            "sexta",
+            "sabado"
+          ],
+          "id": "1"
+        },
+        "quantidade": 2
+      }
+    ],
+    "subtotal": 50,
+    "taxaEntrega": 0,
+    "total": 50,
+    "metodoPagamento": "pix",
+    "data": 1778889079415,
+    "status": "entregue",
+    "horarioEntrega": {
+      "minimo": "23:32",
+      "maximo": "23:52"
+    }
+  },
+  {
+    "id": "PED-1778887980352",
+    "usuario": {
+      "nome": "WILLIAN THIAGO JUNGES ALEXANDRINO",
+      "telefone": "(69) 99971-4972",
+      "endereco": "Rua itupeva, vila furlan, 45",
+      "email": "willianjungesa@gmail.com",
+      "isAdmin": false,
+      "credenciais": {
+        "usuario": "Teste1",
+        "senha": "123456!A"
+      },
+      "distancia": 1.4,
+      "taxaEntrega": 0,
+      "id": "usuario-1778886738866"
+    },
+    "itens": [
+      {
+        "produto": {
+          "nome": "Marmita de Frango",
+          "descricao": "Frango grelhado com arroz, feijão e salada",
+          "preco": "25",
+          "categoria": "marmitas",
+          "imagem": "http://localhost:3001/imagens/img-1778795335493.png",
+          "diaDaSemana": [
+            "domingo",
+            "segunda",
+            "terca",
+            "quarta",
+            "quinta",
+            "sexta",
+            "sabado"
+          ],
+          "id": "1"
+        },
+        "quantidade": 1
+      }
+    ],
+    "subtotal": 25,
+    "taxaEntrega": 0,
+    "total": 25,
+    "metodoPagamento": "pix",
+    "data": 1778887980350,
+    "status": "entregue",
+    "horarioEntrega": {
+      "minimo": "23:32",
+      "maximo": "23:52"
+    }
+  },
+  {
+    "id": "PED-1778887857305",
+    "usuario": {
+      "nome": "WILLIAN THIAGO JUNGES ALEXANDRINO",
+      "telefone": "(69) 99971-4972",
+      "endereco": "Rua itupeva, vila furlan, 45",
+      "email": "willianjungesa@gmail.com",
+      "isAdmin": false,
+      "credenciais": {
+        "usuario": "Teste1",
+        "senha": "123456!A"
+      },
+      "distancia": 1.4,
+      "taxaEntrega": 0,
+      "id": "usuario-1778886738866"
+    },
+    "itens": [
+      {
+        "produto": {
+          "nome": "Marmita de Frango",
+          "descricao": "Frango grelhado com arroz, feijão e salada",
+          "preco": "25",
+          "categoria": "marmitas",
+          "imagem": "http://localhost:3001/imagens/img-1778795335493.png",
+          "diaDaSemana": [
+            "domingo",
+            "segunda",
+            "terca",
+            "quarta",
+            "quinta",
+            "sexta",
+            "sabado"
+          ],
+          "id": "1"
+        },
+        "quantidade": 2
+      }
+    ],
+    "subtotal": 50,
+    "taxaEntrega": 0,
+    "total": 50,
+    "metodoPagamento": "pix",
+    "data": 1778887857303,
+    "status": "entregue",
+    "horarioEntrega": {
+      "minimo": "23:32",
+      "maximo": "23:52"
+    }
+  },
+  {
+    "id": "PED-1778887847090",
+    "usuario": {
+      "nome": "WILLIAN THIAGO JUNGES ALEXANDRINO",
+      "telefone": "(69) 99971-4972",
+      "endereco": "Rua itupeva, vila furlan, 45",
+      "email": "willianjungesa@gmail.com",
+      "isAdmin": false,
+      "credenciais": {
+        "usuario": "Teste1",
+        "senha": "123456!A"
+      },
+      "distancia": 1.4,
+      "taxaEntrega": 0,
+      "id": "usuario-1778886738866"
+    },
+    "itens": [
+      {
+        "produto": {
+          "nome": "Marmita de Frango",
+          "descricao": "Frango grelhado com arroz, feijão e salada",
+          "preco": "25",
+          "categoria": "marmitas",
+          "imagem": "http://localhost:3001/imagens/img-1778795335493.png",
+          "diaDaSemana": [
+            "domingo",
+            "segunda",
+            "terca",
+            "quarta",
+            "quinta",
+            "sexta",
+            "sabado"
+          ],
+          "id": "1"
+        },
+        "quantidade": 1
+      }
+    ],
+    "subtotal": 25,
+    "taxaEntrega": 0,
+    "total": 25,
+    "metodoPagamento": "dinheiro",
+    "data": 1778887847087,
+    "status": "entregue",
+    "horarioEntrega": {
+      "minimo": "23:32",
+      "maximo": "23:52"
+    }
+  },
+  {
+    "id": "PED-1778887832789",
+    "usuario": {
+      "nome": "WILLIAN THIAGO JUNGES ALEXANDRINO",
+      "telefone": "(69) 99971-4972",
+      "endereco": "Rua itupeva, vila furlan, 45",
+      "email": "willianjungesa@gmail.com",
+      "isAdmin": false,
+      "credenciais": {
+        "usuario": "Teste1",
+        "senha": "123456!A"
+      },
+      "distancia": 1.4,
+      "taxaEntrega": 0,
+      "id": "usuario-1778886738866"
+    },
+    "itens": [
+      {
+        "produto": {
+          "nome": "Marmita de Frango",
+          "descricao": "Frango grelhado com arroz, feijão e salada",
+          "preco": "25",
+          "categoria": "marmitas",
+          "imagem": "http://localhost:3001/imagens/img-1778795335493.png",
+          "diaDaSemana": [
+            "domingo",
+            "segunda",
+            "terca",
+            "quarta",
+            "quinta",
+            "sexta",
+            "sabado"
+          ],
+          "id": "1"
+        },
+        "quantidade": 2
+      }
+    ],
+    "subtotal": 50,
+    "taxaEntrega": 0,
+    "total": 50,
+    "metodoPagamento": "cartao",
+    "data": 1778887832742,
+    "status": "entregue",
+    "horarioEntrega": {
+      "minimo": "23:32",
+      "maximo": "23:52"
+    }
+  },
+  {
     "id": "PED-1778820100057",
     "usuario": {
       "id": "usuario-admin",
@@ -33,7 +326,11 @@
     "total": 10,
     "metodoPagamento": "pix",
     "data": 1778820100055,
-    "status": "pendente"
+    "status": "entregue",
+    "horarioEntrega": {
+      "minimo": "23:32",
+      "maximo": "23:52"
+    }
   },
   {
     "id": "PED-1778820086004",
@@ -77,7 +374,11 @@
     "total": 50,
     "metodoPagamento": "pix",
     "data": 1778820086002,
-    "status": "pendente"
+    "status": "entregue",
+    "horarioEntrega": {
+      "minimo": "23:33",
+      "maximo": "23:53"
+    }
   },
   {
     "id": "PED-1778819810505",
@@ -121,7 +422,11 @@
     "total": 50,
     "metodoPagamento": "pix",
     "data": 1778819810494,
-    "status": "pendente"
+    "status": "entregue",
+    "horarioEntrega": {
+      "minimo": "23:32",
+      "maximo": "23:52"
+    }
   },
   {
     "id": "PED-1778799983910",
@@ -697,28 +1002,5 @@
     "metodoPagamento": "pix",
     "data": 1778796765267,
     "status": "entregue"
-  },
-  {
-    "id": "PED-1778795535587",
-    "usuario": {
-      "nome": "Administrador",
-      "telefone": "000000000",
-      "endereco": "rua dos bobos, numero 0",
-      "isAdmin": false,
-      "distancia": 4.4,
-      "taxaEntrega": 0,
-      "credenciais": {
-        "usuario": "administrador",
-        "senha": "BzEJJftQ"
-      },
-      "id": "usuario-1778795527025"
-    },
-    "itens": [],
-    "subtotal": 0,
-    "taxaEntrega": 0,
-    "total": 0,
-    "metodoPagamento": "pix",
-    "data": 1778795535579,
-    "status": "cancelado"
   }
 ]

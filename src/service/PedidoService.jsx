@@ -4,7 +4,7 @@ export function adicionarPedido(pedidos, pedido) {
   return [pedido, ...pedidos];
 }
 export function criarPedido(dados) {
-  return {
+  const pedido = {
     id: `PED-${Date.now()}`,
     usuario: dados.usuario,
     itens: dados.itens,
@@ -12,9 +12,12 @@ export function criarPedido(dados) {
     taxaEntrega: dados.taxaEntrega,
     total: dados.total,
     metodoPagamento: dados.metodoPagamento,
+    tipoEntrega: dados.tipoEntrega || 'entrega',
     data: Date.now(),
     status: OrderStatus.PENDENTE
   };
+  if (dados.trocoPara !== undefined) pedido.trocoPara = dados.trocoPara;
+  return pedido;
 }
 
 const TEMPO_MINIMO_ENTREGA = 40;
@@ -101,13 +104,13 @@ export function obterPedidos() {
   return pedidos.map(normalizarPedido);
 }
 
-export function calcularResumoPedido({ itens, usuario, calcularTaxaEntrega, calcularDistancia }) {
+export function calcularResumoPedido({ itens, usuario, calcularTaxaEntrega }) {
   const subtotal = itens.reduce(
     (total, item) => total + item.produto.preco * item.quantidade,
     0
   );
 
-  const distancia = calcularDistancia(usuario?.endereco || '');
+  const distancia = usuario?.distancia || 0;
   const taxaEntrega = calcularTaxaEntrega(distancia);
   const total = subtotal + taxaEntrega;
 

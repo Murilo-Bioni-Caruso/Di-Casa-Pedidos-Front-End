@@ -44,12 +44,12 @@ export function obterStatusFuncionamento(horario) {
   fechamento.setHours(horaFechamento, minFechamento, 0);
 
   if (agora >= abertura && agora <= fechamento) {
-    return `🟢 Aberto agora • Fecha às ${hoje.close}`;
+    return ` Aberto agora • Fecha às ${hoje.close}`;
   }
 
   if (agora < abertura) {
-    return `🕒 Abre às ${hoje.open}`;
+    return ` Abre às ${hoje.open}`;
   }
 
-  return '🔴 Fechado';
+  return ' Fechado';
 }

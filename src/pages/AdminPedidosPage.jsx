@@ -1,5 +1,5 @@
-import { ChevronDown, ChevronUp, Package } from 'lucide-react';
-import { useState } from 'react';
+import { Banknote, ChevronDown, ChevronUp, CreditCard, MapPin, Package, Smartphone } from 'lucide-react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { LayoutAdmin } from '../components/LayoutAdmin';
 import { usePedido } from '../context/PedidoContexto';
 import { formatarMoeda } from '../util/ConversorDeMoeda';
@@ -16,8 +16,37 @@ export function AdminPedidosPage() {
 
   const [expandedPedido, setExpandedPedido] = useState(null);
   const [filtroStatus, setFiltroStatus] = useState('all');
+  const scrollSalvo = useRef(null);
+
+  useLayoutEffect(() => {
+    if (scrollSalvo.current !== null) {
+      window.scrollTo(0, scrollSalvo.current);
+      scrollSalvo.current = null;
+    }
+  });
 
   const pedidosExibidos = filtrarPedidos(filtroStatus);
+
+  const pagamentoBadge = {
+    pix:      { label: 'PIX',      icon: Smartphone, cor: 'text-green-700 bg-green-100' },
+    dinheiro: { label: 'Dinheiro', icon: Banknote,   cor: 'text-yellow-700 bg-yellow-100' },
+    cartao:   { label: 'Cartão',   icon: CreditCard, cor: 'text-blue-700 bg-blue-100' },
+  };
+
+  const proximoStatus = {
+    pendente:   { key: 'preparando', label: 'Iniciar Preparo',   cor: 'bg-blue-600 hover:bg-blue-700' },
+    preparando: { key: 'pronto',     label: 'Marcar Pronto',     cor: 'bg-green-600 hover:bg-green-700' },
+    pronto:     { key: 'entregue',   label: 'Confirmar Entrega', cor: 'bg-gray-700 hover:bg-gray-800' },
+  };
+
+  const avancarStatus = (e, pedidoId, statusAtual) => {
+    e.stopPropagation();
+    e.currentTarget.blur();
+    const proximo = proximoStatus[statusAtual];
+    if (!proximo) return;
+    scrollSalvo.current = window.scrollY;
+    atualizarStatusPedido(pedidoId, proximo.key);
+  };
 
   const toggleExpandido = (pedidoId) => {
     setExpandedPedido(expandedPedido === pedidoId ? null : pedidoId);
@@ -86,6 +115,9 @@ export function AdminPedidosPage() {
               const expandido = expandedPedido === pedido.id;
               const status = statusConfig[pedido.status];
 
+              const pag = pagamentoBadge[pedido.metodoPagamento];
+              const PagIcon = pag?.icon;
+
               return (
                 <div key={pedido.id} className="bg-white rounded-xl shadow-lg">
 
@@ -108,6 +140,23 @@ export function AdminPedidosPage() {
                         <p className="text-sm text-gray-600">
                           {pedido.usuario.nome} • {pedido.usuario.telefone}
                         </p>
+
+                        <div className="flex items-center gap-2 mt-1 flex-wrap">
+                          {pag && (
+                            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium ${pag.cor}`}>
+                              <PagIcon className="w-3 h-3" />
+                              {pag.label}
+                              {pedido.metodoPagamento === 'dinheiro' && pedido.trocoPara && (
+                                <span className="ml-1">• troco p/ {formatarMoeda(pedido.trocoPara)}</span>
+                              )}
+                            </span>
+                          )}
+                          {pedido.tipoEntrega === 'retirada' && (
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium text-purple-700 bg-purple-100">
+                              <MapPin className="w-3 h-3" /> Retirada no local
+                            </span>
+                          )}
+                        </div>
                       </div>
 
                       <div className="flex items-center gap-4">
@@ -118,6 +167,15 @@ export function AdminPedidosPage() {
                             {formatarMoeda(pedido.total)}
                           </p>
                         </div>
+
+                        {proximoStatus[pedido.status] && (
+                          <button
+                            onClick={(e) => avancarStatus(e, pedido.id, pedido.status)}
+                            className={`px-3 py-1.5 text-white text-xs rounded-lg transition-colors ${proximoStatus[pedido.status].cor}`}
+                          >
+                            {proximoStatus[pedido.status].label}
+                          </button>
+                        )}
 
                         <span className={`px-2 py-1 rounded ${status.color}`}>
                           {status.label}

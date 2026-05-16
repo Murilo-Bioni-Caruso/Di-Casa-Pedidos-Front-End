@@ -1,4 +1,4 @@
-import { ArrowLeft, Banknote, CreditCard, Receipt, Smartphone } from 'lucide-react';
+import { ArrowLeft, Banknote, CreditCard, MapPin, Receipt, Smartphone, Store } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCarrinho } from '../context/CarrinhoContexto';
@@ -12,10 +12,22 @@ export function CheckoutPage() {
   const { itens, limparCarrinho } = useCarrinho();
   const { usuario } = useUsuario();
   const { getResumoPedido, criarPedidoCompleto } = usePedido();
-  const { subtotal, taxaEntrega, total, distancia } = getResumoPedido(itens, usuario);
+  const resumo = getResumoPedido(itens, usuario);
 
+  const [tipoEntrega, setTipoEntrega] = useState('entrega');
   const [metodoPagamento, setMetodoPagamento] = useState('pix');
+  const [valorDinheiro, setValorDinheiro] = useState('');
   const [finalizando, setFinalizando] = useState(false);
+
+  const taxaEntrega = tipoEntrega === 'retirada' ? 0 : resumo.taxaEntrega;
+  const total = resumo.subtotal + taxaEntrega;
+  const subtotal = resumo.subtotal;
+  const distancia = resumo.distancia;
+
+  const troco = valorDinheiro ? parseFloat(valorDinheiro) - total : null;
+  const dinheiroInsuficiente = metodoPagamento === 'dinheiro' && (
+    !valorDinheiro || parseFloat(valorDinheiro) < total
+  );
 
   useEffect(() => {
     if (!usuario) {
@@ -26,10 +38,11 @@ export function CheckoutPage() {
   const finalizarPedido = async () => {
     setFinalizando(true);
     try {
-      await criarPedidoCompleto({ usuario, itens, metodoPagamento });
+      const extras = metodoPagamento === 'dinheiro' ? { trocoPara: parseFloat(valorDinheiro) } : {};
+      await criarPedidoCompleto({ usuario, itens, metodoPagamento, tipoEntrega, ...extras });
       limparCarrinho();
       navigate(LINKS.CONFIRMACAO);
-    } catch (erro) {
+    } catch {
       alert('Erro ao finalizar pedido. Verifique se o servidor está rodando.');
     } finally {
       setFinalizando(false);
@@ -54,6 +67,29 @@ export function CheckoutPage() {
 
           {/* Forma de pagamento */}
           <div className="bg-white rounded-xl shadow-lg p-6">
+
+            {/* Tipo de entrega */}
+            <h2 className="text-gray-900 mb-3 flex items-center gap-2">
+              <MapPin className="w-5 h-5" />
+              Tipo de Entrega
+            </h2>
+            <div className="flex gap-2 mb-6">
+              <button
+                type="button"
+                onClick={() => setTipoEntrega('entrega')}
+                className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-lg border-2 transition-all ${tipoEntrega === 'entrega' ? 'border-[#FF6B35] bg-orange-50 text-[#FF6B35]' : 'border-gray-200 text-gray-600 hover:border-gray-300'}`}
+              >
+                <MapPin className="w-4 h-4" /> Entrega
+              </button>
+              <button
+                type="button"
+                onClick={() => setTipoEntrega('retirada')}
+                className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-lg border-2 transition-all ${tipoEntrega === 'retirada' ? 'border-[#FF6B35] bg-orange-50 text-[#FF6B35]' : 'border-gray-200 text-gray-600 hover:border-gray-300'}`}
+              >
+                <Store className="w-4 h-4" /> Retirada no Local
+              </button>
+            </div>
+
             <h2 className="text-gray-900 mb-4 flex items-center gap-2">
               <CreditCard className="w-5 h-5" />
               Forma de Pagamento
@@ -69,7 +105,7 @@ export function CheckoutPage() {
               <label className={`flex items-center gap-3 p-4 rounded-lg border-2 cursor-pointer transition-all ${metodoPagamento === 'cartao' ? 'border-[#FF6B35] bg-orange-50' : 'border-gray-200 hover:border-gray-300'}`}>
                 <input type="radio" value="cartao" checked={metodoPagamento === 'cartao'} onChange={(e) => setMetodoPagamento(e.target.value)} />
                 <CreditCard className="w-5 h-5" />
-                Cartão de Crédito
+                Cartão na Entrega
               </label>
 
               <label className={`flex items-center gap-3 p-4 rounded-lg border-2 cursor-pointer transition-all ${metodoPagamento === 'dinheiro' ? 'border-[#FF6B35] bg-orange-50' : 'border-gray-200 hover:border-gray-300'}`}>
@@ -81,7 +117,33 @@ export function CheckoutPage() {
 
             {metodoPagamento === 'pix' && (
               <div className="mt-4 p-4 bg-blue-50 rounded-lg">
-                <p className="text-sm text-blue-800">💡 O código PIX será gerado após a confirmação</p>
+                <p className="text-sm text-blue-800">💡 A chave PIX será exibida na tela de confirmação</p>
+              </div>
+            )}
+
+            {metodoPagamento === 'dinheiro' && (
+              <div className="mt-4 p-4 bg-yellow-50 rounded-lg space-y-3">
+                <p className="text-sm text-yellow-800">💵 Informe o valor que vai pagar para levarmos o troco</p>
+                <div>
+                  <label className="text-yellow-900 text-sm font-medium mb-1 block">
+                    Vou pagar com (R$)
+                  </label>
+                  <input
+                    type="number"
+                    min={total}
+                    step="0.01"
+                    value={valorDinheiro}
+                    onChange={(e) => setValorDinheiro(e.target.value)}
+                    placeholder={formatarMoeda(total).replace('R$ ', '')}
+                    className="w-full px-3 py-2 border border-yellow-300 rounded-lg text-sm focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none bg-white"
+                  />
+                  {valorDinheiro && parseFloat(valorDinheiro) < total && (
+                    <p className="text-red-600 text-xs mt-1">Valor insuficiente. Total: {formatarMoeda(total)}</p>
+                  )}
+                  {troco !== null && troco >= 0 && (
+                    <p className="text-green-700 text-sm mt-2 font-semibold">Troco: {formatarMoeda(troco)}</p>
+                  )}
+                </div>
               </div>
             )}
           </div>
@@ -108,9 +170,11 @@ export function CheckoutPage() {
                 <span>{formatarMoeda(subtotal)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600">Entrega ({distancia.toFixed(1)} km)</span>
-                <span className={taxaEntrega === 0 ? 'text-green-600' : ''}>
-                  {taxaEntrega === 0 ? 'Grátis' : formatarMoeda(taxaEntrega)}
+                <span className="text-gray-600">
+                  {tipoEntrega === 'retirada' ? 'Retirada no local' : `Entrega (${distancia.toFixed(1)} km)`}
+                </span>
+                <span className="text-green-600">
+                  {tipoEntrega === 'retirada' ? 'Grátis' : taxaEntrega === 0 ? 'Grátis' : formatarMoeda(taxaEntrega)}
                 </span>
               </div>
               <div className="border-t pt-2 flex justify-between">
@@ -120,15 +184,21 @@ export function CheckoutPage() {
             </div>
 
             <div className="bg-gray-50 rounded-lg p-4 mb-6">
-              <h3 className="text-sm mb-2 text-gray-900">Entregar em:</h3>
+              <h3 className="text-sm mb-2 text-gray-900">
+                {tipoEntrega === 'retirada' ? 'Retirar em:' : 'Entregar em:'}
+              </h3>
               <p>{usuario.nome}</p>
-              <p className="text-sm text-gray-600">{usuario.endereco}</p>
+              {tipoEntrega === 'retirada' ? (
+                <p className="text-sm text-purple-700 font-medium">Retirada no estabelecimento</p>
+              ) : (
+                <p className="text-sm text-gray-600">{usuario.endereco}</p>
+              )}
               <p className="text-sm text-gray-600">{usuario.telefone}</p>
             </div>
 
             <button
               onClick={finalizarPedido}
-              disabled={finalizando}
+              disabled={finalizando || dinheiroInsuficiente}
               className="w-full bg-[#FF6B35] hover:bg-[#FF5722] text-white py-4 rounded-full transition-colors shadow-lg disabled:opacity-50"
             >
               {finalizando ? 'Finalizando...' : 'Confirmar Pedido'}

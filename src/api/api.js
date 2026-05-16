@@ -56,6 +56,12 @@ export const pedidosApi = {
       request(`/pedidos/${id}`, { method: 'PUT', body: JSON.stringify({ status, horarioEntrega }) }),
   };
 
+// ─── MAPS ────────────────────────────────────────────────
+export const mapsApi = {
+  calcularDistancia: (endereco) =>
+    request(`/maps/distancia?endereco=${encodeURIComponent(endereco)}`),
+};
+
 // ─── CONFIGURAÇÕES ───────────────────────────────────────
 export const configuracoesApi = {
   obter: () =>

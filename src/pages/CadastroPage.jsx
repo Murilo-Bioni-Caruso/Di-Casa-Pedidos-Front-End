@@ -1,5 +1,5 @@
 import { ArrowLeft, MapPin, Phone, Truck, User } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Input } from '../components/Input';
 import { useRestaurante } from '../context/RestauranteContexto';
@@ -20,6 +20,8 @@ export function CadastroPage() {
 
     const [carregando, setCarregando] = useState(false);
     const [erro, setErro] = useState('');
+    const [previewEntrega, setPreviewEntrega] = useState({ distancia: 0, taxaEntrega: 0 });
+    const [buscandoDistancia, setBuscandoDistancia] = useState(false);
 
     const [formulario, setFormulario] = useState({
         nome: usuario?.nome || '',
@@ -28,7 +30,24 @@ export function CadastroPage() {
         isAdmin: false
     });
 
-    const { distancia, taxaEntrega } = calcularEntregaPreview(formulario.endereco);
+    useEffect(() => {
+        if (!formulario.endereco || formulario.endereco.trim().length <= 10) {
+            setPreviewEntrega({ distancia: 0, taxaEntrega: 0 });
+            return;
+        }
+        setBuscandoDistancia(true);
+        const timer = setTimeout(async () => {
+            try {
+                const resultado = await calcularEntregaPreview(formulario.endereco);
+                setPreviewEntrega(resultado);
+            } catch {
+                setPreviewEntrega({ distancia: 0, taxaEntrega: 0 });
+            } finally {
+                setBuscandoDistancia(false);
+            }
+        }, 800);
+        return () => clearTimeout(timer);
+    }, [formulario.endereco]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -106,18 +125,24 @@ export function CadastroPage() {
                             required
                         />
 
-                        {distancia > 0 && (
+                        {buscandoDistancia && (
+                            <div className="mt-3 p-3 bg-gray-50 border border-gray-200 rounded-lg">
+                                <p className="text-sm text-gray-500">Calculando distância...</p>
+                            </div>
+                        )}
+
+                        {!buscandoDistancia && previewEntrega.distancia > 0 && (
                             <div className="mt-3 p-4 bg-orange-50 border border-orange-200 rounded-lg">
                                 <div className="flex items-center gap-2 text-orange-900 mb-2">
                                     <Truck className="w-5 h-5" />
                                     <span className="font-semibold text-sm">Informações de Entrega</span>
                                 </div>
                                 <div className="space-y-1 text-sm">
-                                    <p>📍 Distância: <strong>{distancia} km</strong></p>
+                                    <p>📍 Distância: <strong>{previewEntrega.distancia} km</strong></p>
                                     <p>
                                         💵 Taxa:{' '}
-                                        <strong className={taxaEntrega === 0 ? 'text-green-600' : 'text-orange-600'}>
-                                            {taxaEntrega === 0 ? 'GRÁTIS!' : formatarMoeda(taxaEntrega)}
+                                        <strong className={previewEntrega.taxaEntrega === 0 ? 'text-green-600' : 'text-orange-600'}>
+                                            {previewEntrega.taxaEntrega === 0 ? 'GRÁTIS!' : formatarMoeda(previewEntrega.taxaEntrega)}
                                         </strong>
                                     </p>
                                     <p className="text-gray-500">💡 Até {configuracoes.raioEntregaGratis} km é grátis</p>
