@@ -3,8 +3,8 @@
     "id": "usuario-admin",
     "nome": "Administrador",
     "telefone": "(11) 94002-8922",
-    "endereco": "rua dos aaaaa",
-    "distancia": 4.8,
+    "endereco": "Rua Itupeva, 45, Vila Furlan",
+    "distancia": 1.4,
     "taxaEntrega": 0,
     "isAdmin": true,
     "credenciais": {
@@ -232,5 +232,59 @@
     "distancia": 0,
     "taxaEntrega": 0,
     "id": "usuario-1778821181956"
+  },
+  {
+    "nome": "Willian",
+    "telefone": "(69) 99971-4972",
+    "endereco": "rua itupeva, 45, vila furlan",
+    "isAdmin": false,
+    "distancia": 1.4,
+    "taxaEntrega": 0,
+    "credenciais": {
+      "usuario": "willian",
+      "senha": "RTRJjmWM"
+    },
+    "id": "usuario-1778883021375"
+  },
+  {
+    "nome": "Teste",
+    "telefone": "(69) 99971-4972",
+    "endereco": "Rua Itupeva, 45, Vila Furlan",
+    "email": "teste@teste.test",
+    "isAdmin": false,
+    "credenciais": {
+      "usuario": "Teste",
+      "senha": "123456!A"
+    },
+    "distancia": 1.4,
+    "taxaEntrega": 0,
+    "id": "usuario-1778884558842"
+  },
+  {
+    "nome": "WILLIAN THIAGO JUNGES ALEXANDRINO",
+    "telefone": "(69) 99971-4972",
+    "endereco": "Rua itupeva, vila furlan, 45",
+    "email": "willianjungesa@gmail.com",
+    "isAdmin": false,
+    "credenciais": {
+      "usuario": "Teste1",
+      "senha": "123456!A"
+    },
+    "distancia": 1.4,
+    "taxaEntrega": 0,
+    "id": "usuario-1778886738866"
+  },
+  {
+    "nome": "jorge",
+    "telefone": "(19) 99999-9999",
+    "endereco": "Bairro Bela Vista, Avenida 5, vilhena",
+    "isAdmin": false,
+    "distancia": 2217,
+    "taxaEntrega": 5530,
+    "credenciais": {
+      "usuario": "jorge",
+      "senha": "VmQcvQnE"
+    },
+    "id": "usuario-1778890274096"
   }
 ]

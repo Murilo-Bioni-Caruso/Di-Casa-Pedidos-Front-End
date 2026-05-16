@@ -7,7 +7,7 @@ const PedidoContext = createContext();
 
 export const PedidoProvider = ({ children }) => {
   const [pedidos, setPedidos] = useState([]);
-  const { calcularTaxaEntrega, calcularDistancia } = useRestaurante();
+  const { calcularTaxaEntrega } = useRestaurante();
 
   // Busca todos os pedidos do servidor ao iniciar
   useEffect(() => {
@@ -22,19 +22,20 @@ export const PedidoProvider = ({ children }) => {
     carregar();
   }, []);
 
-  const criarPedidoCompleto = async ({ usuario, itens, metodoPagamento }) => {
+  const criarPedidoCompleto = async ({ usuario, itens, metodoPagamento, trocoPara, tipoEntrega }) => {
     const resumo = pedidoService.calcularResumoPedido({
       itens,
       usuario,
-      calcularTaxaEntrega,
-      calcularDistancia
+      calcularTaxaEntrega: tipoEntrega === 'retirada' ? () => 0 : calcularTaxaEntrega,
     });
 
     const dadosPedido = pedidoService.criarPedido({
       ...resumo,
       usuario,
       itens,
-      metodoPagamento
+      metodoPagamento,
+      tipoEntrega: tipoEntrega || 'entrega',
+      ...(trocoPara !== undefined && { trocoPara })
     });
 
     const salvo = await pedidosApi.criar(dadosPedido);
@@ -81,7 +82,6 @@ export const PedidoProvider = ({ children }) => {
       itens,
       usuario,
       calcularTaxaEntrega,
-      calcularDistancia
     });
 
   const getTicketMedio = () =>

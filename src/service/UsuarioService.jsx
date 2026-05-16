@@ -26,8 +26,8 @@ export const UsuarioService = {
     localStorage.removeItem(STORAGE_KEY);
   },
 
-  criarUsuario(dados, calcularDistancia, calcularTaxaEntrega) {
-    const { distancia, taxaEntrega } = this.calcularEntrega(
+  async criarUsuario(dados, calcularDistancia, calcularTaxaEntrega) {
+    const { distancia, taxaEntrega } = await this.calcularEntrega(
       dados.endereco,
       calcularDistancia,
       calcularTaxaEntrega
@@ -48,14 +48,14 @@ export const UsuarioService = {
       }
     };
   },
-  calcularEntrega(endereco, calcularDistancia, calcularTaxaEntrega) {
+  async calcularEntrega(endereco, calcularDistancia, calcularTaxaEntrega) {
     const enderecoValido = endereco?.trim().length > 10;
 
     if (!enderecoValido) {
       return { distancia: 0, taxaEntrega: 0 };
     }
 
-    const distancia = calcularDistancia(endereco);
+    const distancia = await calcularDistancia(endereco);
     const taxaEntrega = calcularTaxaEntrega(distancia);
 
     return { distancia, taxaEntrega };

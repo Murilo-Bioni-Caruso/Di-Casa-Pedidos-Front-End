@@ -1,6 +1,6 @@
 {
   "nome": "DiCasa Marmitaria",
-  "endereco": "Rua das Flores, 123 - Centro",
+  "endereco": "R. Dom Pedro I, 65 - Cidade Nova I, Indaiatuba - SP, 13334-100",
   "telefone": "(11) 98765-4321",
   "email": "contato@dicasa.com.br",
   "horarioFuncionamento": {
@@ -18,8 +18,8 @@
       "close": "18:00"
     },
     "sexta": {
-      "open": "11:00",
-      "close": "22:00"
+      "open": "09:00",
+      "close": "23:00"
     },
     "sabado": {
       "open": "11:00",
@@ -30,9 +30,15 @@
       "close": "22:00"
     }
   },
-  "latitude": -23.5505,
-  "longitude": -46.6333,
+  "latitude": -23.0896,
+  "longitude": -47.2139,
   "raioEntregaGratis": 5,
-  "taxaPorKm": 2.5,
-  "filtrarPorDia": true
+  "taxaPorKm": 1,
+  "filtrarPorDia": true,
+  "chavesPix": [
+    {
+      "tipo": "Email",
+      "chave": "contato@dicasa.com.br"
+    }
+  ]
 }

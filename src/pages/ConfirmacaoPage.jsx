@@ -1,21 +1,27 @@
-import { CheckCircle, Home, Package } from 'lucide-react';
+import { CheckCircle, Copy, Home, Package } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import { useRestaurante } from '../context/RestauranteContexto';
 import { LINKS } from '../rotas/Links';
 import { formatarMoeda } from '../util/ConversorDeMoeda';
 
 
 export function ConfirmacaoPage() {
   const [pedido, setPedido] = useState(null);
+  const [copiado, setCopiado] = useState(null);
+  const { configuracoes } = useRestaurante();
 
   useEffect(() => {
     const ultimoPedido = sessionStorage.getItem('ultimo-pedido');
-    if (ultimoPedido) {
-      setPedido(JSON.parse(ultimoPedido));
-      // Calcula o horário no momento exato em que o pedido é confirmado
-    }
+    if (ultimoPedido) setPedido(JSON.parse(ultimoPedido));
   }, []);
+
+  const copiarChave = (chave) => {
+    navigator.clipboard.writeText(chave);
+    setCopiado(chave);
+    setTimeout(() => setCopiado(null), 3000);
+  };
 
   if (!pedido) {
     return (
@@ -105,16 +111,18 @@ export function ConfirmacaoPage() {
               </div>
             </div>
 
-            {/* Endereço */}
+            {/* Endereço / Retirada */}
             <div>
               <h3 className="text-gray-900 mb-2">
-                🏠 Endereço de Entrega
+                {pedido.tipoEntrega === 'retirada' ? '🏪 Retirada no Local' : '🏠 Endereço de Entrega'}
               </h3>
 
               <p>{pedido.usuario.nome}</p>
-              <p className="text-sm text-gray-600">
-                {pedido.usuario.endereco}
-              </p>
+              {pedido.tipoEntrega === 'retirada' ? (
+                <p className="text-sm text-purple-700 font-medium">Retirar no estabelecimento</p>
+              ) : (
+                <p className="text-sm text-gray-600">{pedido.usuario.endereco}</p>
+              )}
             </div>
 
             {/* Pagamento */}
@@ -123,11 +131,47 @@ export function ConfirmacaoPage() {
                 💳 Forma de Pagamento
               </h3>
 
-              <p className="capitalize">
-                {pedido.metodoPagamento}
-              </p>
+              <p className="capitalize">{pedido.metodoPagamento}</p>
+
+              {pedido.metodoPagamento === 'dinheiro' && pedido.trocoPara && (
+                <p className="text-sm text-gray-600 mt-1">
+                  Troco para {formatarMoeda(pedido.trocoPara)} —{' '}
+                  <span className="text-green-700 font-semibold">
+                    Troco: {formatarMoeda(pedido.trocoPara - pedido.total)}
+                  </span>
+                </p>
+              )}
             </div>
           </div>
+
+          {/* PIX */}
+          {pedido?.metodoPagamento === 'pix' && (
+            <div className="border border-green-200 bg-green-50 rounded-xl p-6 mb-6">
+              <p className="font-semibold text-green-800 mb-4 text-center">💚 Pague com PIX para confirmar seu pedido</p>
+
+              {configuracoes?.chavesPix?.length > 0 ? (
+                <div className="space-y-3">
+                  {configuracoes.chavesPix.map((item, i) => (
+                    <div key={i} className="flex items-center gap-2 bg-white border border-green-200 rounded-lg p-3">
+                      <div className="flex-1">
+                        <p className="text-xs text-gray-500 mb-1">{item.tipo}</p>
+                        <p className="text-sm font-mono text-gray-800 break-all">{item.chave}</p>
+                      </div>
+                      <button
+                        onClick={() => copiarChave(item.chave)}
+                        className="shrink-0 flex items-center gap-1 bg-green-600 hover:bg-green-700 text-white text-xs px-3 py-2 rounded-lg transition-colors"
+                      >
+                        <Copy className="w-3 h-3" />
+                        {copiado === item.chave ? 'Copiado!' : 'Copiar'}
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-sm text-green-700 text-center">Entre em contato para obter a chave PIX.</p>
+              )}
+            </div>
+          )}
 
           {/* Tempo */}
           <div className="bg-[#FFD93D] rounded-lg p-4 mb-6">

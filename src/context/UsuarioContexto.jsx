@@ -14,7 +14,7 @@ export const UsuarioProvider = ({ children }) => {
   const { calcularDistancia, calcularTaxaEntrega } = useRestaurante();
 
   const salvarUsuario = async (dadosUsuario) => {
-    const { distancia, taxaEntrega } = UsuarioService.calcularEntrega(
+    const { distancia, taxaEntrega } = await UsuarioService.calcularEntrega(
       dadosUsuario.endereco,
       calcularDistancia,
       calcularTaxaEntrega
@@ -36,7 +36,7 @@ export const UsuarioProvider = ({ children }) => {
     }
 
     // Usuário novo — cria normalmente
-    const usuarioCriado = UsuarioService.criarUsuario(
+    const usuarioCriado = await UsuarioService.criarUsuario(
       dadosUsuario,
       calcularDistancia,
       calcularTaxaEntrega
@@ -51,7 +51,7 @@ export const UsuarioProvider = ({ children }) => {
     setUsuario(null);
   };
 
-  const calcularEntregaPreview = (endereco) => {
+  const calcularEntregaPreview = async (endereco) => {
     return UsuarioService.calcularEntrega(
       endereco,
       calcularDistancia,

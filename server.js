@@ -136,6 +136,13 @@ app.get('/pedidos', (req, res) => {
 });
 
 app.post('/pedidos', (req, res) => {
+  const { itens, total } = req.body;
+  if (!itens || itens.length === 0) {
+    return res.status(400).json({ erro: 'Pedido sem itens não é permitido.' });
+  }
+  if (!total || total <= 0) {
+    return res.status(400).json({ erro: 'Pedido com valor inválido.' });
+  }
   const lista = lerArquivo('pedidos');
   const novo = { ...req.body, id: `PED-${Date.now()}` };
   lista.unshift(novo);
@@ -154,6 +161,37 @@ app.put('/pedidos/:id', (req, res) => {
   });
   salvarArquivo('pedidos', lista);
   res.json(lista.find(p => p.id === req.params.id));
+});
+
+// ─── MAPS ────────────────────────────────────────────────
+app.get('/maps/distancia', async (req, res) => {
+  const { endereco } = req.query;
+  if (!endereco) return res.status(400).json({ erro: 'Endereço não informado' });
+
+  const chave = process.env.GOOGLE_MAPS_API_KEY;
+  if (!chave) return res.status(503).json({ erro: 'GOOGLE_MAPS_API_KEY não configurada' });
+
+  const config = lerArquivo('configuracoes');
+  const origem = config.endereco;
+
+  const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${encodeURIComponent(origem)}&destinations=${encodeURIComponent(endereco)}&key=${chave}&language=pt-BR&units=metric`;
+
+  const resposta = await fetch(url);
+  const dados = await resposta.json();
+
+  if (dados.status !== 'OK') {
+    return res.status(400).json({ erro: 'Endereço de origem inválido' });
+  }
+
+  const elemento = dados.rows[0]?.elements[0];
+  if (elemento?.status !== 'OK') {
+    return res.status(400).json({ erro: 'Rota não encontrada para o endereço informado' });
+  }
+
+  const distanciaKm = Math.round((elemento.distance.value / 1000) * 10) / 10;
+  const duracaoMinutos = Math.ceil(elemento.duration.value / 60);
+
+  res.json({ distanciaKm, duracaoMinutos });
 });
 
 // ─── CONFIGURAÇÕES ───────────────────────────────────────
