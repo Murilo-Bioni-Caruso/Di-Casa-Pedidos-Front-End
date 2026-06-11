@@ -31,7 +31,7 @@ export function CheckoutPage() {
 
   useEffect(() => {
     if (!usuario) {
-      navigate(LINKS.LOGIN);
+      navigate(LINKS.CARRINHO);
     }
   }, [usuario, navigate]);
 
@@ -131,6 +131,7 @@ export function CheckoutPage() {
                   <input
                     type="number"
                     min={total}
+                    max={total * 10}
                     step="0.01"
                     value={valorDinheiro}
                     onChange={(e) => setValorDinheiro(e.target.value)}
@@ -157,9 +158,18 @@ export function CheckoutPage() {
 
             <div className="space-y-3 mb-6">
               {itens.map(item => (
-                <div key={item.produto.id} className="flex justify-between text-sm">
-                  <span className="text-gray-600">{item.quantidade}x {item.produto.nome}</span>
-                  <span className="text-gray-900">{formatarMoeda(item.produto.preco * item.quantidade)}</span>
+                <div key={item.cartKey ?? item.produto.id} className="flex justify-between text-sm">
+                  <div>
+                    <span className="text-gray-600">{item.quantidade}x {item.produto.nome}</span>
+                    {item.variantesSelecionadas?.length > 0 && (
+                      <p className="text-xs text-gray-400">
+                        {item.variantesSelecionadas.map(v => `${v.label}: ${v.opcaoNome}`).join(' · ')}
+                      </p>
+                    )}
+                  </div>
+                  <span className="text-gray-900">
+                    {formatarMoeda((item.precoUnitario ?? item.produto.preco) * item.quantidade)}
+                  </span>
                 </div>
               ))}
             </div>

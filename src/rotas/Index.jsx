@@ -13,6 +13,7 @@ import { LINKS } from './Links';
 import { AdminPedidosPage } from '../pages/AdminPedidosPage';
 import { AdminCardapiosPage } from '../pages/AdminCardapiosPage';
 import { AdminConfiguracoesPage } from '../pages/AdminConfiguracaoPage';
+import { AdminCategoriasPage } from '../pages/AdminCategoriasPage';
 import { RotaAdmin } from './RotasAdmin';
 import { RotaProtegida } from './RotasLogado';
 import { LoginPage } from '../pages/LoginPage';
@@ -113,6 +114,10 @@ export const router = createBrowserRouter([
       {
         path: LINKS.ADMIN_PRODUTOS,
         element: <AdminCardapiosPage />
+      },
+      {
+        path: LINKS.ADMIN_CATEGORIAS,
+        element: <AdminCategoriasPage />
       },
       {
         path: LINKS.ADMIN_CONFIGURACOES,

@@ -3,7 +3,7 @@ import { Categoria } from "../models/Constantes";
 
 export const statusConfig = {
   pendente: {
-    label: 'Pendente',
+    label: 'Aguardando aprovação',
     icon: Clock,
     color: 'text-yellow-600 bg-yellow-50'
   },
@@ -13,7 +13,7 @@ export const statusConfig = {
     color: 'text-blue-600 bg-blue-50'
   },
   pronto: {
-    label: 'Pronto',
+    label: 'Saiu para entrega',
     icon: CheckCircle,
     color: 'text-green-600 bg-green-50'
   },

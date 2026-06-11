@@ -4,6 +4,7 @@ export const LINKS = {
   ADMIN_CONFIGURACOES: "/admin/configuracoes",
   ADMIN_PRODUTOS: "/admin/produtos",
   ADMIN_PEDIDOS: "/admin/pedidos",
+  ADMIN_CATEGORIAS: "/admin/categorias",
   CARRINHO: "/carrinho",
   CADASTRO: "/cadastro",
   CADASTRO_COMPLETO: "/cadastro-completo",

@@ -9,17 +9,28 @@ export const PedidoProvider = ({ children }) => {
   const [pedidos, setPedidos] = useState([]);
   const { calcularTaxaEntrega } = useRestaurante();
 
-  // Busca todos os pedidos do servidor ao iniciar
   useEffect(() => {
+    let ativo = true;
+
     async function carregar() {
       try {
         const lista = await pedidosApi.listar();
-        setPedidos(lista.map(pedidoService.normalizarPedido));
+        if (ativo) {
+          setPedidos(lista.map(pedidoService.normalizarPedido));
+        }
       } catch (erro) {
         console.error('Erro ao carregar pedidos:', erro);
       }
     }
+
     carregar();
+
+    const intervalo = setInterval(carregar, 10000);
+
+    return () => {
+      ativo = false;
+      clearInterval(intervalo);
+    };
   }, []);
 
   const criarPedidoCompleto = async ({ usuario, itens, metodoPagamento, trocoPara, tipoEntrega }) => {

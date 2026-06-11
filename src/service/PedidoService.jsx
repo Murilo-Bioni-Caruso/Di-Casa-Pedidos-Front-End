@@ -65,7 +65,7 @@ export function getPedidosHoje(pedidos) {
   amanha.setDate(amanha.getDate() + 1);
 
   return pedidos.filter(p => {
-    const dataPedido = new Date(p.data);
+    const dataPedido = new Date(p.dataHora || p.data);
     return dataPedido >= hoje && dataPedido < amanha;
   });
 }
@@ -91,7 +91,9 @@ export function contarPedidosPorStatus(pedidos, status) {
 export function normalizarPedido(pedido) {
   return {
     ...pedido,
-    itens: pedido.itens || []
+    itens: pedido.itens || [],
+    dataHora: pedido.dataHora || pedido.data || null,
+    data: pedido.data || pedido.dataHora || null
   };
 }
 
@@ -106,7 +108,7 @@ export function obterPedidos() {
 
 export function calcularResumoPedido({ itens, usuario, calcularTaxaEntrega }) {
   const subtotal = itens.reduce(
-    (total, item) => total + item.produto.preco * item.quantidade,
+    (total, item) => total + (item.precoUnitario ?? item.produto.preco) * item.quantidade,
     0
   );
 

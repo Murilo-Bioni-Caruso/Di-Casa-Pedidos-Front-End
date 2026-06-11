@@ -6,7 +6,13 @@ const CarrinhoContext = createContext();
 export const CarrinhoProvider = ({ children }) => {
   const [itens, setItens] = useState(() => {
     const salvo = sessionStorage.getItem('carrinho-dicasa');
-    return salvo ? JSON.parse(salvo) : [];
+    if (!salvo) return [];
+    // migração: itens antigos sem cartKey/precoUnitario
+    return JSON.parse(salvo).map(item => ({
+      ...item,
+      cartKey: item.cartKey ?? item.produto.id,
+      precoUnitario: item.precoUnitario ?? item.produto.preco,
+    }));
   });
 
   const salvar = (novosItens) => {
@@ -14,16 +20,16 @@ export const CarrinhoProvider = ({ children }) => {
     setItens(novosItens);
   };
 
-  const adicionarItem = (produto) => {
-    salvar(carrinhoService.adicionarItem(itens, produto));
+  const adicionarItem = (produto, variantesSelecionadas = null) => {
+    salvar(carrinhoService.adicionarItem(itens, produto, variantesSelecionadas));
   };
 
-  const removerItem = (produtoId) => {
-    salvar(carrinhoService.removerItem(itens, produtoId));
+  const removerItem = (cartKey) => {
+    salvar(carrinhoService.removerItem(itens, cartKey));
   };
 
-  const atualizarQuantidade = (produtoId, quantidade) => {
-    salvar(carrinhoService.atualizarQuantidade(itens, produtoId, quantidade));
+  const atualizarQuantidade = (cartKey, quantidade) => {
+    salvar(carrinhoService.atualizarQuantidade(itens, cartKey, quantidade));
   };
 
   const limparCarrinho = () => {

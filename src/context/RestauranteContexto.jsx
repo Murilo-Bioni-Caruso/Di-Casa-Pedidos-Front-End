@@ -1,24 +1,26 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import * as restauranteService from '../service/RestauranteService';
-import { produtosApi, configuracoesApi, mapsApi } from '../api/api';
+import { produtosApi, configuracoesApi, mapsApi, categoriasApi } from '../api/api';
 
 const RestauranteContext = createContext();
 
 export const RestauranteProvider = ({ children }) => {
   const [produtos, setProdutos] = useState([]);
   const [configuracoes, setConfiguracoes] = useState(null);
+  const [categorias, setCategorias] = useState([]);
   const [carregando, setCarregando] = useState(true);
 
-  // Busca produtos e configurações do servidor ao iniciar
   useEffect(() => {
     async function carregar() {
       try {
-        const [prods, config] = await Promise.all([
+        const [prods, config, cats] = await Promise.all([
           produtosApi.listar(),
-          configuracoesApi.obter()
+          configuracoesApi.obter(),
+          categoriasApi.listar()
         ]);
         setProdutos(prods);
         setConfiguracoes(config);
+        setCategorias(cats);
       } catch (erro) {
         console.error('Erro ao carregar dados do servidor:', erro);
       } finally {
@@ -57,6 +59,33 @@ export const RestauranteProvider = ({ children }) => {
 
   const getPratoDoDia = () => {
     return restauranteService.getPratoDoDia(produtos);
+  };
+
+  // ─── CATEGORIAS ───────────────────────────────────────
+
+  const adicionarCategoria = async (dados) => {
+    const nova = await categoriasApi.criar(dados);
+    setCategorias(prev => [...prev, nova].sort((a, b) => a.ordem - b.ordem));
+    return nova;
+  };
+
+  const atualizarCategoria = async (categoria) => {
+    const atualizada = await categoriasApi.atualizar(categoria);
+    setCategorias(prev =>
+      prev.map(c => c.id === atualizada.id ? atualizada : c)
+          .sort((a, b) => a.ordem - b.ordem)
+    );
+    return atualizada;
+  };
+
+  const removerCategoria = async (id) => {
+    await categoriasApi.remover(id);
+    setCategorias(prev => prev.filter(c => c.id !== id));
+  };
+
+  const recarregarCategorias = async () => {
+    const cats = await categoriasApi.listarTodas();
+    setCategorias(cats.filter(c => c.ativo).sort((a, b) => a.ordem - b.ordem));
   };
 
   // ─── CONFIGURAÇÕES ────────────────────────────────────
@@ -112,9 +141,14 @@ export const RestauranteProvider = ({ children }) => {
       value={{
         produtos,
         configuracoes,
+        categorias,
         adicionarProduto,
         atualizarProduto,
         removerProduto,
+        adicionarCategoria,
+        atualizarCategoria,
+        removerCategoria,
+        recarregarCategorias,
         atualizarConfiguracoes,
         calcularDistancia,
         calcularTaxaEntrega,

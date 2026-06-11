@@ -13,14 +13,40 @@ export const UsuarioProvider = ({ children }) => {
 
   const { calcularDistancia, calcularTaxaEntrega } = useRestaurante();
 
+  const salvarConvidado = async (dadosConvidado) => {
+    const { distancia, taxaEntrega } = await UsuarioService.calcularEntrega(
+      dadosConvidado.endereco,
+      calcularDistancia,
+      calcularTaxaEntrega
+    );
+    const convidado = {
+      id: 'convidado-' + Date.now(),
+      nome: dadosConvidado.nome,
+      telefone: dadosConvidado.telefone,
+      endereco: dadosConvidado.endereco,
+      distancia,
+      taxaEntrega,
+      isAdmin: false,
+      isConvidado: true,
+    };
+    sessionStorage.setItem('usuario-dicasa', JSON.stringify(convidado));
+    setUsuario(convidado);
+  };
+
   const salvarUsuario = async (dadosUsuario) => {
+    // Convidado atualizando dados — não cria no banco
+    if (usuario?.isConvidado) {
+      await salvarConvidado(dadosUsuario);
+      return;
+    }
+
     const { distancia, taxaEntrega } = await UsuarioService.calcularEntrega(
       dadosUsuario.endereco,
       calcularDistancia,
       calcularTaxaEntrega
     );
 
-    // Se já tem usuário logado, só atualiza — não cria um novo
+    // Usuário logado real — só atualiza
     if (usuario?.id) {
       const atualizado = {
         ...usuario,
@@ -35,7 +61,7 @@ export const UsuarioProvider = ({ children }) => {
       return;
     }
 
-    // Usuário novo — cria normalmente
+    // Novo usuário real — cria no banco
     const usuarioCriado = await UsuarioService.criarUsuario(
       dadosUsuario,
       calcularDistancia,
@@ -76,6 +102,7 @@ export const UsuarioProvider = ({ children }) => {
         usuario,
         setUsuario,
         salvarUsuario,
+        salvarConvidado,
         limparUsuario,
         calcularEntregaPreview,
         autenticar

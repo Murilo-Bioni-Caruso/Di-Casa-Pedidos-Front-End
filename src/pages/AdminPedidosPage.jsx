@@ -35,7 +35,7 @@ export function AdminPedidosPage() {
 
   const proximoStatus = {
     pendente:   { key: 'preparando', label: 'Iniciar Preparo',   cor: 'bg-blue-600 hover:bg-blue-700' },
-    preparando: { key: 'pronto',     label: 'Marcar Pronto',     cor: 'bg-green-600 hover:bg-green-700' },
+    preparando: { key: 'pronto',     label: 'Marcar como saiu para entrega',     cor: 'bg-green-600 hover:bg-green-700' },
     pronto:     { key: 'entregue',   label: 'Confirmar Entrega', cor: 'bg-gray-700 hover:bg-gray-800' },
   };
 
@@ -134,7 +134,7 @@ export function AdminPedidosPage() {
                         </p>
 
                         <p className="text-sm text-gray-600">
-                          {formatarDataHora(new Date(pedido.data))}
+                          {formatarDataHora(pedido.dataHora || pedido.data)}
                         </p>
 
                         <p className="text-sm text-gray-600">

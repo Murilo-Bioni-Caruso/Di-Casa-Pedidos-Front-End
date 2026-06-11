@@ -3,8 +3,7 @@ import { useState } from 'react';
 import { LayoutAdmin } from '../components/LayoutAdmin';
 import { useRestaurante } from '../context/RestauranteContexto';
 import { formatarMoeda } from '../util/ConversorDeMoeda';
-import { categoriasEmojis } from '../util/CategoriasEmojis';
-import { Categoria, diasSemana } from '../models/Constantes';
+import { diasSemana } from '../models/Constantes';
 import { Input } from '../components/Input';
 import { TextArea } from '../components/TextArea';
 import { Select } from '../components/Select';
@@ -14,37 +13,44 @@ import { FotoProduto } from '../components/ProdutoFoto';
 
 const TODOS_OS_DIAS = diasSemana.map(d => d.key);
 
+const formInicial = {
+    nome: '',
+    descricao: '',
+    preco: 0,
+    categoria: '',
+    imagem: '',
+    diaDaSemana: [],
+    variantes: []
+};
+
 export const AdminCardapiosPage = () => {
     const {
         produtos,
         adicionarProduto,
         atualizarProduto,
         removerProduto,
-        filtrarProdutos
+        filtrarProdutos,
+        categorias
     } = useRestaurante();
 
     const [showModal, setShowModal] = useState(false);
     const [produtoEditado, setProdutoEditado] = useState(null);
     const [categoriaFiltrada, setFiltrarCategoria] = useState('all');
     const [uploadando, setUploadando] = useState(false);
-    const [formData, setFormData] = useState({
-        nome: '',
-        descricao: '',
-        preco: 0,
-        categoria: 'marmitas',
-        imagem: '',
-        diaDaSemana: []
-    });
+    const [formData, setFormData] = useState(formInicial);
+
+    const categoriasOpcoes = categorias.map(c => ({
+        value: c.nome.toLowerCase(),
+        label: `${c.emoji} ${c.nome}`
+    }));
+
+    const todasCategoriasFiltro = [
+        { id: 'all', label: 'Todos', emoji: '🍽️' },
+        ...categorias.map(c => ({ id: c.nome.toLowerCase(), label: c.nome, emoji: c.emoji }))
+    ];
 
     const resetForm = () => {
-        setFormData({
-            nome: '',
-            descricao: '',
-            preco: 0,
-            categoria: 'marmitas',
-            imagem: '',
-            diaDaSemana: []
-        });
+        setFormData({ ...formInicial, categoria: categorias[0]?.nome?.toLowerCase() ?? '' });
         setProdutoEditado(null);
     };
 
@@ -60,7 +66,20 @@ export const AdminCardapiosPage = () => {
                 preco: produto.preco.toString(),
                 categoria: produto.categoria,
                 imagem: produto.imagem,
-                diaDaSemana: dias
+                diaDaSemana: dias,
+                variantes: Array.isArray(produto.variantes)
+                    ? produto.variantes.map((variante) => ({
+                        ...variante,
+                        opcoes: Array.isArray(variante.opcoes)
+                            ? variante.opcoes.map((opcao) => ({
+                                ...opcao,
+                                preco: Number.isFinite(opcao.preco)
+                                    ? opcao.preco
+                                    : (Number(produto.preco) || 0) + (Number(opcao.precoExtra) || 0)
+                            }))
+                            : []
+                    }))
+                    : []
             });
         } else {
             resetForm();
@@ -73,48 +92,84 @@ export const AdminCardapiosPage = () => {
         resetForm();
     };
 
-    // Marca ou desmarca um dia individual
     const handleDiaToggle = (diaKey) => {
         setFormData(prev => {
             const dias = [...prev.diaDaSemana];
             const index = dias.indexOf(diaKey);
-            if (index > -1) {
-                dias.splice(index, 1);
-            } else {
-                dias.push(diaKey);
-            }
+            if (index > -1) dias.splice(index, 1);
+            else dias.push(diaKey);
             return { ...prev, diaDaSemana: dias };
         });
     };
 
-    // Marca todos os dias de uma vez
-    const handleMarcarTodos = () => {
-        setFormData(prev => ({ ...prev, diaDaSemana: [...TODOS_OS_DIAS] }));
+    const handleMarcarTodos = () => setFormData(prev => ({ ...prev, diaDaSemana: [...TODOS_OS_DIAS] }));
+    const handleDesmarcarTodos = () => setFormData(prev => ({ ...prev, diaDaSemana: [] }));
+
+    // ─── Variantes ────────────────────────────────────────
+
+    const adicionarVariante = () => {
+        setFormData(prev => ({
+            ...prev,
+            variantes: [...prev.variantes, { label: '', opcoes: [{ nome: '', preco: 0 }] }]
+        }));
     };
 
-    // Remove todos os dias de uma vez
-    const handleDesmarcarTodos = () => {
-        setFormData(prev => ({ ...prev, diaDaSemana: [] }));
+    const removerVariante = (i) => {
+        setFormData(prev => ({ ...prev, variantes: prev.variantes.filter((_, idx) => idx !== i) }));
     };
 
-    // Faz upload da imagem para o servidor e salva só a URL
+    const atualizarVariante = (i, campo, valor) => {
+        setFormData(prev => ({
+            ...prev,
+            variantes: prev.variantes.map((v, idx) => idx === i ? { ...v, [campo]: valor } : v)
+        }));
+    };
+
+    const adicionarOpcao = (vi) => {
+        setFormData(prev => ({
+            ...prev,
+            variantes: prev.variantes.map((v, idx) =>
+                idx === vi ? { ...v, opcoes: [...v.opcoes, { nome: '', preco: 0 }] } : v
+            )
+        }));
+    };
+
+    const removerOpcao = (vi, oi) => {
+        setFormData(prev => ({
+            ...prev,
+            variantes: prev.variantes.map((v, idx) =>
+                idx === vi ? { ...v, opcoes: v.opcoes.filter((_, i) => i !== oi) } : v
+            )
+        }));
+    };
+
+    const atualizarOpcao = (vi, oi, campo, valor) => {
+        setFormData(prev => ({
+            ...prev,
+            variantes: prev.variantes.map((v, idx) =>
+                idx === vi
+                    ? { ...v, opcoes: v.opcoes.map((o, i) => i === oi ? { ...o, [campo]: valor } : o) }
+                    : v
+            )
+        }));
+    };
+
+    // ─── Upload ───────────────────────────────────────────
+
     const handleImageUpload = async (e) => {
         const file = e.target.files[0];
         if (!file) return;
-
         setUploadando(true);
         try {
             const dados = new FormData();
             dados.append('imagem', file);
-
-            const resposta = await fetch('http://localhost:3001/upload', {
+            const resposta = await fetch(`${import.meta.env.VITE_API_URL}/upload`, {
                 method: 'POST',
                 body: dados
             });
-
             const json = await resposta.json();
             setFormData(prev => ({ ...prev, imagem: json.url }));
-        } catch (erro) {
+        } catch {
             alert('Erro ao fazer upload da imagem. Verifique se o servidor está rodando.');
         } finally {
             setUploadando(false);
@@ -123,10 +178,22 @@ export const AdminCardapiosPage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        const variantesLimpas = formData.variantes
+            .filter(v => v.label.trim())
+            .map(v => ({
+                ...v,
+                opcoes: v.opcoes
+                    .filter(o => o.nome.trim())
+                    .map(o => ({
+                        nome: o.nome,
+                        preco: Number(o.preco) || 0
+                    }))
+            }));
+        const dados = { ...formData, variantes: variantesLimpas };
         if (produtoEditado) {
-            atualizarProduto({ ...formData, id: produtoEditado.id });
+            atualizarProduto({ ...dados, id: produtoEditado.id });
         } else {
-            adicionarProduto(formData);
+            adicionarProduto(dados);
         }
         handleCloseModal();
     };
@@ -156,14 +223,15 @@ export const AdminCardapiosPage = () => {
 
                 {/* Filtro */}
                 <div className="flex gap-2 overflow-x-auto pb-2">
-                    {categoriasEmojis.map((cat) => (
+                    {todasCategoriasFiltro.map((cat) => (
                         <button
                             key={cat.id}
                             onClick={() => setFiltrarCategoria(cat.id)}
-                            className={`px-4 py-2 rounded-lg whitespace-nowrap ${categoriaFiltrada === cat.id
-                                ? 'bg-[#FF6B35] text-white'
-                                : 'bg-white text-gray-700 hover:bg-gray-100'
-                                }`}
+                            className={`px-4 py-2 rounded-lg whitespace-nowrap ${
+                                categoriaFiltrada === cat.id
+                                    ? 'bg-[#FF6B35] text-white'
+                                    : 'bg-white text-gray-700 hover:bg-gray-100'
+                            }`}
                         >
                             {cat.emoji} {cat.label}
                         </button>
@@ -173,15 +241,12 @@ export const AdminCardapiosPage = () => {
                 {/* Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {produtosFiltrados.map((produto) => {
-                        const categoria = categoriasEmojis.find(c => c.id === produto.categoria);
+                        const cat = categorias.find(c => c.nome.toLowerCase() === produto.categoria);
+                        const temVariantes = Array.isArray(produto.variantes) && produto.variantes.length > 0;
                         return (
                             <div key={produto.id} className="bg-white rounded-xl shadow-lg overflow-hidden">
                                 <div className="h-48 w-full overflow-hidden">
-                                    <FotoProduto
-                                        src={produto.imagem}
-                                        alt={produto.nome}
-                                        className="w-full h-full object-cover"
-                                    />
+                                    <FotoProduto src={produto.imagem} alt={produto.nome} className="w-full h-full object-cover" />
                                 </div>
                                 <div className="p-4">
                                     <h3 className="text-gray-900">{produto.nome}</h3>
@@ -189,24 +254,25 @@ export const AdminCardapiosPage = () => {
                                     <div className="flex justify-between items-center mt-3 pt-3 border-t">
                                         <span className="text-[#FF6B35]">{formatarMoeda(produto.preco)}</span>
                                         <div className="flex gap-2">
-                                            <button
-                                                onClick={() => handleOpenModal(produto)}
-                                                className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg"
-                                            >
+                                            <button onClick={() => handleOpenModal(produto)} className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg">
                                                 <Edit2 className="w-4 h-4" />
                                             </button>
-                                            <button
-                                                onClick={() => handleDelete(produto.id)}
-                                                className="p-2 text-red-600 hover:bg-red-50 rounded-lg"
-                                            >
+                                            <button onClick={() => handleDelete(produto.id)} className="p-2 text-red-600 hover:bg-red-50 rounded-lg">
                                                 <Trash2 className="w-4 h-4" />
                                             </button>
                                         </div>
                                     </div>
                                     <div className="flex flex-wrap gap-1 mt-2">
-                                        <span className="px-2 py-1 bg-gray-100 text-gray-700 text-[10px] rounded uppercase font-bold">
-                                            {categoria?.emoji} {categoria?.label}
-                                        </span>
+                                        {cat && (
+                                            <span className="px-2 py-1 bg-gray-100 text-gray-700 text-[10px] rounded uppercase font-bold">
+                                                {cat.emoji} {cat.nome}
+                                            </span>
+                                        )}
+                                        {temVariantes && (
+                                            <span className="px-2 py-1 bg-orange-100 text-orange-700 text-[10px] rounded font-bold">
+                                                {produto.variantes.length} variante(s)
+                                            </span>
+                                        )}
                                         {Array.isArray(produto.diaDaSemana) && produto.diaDaSemana.map(d => (
                                             <span key={d} className="px-2 py-1 bg-orange-100 text-orange-700 text-[10px] rounded uppercase font-bold">
                                                 {d.substring(0, 3)}
@@ -231,7 +297,7 @@ export const AdminCardapiosPage = () => {
                 <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
                     <div className="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
 
-                        <div className="flex justify-between p-4 border-b">
+                        <div className="flex justify-between p-4 border-b sticky top-0 bg-white rounded-t-xl">
                             <h2>{produtoEditado ? 'Editar Produto' : 'Novo Produto'}</h2>
                             <button onClick={handleCloseModal}><X /></button>
                         </div>
@@ -240,7 +306,7 @@ export const AdminCardapiosPage = () => {
                             <Input
                                 placeholder="Nome"
                                 value={formData.nome}
-                                onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
+                                onChange={(valor) => setFormData({ ...formData, nome: valor })}
                                 mask={aceitaApenasLetras}
                             />
                             <TextArea
@@ -253,52 +319,124 @@ export const AdminCardapiosPage = () => {
                                 onChange={(numero) => setFormData({ ...formData, preco: numero })}
                             />
 
+                            {/* Categoria */}
                             <div>
                                 <label className="text-sm font-medium text-gray-700 mb-1 block">Categoria</label>
                                 <Select
                                     value={formData.categoria}
                                     onChange={(e) => setFormData({ ...formData, categoria: e.target.value })}
-                                    options={[
-                                        { value: Categoria.MARMITAS, label: 'Marmitas' },
-                                        { value: Categoria.ASSADOS, label: 'Assados' },
-                                        { value: Categoria.BEBIDAS, label: 'Bebidas' },
-                                        { value: Categoria.SOBREMESAS, label: 'Sobremesas' }
-                                    ]}
+                                    options={categoriasOpcoes}
                                 />
                             </div>
 
                             {/* Dias da semana */}
                             <div>
                                 <div className="flex items-center justify-between mb-2">
-                                    <label className="text-sm font-medium text-gray-700">
-                                        Dias da Semana
-                                    </label>
-                                    <div className="flex gap-2">
-                                        <button
-                                            type="button"
-                                            onClick={todosMarcados ? handleDesmarcarTodos : handleMarcarTodos}
-                                            className="text-xs px-3 py-1 rounded-full border border-[#FF6B35] text-[#FF6B35] hover:bg-orange-50 transition-colors"
-                                        >
-                                            {todosMarcados ? 'Desmarcar todos' : 'Marcar todos'}
-                                        </button>
-                                    </div>
+                                    <label className="text-sm font-medium text-gray-700">Dias da Semana</label>
+                                    <button
+                                        type="button"
+                                        onClick={todosMarcados ? handleDesmarcarTodos : handleMarcarTodos}
+                                        className="text-xs px-3 py-1 rounded-full border border-[#FF6B35] text-[#FF6B35] hover:bg-orange-50"
+                                    >
+                                        {todosMarcados ? 'Desmarcar todos' : 'Marcar todos'}
+                                    </button>
                                 </div>
                                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 bg-gray-50 p-3 rounded-lg border">
                                     {diasSemana.map((d) => (
-                                        <label key={d.key} className="flex items-center gap-2 cursor-pointer hover:bg-white p-1 rounded transition-colors">
+                                        <label key={d.key} className="flex items-center gap-2 cursor-pointer hover:bg-white p-1 rounded">
                                             <input
                                                 type="checkbox"
                                                 checked={formData.diaDaSemana.includes(d.key)}
                                                 onChange={() => handleDiaToggle(d.key)}
-                                                className="w-4 h-4 text-[#FF6B35] rounded focus:ring-[#FF6B35]"
+                                                className="w-4 h-4 text-[#FF6B35] rounded"
                                             />
                                             <span className="text-sm text-gray-700">{d.label}</span>
                                         </label>
                                     ))}
                                 </div>
                                 <p className="text-xs text-gray-500 mt-1 italic">
-                                    Se nenhum dia for selecionado, o item ficará disponível todos os dias.
+                                    Se nenhum dia selecionado, disponível todos os dias.
                                 </p>
+                            </div>
+
+                            {/* Variantes */}
+                            <div>
+                                <div className="flex items-center justify-between mb-2">
+                                    <label className="text-sm font-medium text-gray-700">Variantes (opcional)</label>
+                                    <button
+                                        type="button"
+                                        onClick={adicionarVariante}
+                                        className="text-xs px-3 py-1 rounded-full border border-[#FF6B35] text-[#FF6B35] hover:bg-orange-50 flex items-center gap-1"
+                                    >
+                                        <Plus className="w-3 h-3" /> Adicionar Variante
+                                    </button>
+                                </div>
+
+                                {formData.variantes.length === 0 && (
+                                    <p className="text-xs text-gray-400 italic">
+                                        Nenhuma variante. Ex: Tamanho (Pequena/Média/Grande), Sabor, Porção.
+                                    </p>
+                                )}
+
+                                <div className="space-y-4">
+                                    {formData.variantes.map((variante, vi) => (
+                                        <div key={vi} className="bg-gray-50 rounded-lg p-3 border border-gray-200">
+                                            <div className="flex items-center gap-2 mb-2">
+                                                <input
+                                                    placeholder="Nome da variante (ex: Tamanho)"
+                                                    value={variante.label}
+                                                    onChange={(e) => atualizarVariante(vi, 'label', e.target.value)}
+                                                    className="flex-1 border border-gray-300 px-2 py-1.5 rounded-lg text-sm focus:ring-1 focus:ring-[#FF6B35] focus:border-[#FF6B35] outline-none"
+                                                />
+                                                <button
+                                                    type="button"
+                                                    onClick={() => removerVariante(vi)}
+                                                    className="p-1 text-red-500 hover:bg-red-50 rounded"
+                                                >
+                                                    <X className="w-4 h-4" />
+                                                </button>
+                                            </div>
+
+                                            <div className="space-y-1.5">
+                                                {variante.opcoes.map((opcao, oi) => (
+                                                    <div key={oi} className="flex items-center gap-2">
+                                                        <input
+                                                            placeholder="Nome da opção (ex: Grande)"
+                                                            value={opcao.nome}
+                                                            onChange={(e) => atualizarOpcao(vi, oi, 'nome', e.target.value)}
+                                                            className="flex-1 border border-gray-300 px-2 py-1.5 rounded-lg text-sm focus:ring-1 focus:ring-[#FF6B35] outline-none"
+                                                        />
+                                                        <div className="flex items-center gap-1">
+                                                            <span className="text-xs text-gray-500">R$</span>
+                                                            <input
+                                                                type="number"
+                                                                min="0"
+                                                                step="0.5"
+                                                                value={opcao.preco}
+                                                                onChange={(e) => atualizarOpcao(vi, oi, 'preco', parseFloat(e.target.value) || 0)}
+                                                                className="w-24 border border-gray-300 px-2 py-1.5 rounded-lg text-sm focus:ring-1 focus:ring-[#FF6B35] outline-none"
+                                                            />
+                                                        </div>
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => removerOpcao(vi, oi)}
+                                                            className="p-1 text-red-400 hover:bg-red-50 rounded"
+                                                        >
+                                                            <X className="w-3.5 h-3.5" />
+                                                        </button>
+                                                    </div>
+                                                ))}
+                                                <button
+                                                    type="button"
+                                                    onClick={() => adicionarOpcao(vi)}
+                                                    className="text-xs text-[#FF6B35] hover:underline mt-1"
+                                                >
+                                                    + Adicionar opção
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
 
                             {/* Imagem */}
@@ -322,11 +460,11 @@ export const AdminCardapiosPage = () => {
                                             />
                                             <label
                                                 htmlFor="image-upload"
-                                                className={`flex items-center justify-center gap-2 border-2 border-dashed rounded-lg p-4 cursor-pointer transition-all w-full
-                                                    ${uploadando
+                                                className={`flex items-center justify-center gap-2 border-2 border-dashed rounded-lg p-4 cursor-pointer transition-all w-full ${
+                                                    uploadando
                                                         ? 'border-gray-200 bg-gray-50 cursor-wait'
                                                         : 'border-gray-300 hover:border-[#FF6B35] hover:bg-orange-50'
-                                                    }`}
+                                                }`}
                                             >
                                                 <Upload className={`w-5 h-5 ${uploadando ? 'text-gray-300' : 'text-gray-400'}`} />
                                                 <span className="text-sm text-gray-600">
@@ -334,17 +472,12 @@ export const AdminCardapiosPage = () => {
                                                 </span>
                                             </label>
                                         </div>
-                                        <div className="relative">
-                                            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                                <span className="text-gray-400 text-xs">URL:</span>
-                                            </div>
-                                            <input
-                                                placeholder="Ou cole o link da imagem aqui..."
-                                                value={formData.imagem?.startsWith('http://localhost') || !formData.imagem?.startsWith('data:') ? formData.imagem : ''}
-                                                onChange={(e) => setFormData({ ...formData, imagem: e.target.value })}
-                                                className="w-full border p-2 pl-12 rounded-lg text-sm focus:ring-[#FF6B35] focus:border-[#FF6B35]"
-                                            />
-                                        </div>
+                                        <input
+                                            placeholder="Ou cole o link da imagem aqui..."
+                                            value={formData.imagem?.startsWith('http') ? formData.imagem : ''}
+                                            onChange={(e) => setFormData({ ...formData, imagem: e.target.value })}
+                                            className="w-full border p-2 rounded-lg text-sm focus:ring-[#FF6B35] focus:border-[#FF6B35] outline-none"
+                                        />
                                     </div>
                                 </div>
                             </div>

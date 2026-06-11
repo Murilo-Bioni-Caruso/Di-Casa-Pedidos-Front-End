@@ -1,12 +1,18 @@
-import { categoriasEmojis } from "../util/CategoriasEmojis";
-
+import { useRestaurante } from '../context/RestauranteContexto';
 
 export function NavegacaoCategorias({ categoriaAtiva, aoSelecionarCategoria }) {
+  const { categorias } = useRestaurante();
+
+  const todasCategorias = [
+    { id: 'all', nome: 'Todos', emoji: '🍽️' },
+    ...categorias.map(c => ({ id: c.nome.toLowerCase(), nome: c.nome, emoji: c.emoji }))
+  ];
+
   return (
     <div className="sticky top-[var(--header-height,140px)] z-40 bg-white border-b border-gray-200 shadow-sm">
       <div className="container mx-auto px-4 py-3">
         <div className="flex gap-3 overflow-x-auto scrollbar-hide">
-          {categoriasEmojis.map((cat) => (
+          {todasCategorias.map((cat) => (
             <button
               key={cat.id}
               onClick={() => aoSelecionarCategoria(cat.id)}
@@ -20,7 +26,7 @@ export function NavegacaoCategorias({ categoriaAtiva, aoSelecionarCategoria }) {
               `}
             >
               <span className="mr-2">{cat.emoji}</span>
-              {cat.label}
+              {cat.nome}
             </button>
           ))}
         </div>

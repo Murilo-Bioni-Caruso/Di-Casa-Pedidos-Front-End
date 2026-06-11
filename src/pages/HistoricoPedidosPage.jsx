@@ -63,7 +63,7 @@ export function HistoricoPedidosPage() {
           <div className="space-y-4">
             {pedidos.map(pedido => {
               const status = statusConfig[pedido.status] || statusConfig[OrderStatus.PENDENTE];
-              const dataPedido = new Date(pedido.timestamp || pedido.data);
+              const dataPedido = pedido.timestamp || pedido.dataHora || pedido.data;
 
               return (
                 <div key={pedido.id} className="bg-white rounded-xl shadow-lg p-6">

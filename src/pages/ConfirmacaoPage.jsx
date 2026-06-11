@@ -73,15 +73,21 @@ export function ConfirmacaoPage() {
 
               {pedido.itens.map(item => (
                 <div
-                  key={item.produto.id}
+                  key={item.cartKey ?? item.produto.id}
                   className="flex justify-between text-sm py-1"
                 >
-                  <span className="text-gray-600">
-                    {item.quantidade}x {item.produto.nome}
-                  </span>
-
+                  <div>
+                    <span className="text-gray-600">
+                      {item.quantidade}x {item.produto.nome}
+                    </span>
+                    {item.variantesSelecionadas?.length > 0 && (
+                      <p className="text-xs text-gray-400">
+                        {item.variantesSelecionadas.map(v => `${v.label}: ${v.opcaoNome}`).join(' · ')}
+                      </p>
+                    )}
+                  </div>
                   <span className="text-gray-900">
-                    {formatarMoeda(item.produto.preco * item.quantidade)}
+                    {formatarMoeda((item.precoUnitario ?? item.produto.preco) * item.quantidade)}
                   </span>
                 </div>
               ))}

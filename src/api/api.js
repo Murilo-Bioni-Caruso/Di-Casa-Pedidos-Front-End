@@ -29,6 +29,24 @@ export const produtosApi = {
     request(`/produtos/${id}`, { method: 'DELETE' }),
 };
 
+// ─── CATEGORIAS ──────────────────────────────────────────
+export const categoriasApi = {
+  listar: () =>
+    request('/categorias'),
+
+  listarTodas: () =>
+    request('/categorias/todas'),
+
+  criar: (categoria) =>
+    request('/categorias', { method: 'POST', body: JSON.stringify(categoria) }),
+
+  atualizar: (categoria) =>
+    request(`/categorias/${categoria.id}`, { method: 'PUT', body: JSON.stringify(categoria) }),
+
+  remover: (id) =>
+    request(`/categorias/${id}`, { method: 'DELETE' }),
+};
+
 // ─── USUÁRIOS ────────────────────────────────────────────
 export const usuariosApi = {
   listar: () =>
@@ -52,9 +70,9 @@ export const pedidosApi = {
   criar: (pedido) =>
     request('/pedidos', { method: 'POST', body: JSON.stringify(pedido) }),
 
-    atualizarStatus: (id, status, horarioEntrega) =>
-      request(`/pedidos/${id}`, { method: 'PUT', body: JSON.stringify({ status, horarioEntrega }) }),
-  };
+  atualizarStatus: (id, status, horarioEntrega) =>
+    request(`/pedidos/${id}`, { method: 'PUT', body: JSON.stringify({ status, horarioEntrega }) }),
+};
 
 // ─── MAPS ────────────────────────────────────────────────
 export const mapsApi = {
@@ -69,4 +87,4 @@ export const configuracoesApi = {
 
   atualizar: (configuracoes) =>
     request('/configuracoes', { method: 'PUT', body: JSON.stringify(configuracoes) }),
-}; 
+};

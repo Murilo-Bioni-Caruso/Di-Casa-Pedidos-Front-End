@@ -2,11 +2,13 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { LINKS } from '../rotas/Links';
 import { useUsuario } from '../context/UsuarioContexto';
+import { useToast } from '../context/ToastContexto';
 import { Lock, User, LogIn } from 'lucide-react';
 
 export function LoginPage() {
     const navigate = useNavigate();
     const { autenticar } = useUsuario();
+    const { showToast } = useToast();
 
     const [form, setForm] = useState({ usuario: '', senha: '' });
     const [erro, setErro] = useState('');
@@ -21,6 +23,7 @@ export function LoginPage() {
             const usuarioAutenticado = await autenticar(form.usuario, form.senha);
 
             if (usuarioAutenticado) {
+                showToast(`Bem-vindo, ${usuarioAutenticado.nome}!`);
                 if (usuarioAutenticado.isAdmin) {
                     navigate(LINKS.ADMIN);
                 } else {

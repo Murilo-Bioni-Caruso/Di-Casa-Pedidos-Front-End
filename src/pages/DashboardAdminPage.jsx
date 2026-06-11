@@ -98,7 +98,7 @@ export function DashboardAdminPage() {
 
                 <tbody>
                   {pedidosRecentes.map(pedido => {
-                    const data = new Date(pedido.data);
+                    const data = pedido.dataHora || pedido.data;
                     const status = statusConfig[pedido.status];
                     const Icon = status?.icon;
                     return (
