@@ -67,25 +67,24 @@ export function MenuUsuario({ usuario, onLogout }) {
                   )}
                 </div>
 
+                <Link
+                  to={LINKS.HISTORICO_PEDIDOS}
+                  className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100"
+                  onClick={fechar}
+                >
+                  <History className="w-4 h-4" />
+                  {usuario.isConvidado ? 'Acompanhar pedido' : 'Meus Pedidos'}
+                </Link>
+
                 {!usuario.isConvidado && (
-                  <>
-                    <Link
-                      to={LINKS.HISTORICO_PEDIDOS}
-                      className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100"
-                      onClick={fechar}
-                    >
-                      <History className="w-4 h-4" />
-                      Meus Pedidos
-                    </Link>
-                    <Link
-                      to={LINKS.USUARIO_CONFIG}
-                      className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100"
-                      onClick={fechar}
-                    >
-                      <User className="w-4 h-4" />
-                      Meus dados
-                    </Link>
-                  </>
+                  <Link
+                    to={LINKS.USUARIO_CONFIG}
+                    className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100"
+                    onClick={fechar}
+                  >
+                    <User className="w-4 h-4" />
+                    Meus dados
+                  </Link>
                 )}
 
                 {usuario.isAdmin && (

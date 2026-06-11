@@ -36,7 +36,9 @@ export function HistoricoPedidosPage() {
             <ArrowLeft className="w-6 h-6" />
           </Link>
 
-          <h1 className="text-gray-900">Meus Pedidos</h1>
+          <h1 className="text-gray-900">
+            {usuario.isConvidado ? 'Acompanhar Pedido' : 'Meus Pedidos'}
+          </h1>
         </div>
 
         {/* Sem pedidos */}

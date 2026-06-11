@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Plus, Edit2, Trash2, X, Check, GripVertical } from 'lucide-react';
 import { LayoutAdmin } from '../components/LayoutAdmin';
 import { useRestaurante } from '../context/RestauranteContexto';
@@ -15,6 +15,12 @@ export const AdminCategoriasPage = () => {
     const [formData, setFormData] = useState(formVazio);
     const [salvando, setSalvando] = useState(false);
     const [erro, setErro] = useState('');
+    const [categoriasOrdenadas, setCategoriasOrdenadas] = useState([]);
+    const [arrastandoId, setArrastandoId] = useState(null);
+
+    useEffect(() => {
+        setCategoriasOrdenadas([...categorias].sort((a, b) => a.ordem - b.ordem));
+    }, [categorias]);
 
     const handleAbrirNova = () => {
         setEditando(null);
@@ -71,6 +77,42 @@ export const AdminCategoriasPage = () => {
         await atualizarCategoria({ ...cat, ativo: !cat.ativo });
     };
 
+    const persistirNovaOrdem = async (lista) => {
+        try {
+            await Promise.all(
+                lista.map((categoria, indice) =>
+                    atualizarCategoria({
+                        ...categoria,
+                        ordem: indice
+                    })
+                )
+            );
+        } catch {
+            setErro('Não foi possível salvar a nova ordem das categorias.');
+        }
+    };
+
+    const moverCategoria = async (origemId, destinoId) => {
+        if (origemId === destinoId) return;
+
+        const origemIndex = categoriasOrdenadas.findIndex(cat => cat.id === origemId);
+        const destinoIndex = categoriasOrdenadas.findIndex(cat => cat.id === destinoId);
+
+        if (origemIndex < 0 || destinoIndex < 0) return;
+
+        const novaOrdem = [...categoriasOrdenadas];
+        const [itemMovido] = novaOrdem.splice(origemIndex, 1);
+        novaOrdem.splice(destinoIndex, 0, itemMovido);
+
+        const ordenadasComIndice = novaOrdem.map((categoria, indice) => ({
+            ...categoria,
+            ordem: indice
+        }));
+
+        setCategoriasOrdenadas(ordenadasComIndice);
+        await persistirNovaOrdem(ordenadasComIndice);
+    };
+
     return (
         <LayoutAdmin>
             <div className="space-y-6">
@@ -90,7 +132,7 @@ export const AdminCategoriasPage = () => {
 
                 {/* Lista */}
                 <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-                    {categorias.length === 0 ? (
+                    {categoriasOrdenadas.length === 0 ? (
                         <div className="p-12 text-center text-gray-500">
                             Nenhuma categoria cadastrada. Clique em "Nova Categoria" para começar.
                         </div>
@@ -105,12 +147,18 @@ export const AdminCategoriasPage = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {[...categorias]
-                                    .sort((a, b) => a.ordem - b.ordem)
-                                    .map((cat) => (
-                                    <tr key={cat.id} className="border-b last:border-0 hover:bg-gray-50">
+                                {categoriasOrdenadas.map((cat) => (
+                                    <tr
+                                        key={cat.id}
+                                        draggable
+                                        onDragStart={() => setArrastandoId(cat.id)}
+                                        onDragOver={(e) => e.preventDefault()}
+                                        onDrop={() => moverCategoria(arrastandoId, cat.id)}
+                                        onDragEnd={() => setArrastandoId(null)}
+                                        className={`border-b last:border-0 hover:bg-gray-50 ${arrastandoId === cat.id ? 'opacity-50' : ''}`}
+                                    >
                                         <td className="px-4 py-3">
-                                            <div className="flex items-center gap-3">
+                                            <div className="flex items-center gap-3 cursor-move select-none">
                                                 <GripVertical className="w-4 h-4 text-gray-300" />
                                                 <span className="text-2xl">{cat.emoji}</span>
                                                 <span className="font-medium text-gray-900">{cat.nome}</span>

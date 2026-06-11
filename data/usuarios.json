@@ -13,278 +13,353 @@
     }
   },
   {
-    "nome": "Administrador",
-    "telefone": "000000000",
-    "endereco": "rua dos bobos, numero 0",
-    "isAdmin": false,
-    "distancia": 4.4,
-    "taxaEntrega": 0,
-    "credenciais": {
-      "usuario": "administrador",
-      "senha": "BzEJJftQ"
-    },
-    "id": "usuario-1778795527025"
+    "nome": "Maria Silva",
+    "telefone": "(19) 98001-1001",
+    "email": "maria_silva_marmitariateste@gmail.com",
+    "endereco": "Rua das Orquídeas, 107 - Jardim Morada do Sol - Indaiatuba - SP",
+    "isConvidado": false
   },
   {
-    "nome": "Administrador",
-    "telefone": "000000000",
-    "endereco": "rua dos bobos, numero 0",
-    "isAdmin": false,
-    "distancia": 4.4,
-    "taxaEntrega": 0,
-    "credenciais": {
-      "usuario": "administrador",
-      "senha": "!mpxE$$o"
-    },
-    "id": "usuario-1778795900058"
+    "nome": "João Santos",
+    "telefone": "(19) 98002-1002",
+    "email": "joão_santos_marmitariateste@gmail.com",
+    "endereco": "Rua Tuiuti, 114 - Cidade Nova I - Indaiatuba - SP",
+    "isConvidado": false
   },
   {
-    "nome": "Administrador",
-    "telefone": "000000000",
-    "endereco": "rua dos bobos, numero 0",
-    "isAdmin": false,
-    "distancia": 4.4,
-    "taxaEntrega": 0,
-    "credenciais": {
-      "usuario": "administrador",
-      "senha": "H$4I9gJx"
-    },
-    "id": "usuario-1778796194276"
+    "nome": "Ana Oliveira",
+    "telefone": "(19) 98003-1003",
+    "email": "ana_oliveira_marmitariateste@gmail.com",
+    "endereco": "Rua Humaitá, 121 - Cidade Nova II - Indaiatuba - SP",
+    "isConvidado": false
   },
   {
-    "nome": "Administrador",
-    "telefone": "000000000",
-    "endereco": "rua dos bobos, numero 0",
-    "isAdmin": false,
-    "distancia": 4.4,
-    "taxaEntrega": 0,
-    "credenciais": {
-      "usuario": "administrador",
-      "senha": "3QEoDU41"
-    },
-    "id": "usuario-1778796761269"
+    "nome": "Carlos Pereira",
+    "telefone": "(19) 98004-1004",
+    "email": "carlos_pereira_marmitariateste@gmail.com",
+    "endereco": "Rua Cerqueira César, 128 - Jardim América - Indaiatuba - SP",
+    "isConvidado": false
   },
   {
-    "nome": "Administrador",
-    "telefone": "000000000",
-    "endereco": "rua dos bobos, numero 0",
-    "isAdmin": false,
-    "distancia": 4.4,
-    "taxaEntrega": 0,
-    "credenciais": {
-      "usuario": "administrador",
-      "senha": "yC85RqNX"
-    },
-    "id": "usuario-1778797021944"
+    "nome": "Fernanda Costa",
+    "telefone": "(19) 98005-1005",
+    "email": "fernanda_costa_marmitariateste@gmail.com",
+    "endereco": "Rua das Camélias, 135 - Jardim Esplanada - Indaiatuba - SP",
+    "isConvidado": false
   },
   {
-    "nome": "Administrador",
-    "telefone": "000000000",
-    "endereco": "rua dos bobos, numero 0",
-    "isAdmin": false,
-    "distancia": 4.4,
-    "taxaEntrega": 0,
-    "credenciais": {
-      "usuario": "administrador",
-      "senha": "sD7LbgEN"
-    },
-    "id": "usuario-1778797418515"
+    "nome": "Lucas Almeida",
+    "telefone": "(19) 98006-1006",
+    "email": "lucas_almeida_marmitariateste@gmail.com",
+    "endereco": "Rua Paraguai, 142 - Jardim Pau Preto - Indaiatuba - SP",
+    "isConvidado": false
   },
   {
-    "nome": "Administrador",
-    "telefone": "000000000",
-    "endereco": "rua dos bobos, numero 0",
-    "isAdmin": false,
-    "distancia": 4.4,
-    "taxaEntrega": 0,
-    "credenciais": {
-      "usuario": "administrador",
-      "senha": "NvSFQ!JR"
-    },
-    "id": "usuario-1778797963999"
+    "nome": "Juliana Martins",
+    "telefone": "(19) 98007-1007",
+    "email": "juliana_martins_marmitariateste@gmail.com",
+    "endereco": "Rua Quinze de Novembro, 149 - Vila Georgina - Indaiatuba - SP",
+    "isConvidado": false
   },
   {
-    "nome": "Administrador",
-    "telefone": "000000000",
-    "endereco": "rua dos bobos, ",
-    "isAdmin": false,
-    "distancia": 2.7,
-    "taxaEntrega": 0,
-    "credenciais": {
-      "usuario": "administrador",
-      "senha": "59Bd2uTp"
-    },
-    "id": "usuario-1778798240270"
+    "nome": "Rafael Barbosa",
+    "telefone": "(19) 98008-1008",
+    "email": "rafael_barbosa_marmitariateste@gmail.com",
+    "endereco": "Rua Onze de Junho, 156 - Jardim Hubert - Indaiatuba - SP",
+    "isConvidado": false
   },
   {
-    "nome": "Administrador",
-    "telefone": "000000000",
-    "endereco": "rua dos bob",
-    "isAdmin": false,
-    "distancia": 1.5,
-    "taxaEntrega": 0,
-    "credenciais": {
-      "usuario": "administrador",
-      "senha": "5Vhgvfd6"
-    },
-    "id": "usuario-1778798593576"
+    "nome": "Patrícia Lima",
+    "telefone": "(19) 98009-1009",
+    "email": "patrícia_lima_marmitariateste@gmail.com",
+    "endereco": "Rua das Primaveras, 163 - Jardim Morumbi - Indaiatuba - SP",
+    "isConvidado": false
   },
   {
-    "nome": "Administrador",
-    "telefone": "000000000",
-    "endereco": "rua dos bob",
-    "isAdmin": false,
-    "distancia": 1.5,
-    "taxaEntrega": 0,
-    "credenciais": {
-      "usuario": "administrador",
-      "senha": "#PS3lB$Z"
-    },
-    "id": "usuario-1778798770910"
+    "nome": "Bruno Rodrigues",
+    "telefone": "(19) 98010-1010",
+    "email": "bruno_rodrigues_marmitariateste@gmail.com",
+    "endereco": "Rua Pedro de Toledo, 170 - Centro - Indaiatuba - SP",
+    "isConvidado": false
   },
   {
-    "nome": "Administrador",
-    "telefone": "000000000",
-    "endereco": "rua dos bob789",
-    "isAdmin": false,
-    "distancia": 3.8,
-    "taxaEntrega": 0,
-    "credenciais": {
-      "usuario": "administrador",
-      "senha": "i4PJ1JrQ"
-    },
-    "id": "usuario-1778798988747"
+    "nome": "Camila Ferreira",
+    "telefone": "(19) 98011-1011",
+    "email": "camila_ferreira_marmitariateste@gmail.com",
+    "endereco": "Rua das Orquídeas, 177 - Jardim Morada do Sol - Indaiatuba - SP",
+    "isConvidado": false
   },
   {
-    "nome": "Administrador",
-    "telefone": "000000000",
-    "endereco": "rua dos bob",
-    "isAdmin": false,
-    "distancia": 1.5,
-    "taxaEntrega": 0,
-    "credenciais": {
-      "usuario": "administrador",
-      "senha": "N71KqZ#P"
-    },
-    "id": "usuario-1778799786621"
+    "nome": "Diego Gomes",
+    "telefone": "(19) 98012-1012",
+    "email": "diego_gomes_marmitariateste@gmail.com",
+    "endereco": "Rua Tuiuti, 184 - Cidade Nova I - Indaiatuba - SP",
+    "isConvidado": false
   },
   {
-    "nome": "Administrador",
-    "telefone": "000000000",
-    "endereco": "rua dos bob",
-    "isAdmin": false,
-    "distancia": 1.5,
-    "taxaEntrega": 0,
-    "credenciais": {
-      "usuario": "administrador",
-      "senha": "Dzh1Tz0@"
-    },
-    "id": "usuario-1778799944009"
+    "nome": "Vanessa Rocha",
+    "telefone": "(19) 98013-1013",
+    "email": "vanessa_rocha_marmitariateste@gmail.com",
+    "endereco": "Rua Humaitá, 191 - Cidade Nova II - Indaiatuba - SP",
+    "isConvidado": false
   },
   {
-    "nome": "Administrador",
-    "telefone": "000000000",
-    "endereco": "rua dos bob",
-    "isAdmin": false,
-    "distancia": 1.5,
-    "taxaEntrega": 0,
-    "credenciais": {
-      "usuario": "administrador",
-      "senha": "qpCyUqUD"
-    },
-    "id": "usuario-1778799982760"
+    "nome": "Ricardo Souza",
+    "telefone": "(19) 98014-1014",
+    "email": "ricardo_souza_marmitariateste@gmail.com",
+    "endereco": "Rua Cerqueira César, 198 - Jardim América - Indaiatuba - SP",
+    "isConvidado": false
   },
   {
-    "nome": "Willian Thiago Junges Alexandrino",
-    "telefone": "(69) 99971-4972",
-    "endereco": "Dos bobos, 0, sem nome",
-    "isAdmin": false,
-    "credenciais": {
-      "usuario": "Baunilha",
-      "senha": "123456"
-    },
-    "distancia": 14.4,
-    "taxaEntrega": 23.5,
-    "id": "usuario-1778819671352"
+    "nome": "Larissa Carvalho",
+    "telefone": "(19) 98015-1015",
+    "email": "larissa_carvalho_marmitariateste@gmail.com",
+    "endereco": "Rua das Camélias, 205 - Jardim Esplanada - Indaiatuba - SP",
+    "isConvidado": false
   },
   {
-    "nome": "Administrador",
-    "telefone": "(69) 99971-4972",
-    "endereco": "Rua dos nno",
-    "isAdmin": false,
-    "distancia": 3.9,
-    "taxaEntrega": 0,
-    "credenciais": {
-      "usuario": "administrador",
-      "senha": "zPa4WRI!"
-    },
-    "id": "usuario-1778819794328"
+    "nome": "Felipe Nunes",
+    "telefone": "(19) 98016-1016",
+    "email": "felipe_nunes_marmitariateste@gmail.com",
+    "endereco": "Rua Paraguai, 212 - Jardim Pau Preto - Indaiatuba - SP",
+    "isConvidado": false
   },
   {
-    "nome": "Willian",
-    "telefone": "(66) 12311-2313",
-    "endereco": "rua, 0, um",
-    "isAdmin": false,
-    "credenciais": {
-      "usuario": "admin",
-      "senha": "123456"
-    },
-    "distancia": 0,
-    "taxaEntrega": 0,
-    "id": "usuario-1778821181956"
+    "nome": "Tatiane Ribeiro",
+    "telefone": "(19) 98017-1017",
+    "email": "tatiane_ribeiro_marmitariateste@gmail.com",
+    "endereco": "Rua Quinze de Novembro, 219 - Vila Georgina - Indaiatuba - SP",
+    "isConvidado": false
   },
   {
-    "nome": "Willian",
-    "telefone": "(69) 99971-4972",
-    "endereco": "rua itupeva, 45, vila furlan",
-    "isAdmin": false,
-    "distancia": 1.4,
-    "taxaEntrega": 0,
-    "credenciais": {
-      "usuario": "willian",
-      "senha": "RTRJjmWM"
-    },
-    "id": "usuario-1778883021375"
+    "nome": "André Moreira",
+    "telefone": "(19) 98018-1018",
+    "email": "andré_moreira_marmitariateste@gmail.com",
+    "endereco": "Rua Onze de Junho, 226 - Jardim Hubert - Indaiatuba - SP",
+    "isConvidado": false
   },
   {
-    "nome": "Teste",
-    "telefone": "(69) 99971-4972",
-    "endereco": "Rua Itupeva, 45, Vila Furlan",
-    "email": "teste@teste.test",
-    "isAdmin": false,
-    "credenciais": {
-      "usuario": "Teste",
-      "senha": "123456!A"
-    },
-    "distancia": 1.4,
-    "taxaEntrega": 0,
-    "id": "usuario-1778884558842"
+    "nome": "Gabriela Teixeira",
+    "telefone": "(19) 98019-1019",
+    "email": "gabriela_teixeira_marmitariateste@gmail.com",
+    "endereco": "Rua das Primaveras, 233 - Jardim Morumbi - Indaiatuba - SP",
+    "isConvidado": false
   },
   {
-    "nome": "WILLIAN THIAGO JUNGES ALEXANDRINO",
-    "telefone": "(69) 99971-4972",
-    "endereco": "Rua itupeva, vila furlan, 45",
-    "email": "willianjungesa@gmail.com",
-    "isAdmin": false,
-    "credenciais": {
-      "usuario": "Teste1",
-      "senha": "123456!A"
-    },
-    "distancia": 1.4,
-    "taxaEntrega": 0,
-    "id": "usuario-1778886738866"
+    "nome": "Eduardo Lopes",
+    "telefone": "(19) 98020-1020",
+    "email": "eduardo_lopes_marmitariateste@gmail.com",
+    "endereco": "Rua Pedro de Toledo, 240 - Centro - Indaiatuba - SP",
+    "isConvidado": false
   },
   {
-    "nome": "jorge",
-    "telefone": "(19) 99999-9999",
-    "endereco": "Bairro Bela Vista, Avenida 5, vilhena",
-    "isAdmin": false,
-    "distancia": 2217,
-    "taxaEntrega": 5530,
-    "credenciais": {
-      "usuario": "jorge",
-      "senha": "VmQcvQnE"
-    },
-    "id": "usuario-1778890274096"
+    "nome": "Aline Mendes",
+    "telefone": "(19) 98021-1021",
+    "email": "aline_mendes_marmitariateste@gmail.com",
+    "endereco": "Rua das Orquídeas, 247 - Jardim Morada do Sol - Indaiatuba - SP",
+    "isConvidado": false
+  },
+  {
+    "nome": "Gustavo Araújo",
+    "telefone": "(19) 98022-1022",
+    "email": "gustavo_araújo_marmitariateste@gmail.com",
+    "endereco": "Rua Tuiuti, 254 - Cidade Nova I - Indaiatuba - SP",
+    "isConvidado": false
+  },
+  {
+    "nome": "Renata Castro",
+    "telefone": "(19) 98023-1023",
+    "email": "renata_castro_marmitariateste@gmail.com",
+    "endereco": "Rua Humaitá, 261 - Cidade Nova II - Indaiatuba - SP",
+    "isConvidado": false
+  },
+  {
+    "nome": "Thiago Moraes",
+    "telefone": "(19) 98024-1024",
+    "email": "thiago_moraes_marmitariateste@gmail.com",
+    "endereco": "Rua Cerqueira César, 268 - Jardim América - Indaiatuba - SP",
+    "isConvidado": false
+  },
+  {
+    "nome": "Beatriz Fernandes",
+    "telefone": "(19) 98025-1025",
+    "email": "beatriz_fernandes_marmitariateste@gmail.com",
+    "endereco": "Rua das Camélias, 275 - Jardim Esplanada - Indaiatuba - SP",
+    "isConvidado": false
+  },
+  {
+    "nome": "Marcelo Correia",
+    "telefone": "(19) 98026-1026",
+    "email": "marcelo_correia_marmitariateste@gmail.com",
+    "endereco": "Rua Paraguai, 282 - Jardim Pau Preto - Indaiatuba - SP",
+    "isConvidado": false
+  },
+  {
+    "nome": "Priscila Batista",
+    "telefone": "(19) 98027-1027",
+    "email": "priscila_batista_marmitariateste@gmail.com",
+    "endereco": "Rua Quinze de Novembro, 289 - Vila Georgina - Indaiatuba - SP",
+    "isConvidado": false
+  },
+  {
+    "nome": "Leonardo Freitas",
+    "telefone": "(19) 98028-1028",
+    "email": "leonardo_freitas_marmitariateste@gmail.com",
+    "endereco": "Rua Onze de Junho, 296 - Jardim Hubert - Indaiatuba - SP",
+    "isConvidado": false
+  },
+  {
+    "nome": "Amanda Cardoso",
+    "telefone": "(19) 98029-1029",
+    "email": "amanda_cardoso_marmitariateste@gmail.com",
+    "endereco": "Rua das Primaveras, 303 - Jardim Morumbi - Indaiatuba - SP",
+    "isConvidado": false
+  },
+  {
+    "nome": "Vinicius Machado",
+    "telefone": "(19) 98030-1030",
+    "email": "vinicius_machado_marmitariateste@gmail.com",
+    "endereco": "Rua Pedro de Toledo, 310 - Centro - Indaiatuba - SP",
+    "isConvidado": false
+  },
+  {
+    "nome": "Paula Dias",
+    "telefone": "(19) 98031-1031",
+    "email": "paula_dias_marmitariateste@gmail.com",
+    "endereco": "Rua das Orquídeas, 317 - Jardim Morada do Sol - Indaiatuba - SP",
+    "isConvidado": false
+  },
+  {
+    "nome": "Rodrigo Vieira",
+    "telefone": "(19) 98032-1032",
+    "email": "rodrigo_vieira_marmitariateste@gmail.com",
+    "endereco": "Rua Tuiuti, 324 - Cidade Nova I - Indaiatuba - SP",
+    "isConvidado": false
+  },
+  {
+    "nome": "Carolina Rezende",
+    "telefone": "(19) 98033-1033",
+    "email": "carolina_rezende_marmitariateste@gmail.com",
+    "endereco": "Rua Humaitá, 331 - Cidade Nova II - Indaiatuba - SP",
+    "isConvidado": false
+  },
+  {
+    "nome": "Matheus Pinto",
+    "telefone": "(19) 98034-1034",
+    "email": "matheus_pinto_marmitariateste@gmail.com",
+    "endereco": "Rua Cerqueira César, 338 - Jardim América - Indaiatuba - SP",
+    "isConvidado": false
+  },
+  {
+    "nome": "Natália Cunha",
+    "telefone": "(19) 98035-1035",
+    "email": "natália_cunha_marmitariateste@gmail.com",
+    "endereco": "Rua das Camélias, 345 - Jardim Esplanada - Indaiatuba - SP",
+    "isConvidado": false
+  },
+  {
+    "nome": "Fábio Monteiro",
+    "telefone": "(19) 98036-1036",
+    "email": "fábio_monteiro_marmitariateste@gmail.com",
+    "endereco": "Rua Paraguai, 352 - Jardim Pau Preto - Indaiatuba - SP",
+    "isConvidado": false
+  },
+  {
+    "nome": "Débora Peixoto",
+    "telefone": "(19) 98037-1037",
+    "email": "débora_peixoto_marmitariateste@gmail.com",
+    "endereco": "Rua Quinze de Novembro, 359 - Vila Georgina - Indaiatuba - SP",
+    "isConvidado": false
+  },
+  {
+    "nome": "Igor Farias",
+    "telefone": "(19) 98038-1038",
+    "email": "igor_farias_marmitariateste@gmail.com",
+    "endereco": "Rua Onze de Junho, 366 - Jardim Hubert - Indaiatuba - SP",
+    "isConvidado": false
+  },
+  {
+    "nome": "Elaine Melo",
+    "telefone": "(19) 98039-1039",
+    "email": "elaine_melo_marmitariateste@gmail.com",
+    "endereco": "Rua das Primaveras, 373 - Jardim Morumbi - Indaiatuba - SP",
+    "isConvidado": false
+  },
+  {
+    "nome": "Daniel Azevedo",
+    "telefone": "(19) 98040-1040",
+    "email": "daniel_azevedo_marmitariateste@gmail.com",
+    "endereco": "Rua Pedro de Toledo, 380 - Centro - Indaiatuba - SP",
+    "isConvidado": false
+  },
+  {
+    "nome": "Cristiane Borges",
+    "telefone": "(19) 98041-1041",
+    "email": "cristiane_borges_marmitariateste@gmail.com",
+    "endereco": "Rua das Orquídeas, 387 - Jardim Morada do Sol - Indaiatuba - SP",
+    "isConvidado": false
+  },
+  {
+    "nome": "Leandro Ramos",
+    "telefone": "(19) 98042-1042",
+    "email": "leandro_ramos_marmitariateste@gmail.com",
+    "endereco": "Rua Tuiuti, 394 - Cidade Nova I - Indaiatuba - SP",
+    "isConvidado": false
+  },
+  {
+    "nome": "Michele Campos",
+    "telefone": "(19) 98043-1043",
+    "email": "michele_campos_marmitariateste@gmail.com",
+    "endereco": "Rua Humaitá, 401 - Cidade Nova II - Indaiatuba - SP",
+    "isConvidado": false
+  },
+  {
+    "nome": "Caio Tavares",
+    "telefone": "(19) 98044-1044",
+    "email": "caio_tavares_marmitariateste@gmail.com",
+    "endereco": "Rua Cerqueira César, 408 - Jardim América - Indaiatuba - SP",
+    "isConvidado": false
+  },
+  {
+    "nome": "Bianca Fonseca",
+    "telefone": "(19) 98045-1045",
+    "email": "bianca_fonseca_marmitariateste@gmail.com",
+    "endereco": "Rua das Camélias, 415 - Jardim Esplanada - Indaiatuba - SP",
+    "isConvidado": false
+  },
+  {
+    "nome": "Roberto Miranda",
+    "telefone": "(19) 98046-1046",
+    "email": "roberto_miranda_marmitariateste@gmail.com",
+    "endereco": "Rua Paraguai, 422 - Jardim Pau Preto - Indaiatuba - SP",
+    "isConvidado": false
+  },
+  {
+    "nome": "Sabrina Barros",
+    "telefone": "(19) 98047-1047",
+    "email": "sabrina_barros_marmitariateste@gmail.com",
+    "endereco": "Rua Quinze de Novembro, 429 - Vila Georgina - Indaiatuba - SP",
+    "isConvidado": false
+  },
+  {
+    "nome": "Pedro Duarte",
+    "telefone": "(19) 98048-1048",
+    "email": "pedro_duarte_marmitariateste@gmail.com",
+    "endereco": "Rua Onze de Junho, 436 - Jardim Hubert - Indaiatuba - SP",
+    "isConvidado": false
+  },
+  {
+    "nome": "Jéssica Sales",
+    "telefone": "(19) 98049-1049",
+    "email": "jéssica_sales_marmitariateste@gmail.com",
+    "endereco": "Rua das Primaveras, 443 - Jardim Morumbi - Indaiatuba - SP",
+    "isConvidado": false
+  },
+  {
+    "nome": "Henrique Macedo",
+    "telefone": "(19) 98050-1050",
+    "email": "henrique_macedo_marmitariateste@gmail.com",
+    "endereco": "Rua Pedro de Toledo, 450 - Centro - Indaiatuba - SP",
+    "isConvidado": false
   }
 ]

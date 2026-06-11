@@ -322,6 +322,15 @@ export function CadastroPage() {
                     >
                         {carregando ? 'Salvando...' : textoBotao}
                     </button>
+
+                    {!usuario && (
+                        <p className="text-center text-sm text-gray-500 mt-4">
+                            Já tem uma conta?{' '}
+                            <Link to={LINKS.LOGIN} className="text-[#FF6B35] font-medium hover:underline">
+                                Fazer Login
+                            </Link>
+                        </p>
+                    )}
                 </form>
             </main>
         </div>

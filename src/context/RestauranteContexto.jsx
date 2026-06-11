@@ -52,9 +52,31 @@ export const RestauranteProvider = ({ children }) => {
     setProdutos(prev => prev.filter(p => p.id !== produtoId));
   };
 
+  const ordenarProdutos = (lista) => {
+    const ordemCategoria = new Map(
+      categorias.map((categoria, indice) => [categoria.nome.toLowerCase(), indice])
+    );
+
+    return [...lista].sort((a, b) => {
+      const ordemA = ordemCategoria.has(a.categoria)
+        ? ordemCategoria.get(a.categoria)
+        : Number.MAX_SAFE_INTEGER;
+      const ordemB = ordemCategoria.has(b.categoria)
+        ? ordemCategoria.get(b.categoria)
+        : Number.MAX_SAFE_INTEGER;
+
+      if (ordemA !== ordemB) {
+        return ordemA - ordemB;
+      }
+
+      return a.nome.localeCompare(b.nome, 'pt-BR', { sensitivity: 'base' });
+    });
+  };
+
   const filtrarProdutos = (categoria, apenasDisponiveis = false) => {
     const aplicarFiltroDia = apenasDisponiveis && configuracoes?.filtrarPorDia;
-    return restauranteService.filtrarProdutos(produtos, categoria, aplicarFiltroDia);
+    const filtrados = restauranteService.filtrarProdutos(produtos, categoria, aplicarFiltroDia);
+    return ordenarProdutos(filtrados);
   };
 
   const getPratoDoDia = () => {

@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "nome": "Marmitas",
+    "emoji": "🍱",
+    "ativo": true,
+    "ordem": 0
+  },
+  {
+    "id": 2,
+    "nome": "Assados",
+    "emoji": "🍗",
+    "ativo": true,
+    "ordem": 1
+  },
+  {
+    "id": 3,
+    "nome": "Bebidas",
+    "emoji": "🥤",
+    "ativo": true,
+    "ordem": 2
+  },
+  {
+    "id": 33,
+    "nome": "Acompanhamentos",
+    "emoji": "🫕",
+    "ativo": true,
+    "ordem": 3
+  },
+  {
+    "id": 4,
+    "nome": "Sobremesas",
+    "emoji": "🍰",
+    "ativo": true,
+    "ordem": 4
+  }
+]

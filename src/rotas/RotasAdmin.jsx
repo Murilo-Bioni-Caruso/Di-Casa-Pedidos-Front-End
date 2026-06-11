@@ -7,7 +7,7 @@ export function RotaAdmin() {
 
   // ❌ não logado
   if (!usuario) {
-    return <Navigate to={LINKS.CADASTRO} />;
+    return <Navigate to={LINKS.LOGIN} />;
   }
 
   // ❌ não é admin

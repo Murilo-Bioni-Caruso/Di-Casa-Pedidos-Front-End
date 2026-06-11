@@ -1,120 +1,671 @@
-[
-  {
-    "nome": "Marmita de Frango",
-    "descricao": "Frango grelhado com arroz, feijão e salada",
-    "preco": "25",
-    "categoria": "marmitas",
-    "imagem": "http://localhost:3001/imagens/img-1778795335493.png",
-    "diaDaSemana": [
-      "domingo",
-      "segunda",
-      "terca",
-      "quarta",
-      "quinta",
-      "sexta",
-      "sabado"
-    ],
-    "id": "1"
-  },
-  {
-    "id": "2",
-    "nome": "Marmita de Carne",
-    "descricao": "Carne assada com arroz, feijão e batata",
-    "preco": 28,
-    "categoria": "marmitas",
-    "imagem": "https://images.unsplash.com/photo-1600891964599-f61ba0e24092",
-    "diaDaSemana": [
-      "terca"
-    ]
-  },
-  {
-    "nome": "Frango Assado",
-    "descricao": "Frango inteiro assado temperado",
-    "preco": "40",
-    "categoria": "assados",
-    "imagem": "https://images.unsplash.com/photo-1604908177522-402f3f61b1b4",
-    "diaDaSemana": [
-      "quarta",
-      "quinta"
-    ],
-    "id": "3"
-  },
-  {
-    "id": "4",
-    "nome": "Costela Assada",
-    "descricao": "Costela bovina assada lentamente",
-    "preco": 55,
-    "categoria": "assados",
-    "imagem": "https://images.unsplash.com/photo-1558030006-450675393462",
-    "diaDaSemana": []
-  },
-  {
-    "nome": "Coca-Cola",
-    "descricao": "Lata 350ml gelada",
-    "preco": "5",
-    "categoria": "bebidas",
-    "imagem": "http://localhost:3001/imagens/img-1778893821776.webp",
-    "diaDaSemana": [
-      "domingo",
-      "segunda",
-      "terca",
-      "quarta",
-      "quinta",
-      "sexta",
-      "sabado"
-    ],
-    "id": "5"
-  },
-  {
-    "id": "6",
-    "nome": "Suco de Laranja",
-    "descricao": "Suco natural 500ml",
-    "preco": 8,
-    "categoria": "bebidas",
-    "imagem": "https://images.unsplash.com/photo-1571689936114-b8c9d2c6a9b0",
-    "diaDaSemana": []
-  },
-  {
-    "nome": "Pudim",
-    "descricao": "Pudim de leite condensado",
-    "preco": "10",
-    "categoria": "sobremesas",
-    "imagem": "http://localhost:3001/imagens/img-1778893756401.jpg",
-    "diaDaSemana": [
-      "sexta",
-      "quinta"
-    ],
-    "id": "7"
-  },
-  {
-    "id": "8",
-    "nome": "Bolo de Chocolate",
-    "descricao": "Fatia de bolo com cobertura",
-    "preco": 12,
-    "categoria": "sobremesas",
-    "imagem": "https://images.unsplash.com/photo-1599785209707-28c3e0c1c2f5",
-    "diaDaSemana": []
-  },
-  {
-    "id": "9",
-    "nome": "Marmita Fitness",
-    "descricao": "Frango grelhado, batata doce e legumes",
-    "preco": 30,
-    "categoria": "marmitas",
-    "imagem": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c",
-    "diaDaSemana": [
-      "sabado"
-    ]
-  },
-  {
-    "id": "10",
-    "nome": "Feijoada",
-    "descricao": "Feijoada completa com acompanhamentos",
-    "preco": 35,
-    "categoria": "marmitas",
-    "imagem": "https://images.unsplash.com/photo-1600891964092-4316c288032e",
-    "diaDaSemana": [
-      "domingo"
-    ]
-  }
+﻿[
+    {
+        "id":  "1",
+        "nome":  "Marmita de Frango",
+        "descricao":  "Frango grelhado com purÃª, macarrÃ£o e salada",
+        "preco":  22.0,
+        "categoria":  "marmitas",
+        "imagem":  "https://res.cloudinary.com/dwd4ea7we/image/upload/q_auto/f_auto/v1781203021/IMG-20260610-WA0063_bf4wxs.jpg",
+        "diaDaSemana":  [
+                            "domingo",
+                            "segunda",
+                            "terca",
+                            "quarta",
+                            "quinta",
+                            "sexta",
+                            "sabado"
+                        ],
+        "variantes":  [
+                          {
+                              "label":  "Grande",
+                              "opcoes":  [
+                                             {
+                                                 "nome":  "Pequena",
+                                                 "preco":  20
+                                             }
+                                         ]
+                          }
+                      ]
+    },
+    {
+        "id":  "2",
+        "nome":  "Marmita de Carne",
+        "descricao":  "Carne assada com mandioca frita, ovo frito, macarrÃ£o, abobora e salada",
+        "preco":  22.0,
+        "categoria":  "marmitas",
+        "imagem":  "https://res.cloudinary.com/dwd4ea7we/image/upload/q_auto/f_auto/v1781203021/IMG-20260610-WA0066_vqfbk6.jpg",
+        "diaDaSemana":  [
+                            "domingo",
+                            "terca",
+                            "quarta",
+                            "quinta",
+                            "sexta",
+                            "sabado"
+                        ],
+        "variantes":  [
+                          {
+                              "label":  "Grande",
+                              "opcoes":  [
+                                             {
+                                                 "nome":  "Pequena",
+                                                 "preco":  20
+                                             }
+                                         ]
+                          }
+                      ]
+    },
+    {
+        "id":  "4",
+        "nome":  "Costela Assada",
+        "descricao":  "Costela bovina assada lentamente",
+        "preco":  55.0,
+        "categoria":  "assados",
+        "imagem":  "https://res.cloudinary.com/dwd4ea7we/image/upload/q_auto/f_auto/v1781202979/IMG-20260611-WA0033_wufqqu.jpg",
+        "diaDaSemana":  [
+                            "sabado",
+                            "domingo"
+                        ],
+        "variantes":  [
+
+                      ]
+    },
+    {
+        "id":  "5",
+        "nome":  "Coca-Cola",
+        "descricao":  "Lata 350ml gelada",
+        "preco":  5.0,
+        "categoria":  "bebidas",
+        "imagem":  "https://res.cloudinary.com/dwd4ea7we/image/upload/q_auto/f_auto/v1781202971/1781198554546_pmn2wo.png",
+        "diaDaSemana":  [
+                            "domingo",
+                            "terca",
+                            "quarta",
+                            "quinta",
+                            "sexta",
+                            "sabado"
+                        ],
+        "variantes":  [
+
+                      ]
+    },
+    {
+        "id":  "7",
+        "nome":  "Pudim",
+        "descricao":  "Pudim de leite condensado",
+        "preco":  10.0,
+        "categoria":  "sobremesas",
+        "imagem":  "https://res.cloudinary.com/dwd4ea7we/image/upload/q_auto/f_auto/v1781202978/IMG_20260611_130356_sbixpm.jpg",
+        "diaDaSemana":  [
+                            "domingo",
+                            "terca",
+                            "quarta",
+                            "quinta",
+                            "sexta",
+                            "sabado"
+                        ],
+        "variantes":  [
+
+                      ]
+    },
+    {
+        "id":  "10",
+        "nome":  "Feijoada",
+        "descricao":  "Feijoada completa com acompanhamentos",
+        "preco":  48.0,
+        "categoria":  "marmitas",
+        "imagem":  "https://res.cloudinary.com/dwd4ea7we/image/upload/q_auto/f_auto/v1781202974/IMG-20260611-WA0093_b6j3wu.jpg",
+        "diaDaSemana":  [
+                            "domingo",
+                            "terca",
+                            "quarta",
+                            "quinta",
+                            "sexta",
+                            "sabado"
+                        ],
+        "variantes":  [
+
+                      ]
+    },
+    {
+        "id":  "produto-1781202289497",
+        "nome":  "Cerveja Brahma",
+        "descricao":  "350ml",
+        "preco":  7.0,
+        "categoria":  "bebidas",
+        "imagem":  "https://res.cloudinary.com/dwd4ea7we/image/upload/q_auto/f_auto/v1781202974/1781198394862_y3wffv.png",
+        "diaDaSemana":  [
+                            "domingo",
+                            "terca",
+                            "quarta",
+                            "quinta",
+                            "sexta",
+                            "sabado"
+                        ],
+        "variantes":  [
+
+                      ]
+    },
+    {
+        "id":  "produto-1781202506939",
+        "nome":  "Pepsi ",
+        "descricao":  "",
+        "preco":  7.0,
+        "categoria":  "bebidas",
+        "imagem":  "https://res.cloudinary.com/dwd4ea7we/image/upload/q_auto/f_auto/v1781202974/3334-pepsi-lata-350ml-normal-12un.20260213105126_i8qhda.png",
+        "diaDaSemana":  [
+                            "domingo",
+                            "terca",
+                            "quarta",
+                            "quinta",
+                            "sexta",
+                            "sabado"
+                        ],
+        "variantes":  [
+                          {
+                              "label":  "350ml",
+                              "opcoes":  [
+                                             {
+                                                 "nome":  "1L",
+                                                 "preco":  12
+                                             }
+                                         ]
+                          }
+                      ]
+    },
+    {
+        "id":  "produto-1781204281222",
+        "nome":  "Costela Suina",
+        "descricao":  "Costela Suina assada",
+        "preco":  60.0,
+        "categoria":  "assados",
+        "imagem":  "https://res.cloudinary.com/dwd4ea7we/image/upload/q_auto/f_auto/v1781203018/IMG-20260610-WA0079_qvqdxz.jpg",
+        "diaDaSemana":  [
+                            "domingo",
+                            "sabado"
+                        ],
+        "variantes":  [
+
+                      ]
+    },
+    {
+        "id":  "produto-1781204446255",
+        "nome":  "Pepsi Zero",
+        "descricao":  "",
+        "preco":  7.0,
+        "categoria":  "bebidas",
+        "imagem":  "https://res.cloudinary.com/dwd4ea7we/image/upload/q_auto/f_auto/v1781202975/3336-pepsi-lata-350ml-black-zero-12un.20251024104230_jj8ozf.png",
+        "diaDaSemana":  [
+                            "domingo",
+                            "terca",
+                            "quarta",
+                            "quinta",
+                            "sexta",
+                            "sabado"
+                        ],
+        "variantes":  [
+                          {
+                              "label":  "Lata",
+                              "opcoes":  [
+                                             {
+                                                 "nome":  "2l",
+                                                 "preco":  17
+                                             }
+                                         ]
+                          }
+                      ]
+    },
+    {
+        "id":  "produto-1781204552358",
+        "nome":  "Marmita Parmegiana",
+        "descricao":  "Parmegiana deliciosa, acompanha batata frita, macarrÃ£o, arroz e salada",
+        "preco":  22.0,
+        "categoria":  "marmitas",
+        "imagem":  "https://res.cloudinary.com/dwd4ea7we/image/upload/q_auto/f_auto/v1781203023/IMG-20260610-WA0052_r3d69w.jpg",
+        "diaDaSemana":  [
+                            "domingo",
+                            "terca",
+                            "quarta",
+                            "quinta",
+                            "sexta",
+                            "sabado"
+                        ],
+        "variantes":  [
+                          {
+                              "label":  "Grande",
+                              "opcoes":  [
+                                             {
+                                                 "nome":  "Pequena",
+                                                 "preco":  20.5
+                                             }
+                                         ]
+                          }
+                      ]
+    },
+    {
+        "id":  "produto-1781204648734",
+        "nome":  "Marmita de TilÃ¡pia",
+        "descricao":  "TilÃ¡pia cozida, macarrÃ£o, purÃª de batata, arroz e salada",
+        "preco":  22.0,
+        "categoria":  "marmitas",
+        "imagem":  "https://res.cloudinary.com/dwd4ea7we/image/upload/q_auto/f_auto/v1781203025/IMG-20260610-WA0036_pi5auk.jpg",
+        "diaDaSemana":  [
+                            "domingo",
+                            "terca",
+                            "quarta",
+                            "quinta",
+                            "sexta",
+                            "sabado"
+                        ],
+        "variantes":  [
+                          {
+                              "label":  "Grande",
+                              "opcoes":  [
+                                             {
+                                                 "nome":  "Pequena",
+                                                 "preco":  20
+                                             }
+                                         ]
+                          }
+                      ]
+    },
+    {
+        "id":  "produto-1781204817510",
+        "nome":  "Pudim quatro leite",
+        "descricao":  "Pudim delicioso",
+        "preco":  15.0,
+        "categoria":  "sobremesas",
+        "imagem":  "https://res.cloudinary.com/dwd4ea7we/image/upload/q_auto/f_auto/v1781202978/IMG_20260611_130345_dsx7vl.jpg",
+        "diaDaSemana":  [
+                            "domingo",
+                            "terca",
+                            "quarta",
+                            "quinta",
+                            "sexta",
+                            "sabado"
+                        ],
+        "variantes":  [
+
+                      ]
+    },
+    {
+        "id":  "produto-1781204981157",
+        "nome":  "SalpicÃ£o",
+        "descricao":  "",
+        "preco":  18.0,
+        "categoria":  "acompanhamento",
+        "imagem":  "https://res.cloudinary.com/dwd4ea7we/image/upload/q_auto/f_auto/v1781202978/IMG_20260611_140513_dtb17d.png",
+        "diaDaSemana":  [
+                            "domingo",
+                            "terca",
+                            "quarta",
+                            "quinta",
+                            "sexta",
+                            "sabado"
+                        ],
+        "variantes":  [
+
+                      ]
+    },
+    {
+        "id":  "produto-1781205008851",
+        "nome":  "Maionese",
+        "descricao":  "",
+        "preco":  12.0,
+        "categoria":  "acompanhamento",
+        "imagem":  "https://res.cloudinary.com/dwd4ea7we/image/upload/q_auto/f_auto/v1781202977/IMG_20260611_140544_eqq3kp.png",
+        "diaDaSemana":  [
+                            "domingo",
+                            "terca",
+                            "quarta",
+                            "quinta",
+                            "sexta",
+                            "sabado"
+                        ],
+        "variantes":  [
+
+                      ]
+    },
+    {
+        "id":  "produto-1781205042326",
+        "nome":  "FeijÃ£o Tropeiro",
+        "descricao":  "",
+        "preco":  15.0,
+        "categoria":  "acompanhamento",
+        "imagem":  "https://res.cloudinary.com/dwd4ea7we/image/upload/q_auto/f_auto/v1781202977/IMG_20260611_140559_d1yhk5.png",
+        "diaDaSemana":  [
+                            "domingo",
+                            "terca",
+                            "quarta",
+                            "quinta",
+                            "sexta",
+                            "sabado"
+                        ],
+        "variantes":  [
+
+                      ]
+    },
+    {
+        "id":  "produto-1781205087141",
+        "nome":  "Farofa de Cuzcuz",
+        "descricao":  "",
+        "preco":  12.0,
+        "categoria":  "acompanhamento",
+        "imagem":  "https://res.cloudinary.com/dwd4ea7we/image/upload/q_auto/f_auto/v1781202977/IMG_20260611_140616_uqwnpg.png",
+        "diaDaSemana":  [
+                            "domingo",
+                            "terca",
+                            "quarta",
+                            "quinta",
+                            "sexta",
+                            "sabado"
+                        ],
+        "variantes":  [
+
+                      ]
+    },
+    {
+        "id":  "produto-1781205102582",
+        "nome":  "Farofa de Banana",
+        "descricao":  "",
+        "preco":  12.0,
+        "categoria":  "acompanhamento",
+        "imagem":  "https://res.cloudinary.com/dwd4ea7we/image/upload/q_auto/f_auto/v1781202976/IMG_20260611_140638_kbxnwq.png",
+        "diaDaSemana":  [
+                            "domingo",
+                            "terca",
+                            "quarta",
+                            "quinta",
+                            "sexta",
+                            "sabado"
+                        ],
+        "variantes":  [
+
+                      ]
+    },
+    {
+        "id":  "produto-1781205124582",
+        "nome":  "Farofa Tradicional",
+        "descricao":  "",
+        "preco":  10.0,
+        "categoria":  "acompanhamento",
+        "imagem":  "https://res.cloudinary.com/dwd4ea7we/image/upload/q_auto/f_auto/v1781202976/IMG_20260611_140653_z8auhv.png",
+        "diaDaSemana":  [
+                            "domingo",
+                            "terca",
+                            "quarta",
+                            "quinta",
+                            "sexta",
+                            "sabado"
+                        ],
+        "variantes":  [
+
+                      ]
+    },
+    {
+        "id":  "produto-1781205156133",
+        "nome":  "Mandioca",
+        "descricao":  "",
+        "preco":  10.0,
+        "categoria":  "acompanhamento",
+        "imagem":  "https://res.cloudinary.com/dwd4ea7we/image/upload/q_auto/f_auto/v1781202976/IMG_20260611_140706_qx4o3q.png",
+        "diaDaSemana":  [
+                            "domingo",
+                            "terca",
+                            "quarta",
+                            "quinta",
+                            "sexta",
+                            "sabado"
+                        ],
+        "variantes":  [
+
+                      ]
+    },
+    {
+        "id":  "produto-1781205289942",
+        "nome":  "Coca Cola Zero",
+        "descricao":  "",
+        "preco":  7.0,
+        "categoria":  "bebidas",
+        "imagem":  "https://res.cloudinary.com/dwd4ea7we/image/upload/q_auto/f_auto/v1781202975/1020137-800-auto_p2rah1.png",
+        "diaDaSemana":  [
+                            "domingo",
+                            "terca",
+                            "quarta",
+                            "quinta",
+                            "sexta",
+                            "sabado"
+                        ],
+        "variantes":  [
+                          {
+                              "label":  "350ml",
+                              "opcoes":  [
+                                             {
+                                                 "nome":  "1L",
+                                                 "preco":  15
+                                             },
+                                             {
+                                                 "nome":  "2L",
+                                                 "preco":  22
+                                             }
+                                         ]
+                          }
+                      ]
+    },
+    {
+        "id":  "produto-1781205349471",
+        "nome":  "Sprite LimÃ£o",
+        "descricao":  "",
+        "preco":  7.0,
+        "categoria":  "bebidas",
+        "imagem":  "https://res.cloudinary.com/dwd4ea7we/image/upload/q_auto/f_auto/v1781202975/3732-sprite-lata-350ml-normal-6un.20251024104230_r5nwsz.png",
+        "diaDaSemana":  [
+                            "domingo",
+                            "terca",
+                            "quarta",
+                            "quinta",
+                            "sexta",
+                            "sabado"
+                        ],
+        "variantes":  [
+                          {
+                              "label":  "350ml",
+                              "opcoes":  [
+                                             {
+                                                 "nome":  "1L",
+                                                 "preco":  14.5
+                                             }
+                                         ]
+                          }
+                      ]
+    },
+    {
+        "id":  "produto-1781205479727",
+        "nome":  "Budweiser",
+        "descricao":  "269ml",
+        "preco":  11.0,
+        "categoria":  "bebidas",
+        "imagem":  "https://res.cloudinary.com/dwd4ea7we/image/upload/q_auto/f_auto/v1781202974/Budweiser-269ml_zmpdjz.png",
+        "diaDaSemana":  [
+                            "domingo",
+                            "terca",
+                            "quarta",
+                            "quinta",
+                            "sexta",
+                            "sabado"
+                        ],
+        "variantes":  [
+
+                      ]
+    },
+    {
+        "id":  "produto-1781205516733",
+        "nome":  "Cerveja Antartica",
+        "descricao":  "350ml",
+        "preco":  11.0,
+        "categoria":  "bebidas",
+        "imagem":  "https://res.cloudinary.com/dwd4ea7we/image/upload/q_auto/f_auto/v1781202973/1781198412100_puqsaz.png",
+        "diaDaSemana":  [
+                            "domingo",
+                            "terca",
+                            "quarta",
+                            "quinta",
+                            "sexta",
+                            "sabado"
+                        ],
+        "variantes":  [
+
+                      ]
+    },
+    {
+        "id":  "produto-1781205547677",
+        "nome":  "Tampico",
+        "descricao":  "2L",
+        "preco":  15.0,
+        "categoria":  "bebidas",
+        "imagem":  "https://res.cloudinary.com/dwd4ea7we/image/upload/q_auto/f_auto/v1781202973/1781198437830_lxdznl.png",
+        "diaDaSemana":  [
+                            "domingo",
+                            "terca",
+                            "quarta",
+                            "quinta",
+                            "sexta",
+                            "sabado"
+                        ],
+        "variantes":  [
+
+                      ]
+    },
+    {
+        "id":  "produto-1781205620676",
+        "nome":  "Cerveja Brahma Zero",
+        "descricao":  "350ml",
+        "preco":  12.0,
+        "categoria":  "bebidas",
+        "imagem":  "https://res.cloudinary.com/dwd4ea7we/image/upload/q_auto/f_auto/v1781202973/1781198421387_eqgkd0.png",
+        "diaDaSemana":  [
+                            "domingo",
+                            "terca",
+                            "quarta",
+                            "quinta",
+                            "sexta",
+                            "sabado"
+                        ],
+        "variantes":  [
+
+                      ]
+    },
+    {
+        "id":  "produto-1781205651366",
+        "nome":  "Refrigerante Dyduo",
+        "descricao":  "2l",
+        "preco":  12.0,
+        "categoria":  "bebidas",
+        "imagem":  "https://res.cloudinary.com/dwd4ea7we/image/upload/q_auto/f_auto/v1781202972/1781198451945_ds8ciq.png",
+        "diaDaSemana":  [
+                            "domingo",
+                            "terca",
+                            "quarta",
+                            "quinta",
+                            "sexta",
+                            "sabado"
+                        ],
+        "variantes":  [
+
+                      ]
+    },
+    {
+        "id":  "produto-1781205687543",
+        "nome":  "Sukita Laranja",
+        "descricao":  "350ml",
+        "preco":  7.0,
+        "categoria":  "bebidas",
+        "imagem":  "https://res.cloudinary.com/dwd4ea7we/image/upload/q_auto/f_auto/v1781202972/1781198462072_mnxldh.png",
+        "diaDaSemana":  [
+                            "domingo",
+                            "terca",
+                            "quarta",
+                            "quinta",
+                            "sexta",
+                            "sabado"
+                        ],
+        "variantes":  [
+
+                      ]
+    },
+    {
+        "id":  "produto-1781205738854",
+        "nome":  "Sukita Uva",
+        "descricao":  "350ml",
+        "preco":  7.0,
+        "categoria":  "bebidas",
+        "imagem":  "https://res.cloudinary.com/dwd4ea7we/image/upload/q_auto/f_auto/v1781202972/1781198470640_d3s4or.png",
+        "diaDaSemana":  [
+                            "domingo",
+                            "terca",
+                            "quarta",
+                            "quinta",
+                            "sexta",
+                            "sabado"
+                        ],
+        "variantes":  [
+
+                      ]
+    },
+    {
+        "id":  "produto-1781205776181",
+        "nome":  "Fanta Laranja",
+        "descricao":  "350ml",
+        "preco":  7.0,
+        "categoria":  "bebidas",
+        "imagem":  "https://res.cloudinary.com/dwd4ea7we/image/upload/q_auto/f_auto/v1781202972/1781198515874_fe86dq.png",
+        "diaDaSemana":  [
+                            "domingo",
+                            "terca",
+                            "quarta",
+                            "quinta",
+                            "sexta",
+                            "sabado"
+                        ],
+        "variantes":  [
+
+                      ]
+    },
+    {
+        "id":  "produto-1781205805381",
+        "nome":  "Fanta Uva",
+        "descricao":  "350ml",
+        "preco":  7.0,
+        "categoria":  "bebidas",
+        "imagem":  "https://res.cloudinary.com/dwd4ea7we/image/upload/q_auto/f_auto/v1781202972/1781198495387_i2bwvh.png",
+        "diaDaSemana":  [
+                            "domingo",
+                            "terca",
+                            "quarta",
+                            "quinta",
+                            "sexta",
+                            "sabado"
+                        ],
+        "variantes":  [
+
+                      ]
+    },
+    {
+        "id":  "produto-1781205840853",
+        "nome":  "GuaranÃ¡ Antartica",
+        "descricao":  "350ml",
+        "preco":  7.0,
+        "categoria":  "bebidas",
+        "imagem":  "https://res.cloudinary.com/dwd4ea7we/image/upload/q_auto/f_auto/v1781202972/1781198481355_oa2aap.png",
+        "diaDaSemana":  [
+                            "domingo",
+                            "terca",
+                            "quarta",
+                            "quinta",
+                            "sexta",
+                            "sabado"
+                        ],
+        "variantes":  [
+
+                      ]
+    }
 ]

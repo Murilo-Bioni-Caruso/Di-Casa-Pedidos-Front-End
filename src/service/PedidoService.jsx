@@ -13,6 +13,7 @@ export function criarPedido(dados) {
     total: dados.total,
     metodoPagamento: dados.metodoPagamento,
     tipoEntrega: dados.tipoEntrega || 'entrega',
+    dataHora: new Date().toISOString(),
     data: Date.now(),
     status: OrderStatus.PENDENTE
   };
@@ -58,16 +59,20 @@ export function getPedidoPorId(pedidos, pedidoId) {
 }
 
 export function getPedidosHoje(pedidos) {
-  const hoje = new Date();
-  hoje.setHours(0, 0, 0, 0);
+  const formatarChaveData = (valor) => {
+    const data = new Date(valor);
+    if (Number.isNaN(data.getTime())) return null;
 
-  const amanha = new Date(hoje);
-  amanha.setDate(amanha.getDate() + 1);
+    return [
+      data.getFullYear(),
+      String(data.getMonth() + 1).padStart(2, '0'),
+      String(data.getDate()).padStart(2, '0')
+    ].join('-');
+  };
 
-  return pedidos.filter(p => {
-    const dataPedido = new Date(p.dataHora || p.data);
-    return dataPedido >= hoje && dataPedido < amanha;
-  });
+  const chaveHoje = formatarChaveData(new Date());
+
+  return pedidos.filter(p => formatarChaveData(p.dataHora || p.data) === chaveHoje);
 }
 
 export function getFaturamentoHoje(pedidos) {
